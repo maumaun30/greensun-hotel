@@ -212,3 +212,25 @@ function greensun_hotel_enqueue_contact_form_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'greensun_hotel_enqueue_contact_form_assets' );
 
+/**
+ * Enqueue the multi-step booking flow JS only on the booking template.
+ */
+function greensun_hotel_enqueue_booking_flow_assets() {
+    if ( ! is_page_template( 'page-booking.php' ) ) {
+        return;
+    }
+    $handle = 'greensun-hotel-booking-flow';
+    wp_enqueue_script(
+        $handle,
+        get_theme_file_uri( '/assets/js/booking-flow.js' ),
+        [],
+        filemtime( get_theme_file_path( '/assets/js/booking-flow.js' ) ),
+        true
+    );
+    wp_localize_script( $handle, 'GreensunBookingFlow', [
+        'restUrl' => esc_url_raw( rest_url( 'greensun/v1/' ) ),
+        'nonce'   => wp_create_nonce( 'wp_rest' ),
+    ] );
+}
+add_action( 'wp_enqueue_scripts', 'greensun_hotel_enqueue_booking_flow_assets' );
+

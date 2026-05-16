@@ -1,0 +1,16 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/booking-bar",
+  "title": "Booking Bar",
+  "category": "design",
+  "icon": "calendar",
+  "description": "Check-in / check-out / guests / rooms search bar. Deep-links to the booking engine until the eZee API is wired up.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "submitText":  { "type": "string", "default": "Check availability" },
+    "actionUrl":   { "type": "string", "default": "" },
+    "showRoomType":{ "type": "boolean","default": true }
+  }
+}

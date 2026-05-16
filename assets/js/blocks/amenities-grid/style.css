@@ -1,0 +1,16 @@
+.wp-block-greensun-hotel-amenities-grid .amenity__svg {
+  width: 34px;
+  height: 34px;
+}
+
+@media (max-width: 900px) {
+  .wp-block-greensun-hotel-amenities-grid .amenities-list {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .wp-block-greensun-hotel-amenities-grid .amenities-list {
+    grid-template-columns: 1fr !important;
+  }
+}

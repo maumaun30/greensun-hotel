@@ -1,0 +1,14 @@
+@media (max-width: 900px) {
+  .wp-block-greensun-hotel-booking-bar .booking-bar {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .wp-block-greensun-hotel-booking-bar .booking-bar button {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .wp-block-greensun-hotel-booking-bar .booking-bar {
+    grid-template-columns: 1fr !important;
+  }
+}

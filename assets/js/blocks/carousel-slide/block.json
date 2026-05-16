@@ -48,7 +48,19 @@
     },
     "overlayOpacity": {
       "type": "number",
-      "default": 85
+      "default": 55
+    },
+    "eyebrow": {
+      "type": "string",
+      "default": ""
+    },
+    "accent": {
+      "type": "string",
+      "default": ""
+    },
+    "kenBurns": {
+      "type": "boolean",
+      "default": true
     }
   }
 }

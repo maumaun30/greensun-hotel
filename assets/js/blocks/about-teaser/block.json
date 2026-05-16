@@ -1,0 +1,21 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/about-teaser",
+  "title": "About Teaser",
+  "category": "design",
+  "icon": "info",
+  "description": "Two-column section: eyebrow + title (with italic accent) + body + CTA next to an image.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow":      { "type": "string", "default": "About our hotel" },
+    "title":        { "type": "string", "default": "A quiet luxury rooted in <em>nature</em>." },
+    "subtitle":     { "type": "string", "default": "Tucked between the forest and the sea, every room frames a view, every meal honors the harvest." },
+    "ctaText":      { "type": "string", "default": "Discover our story" },
+    "ctaUrl":       { "type": "string", "default": "#" },
+    "imageUrl":     { "type": "string", "default": "" },
+    "imageId":      { "type": "number", "default": 0 },
+    "imageAlt":     { "type": "string", "default": "" }
+  }
+}

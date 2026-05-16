@@ -10,6 +10,7 @@ import {
   Button,
   TextControl,
   RangeControl,
+  ToggleControl,
   ResponsiveWrapper,
 } from '@wordpress/components';
 
@@ -25,10 +26,13 @@ export default function Edit({ attributes, setAttributes }) {
     secondaryButtonText,
     secondaryButtonUrl,
     overlayOpacity,
+    eyebrow,
+    accent,
+    kenBurns,
   } = attributes;
 
   const overlayStyle = {
-    background: `linear-gradient(to right, rgba(10, 10, 11, ${overlayOpacity / 100}), rgba(10, 10, 11, ${(overlayOpacity / 100) * 0.6}))`,
+    background: `linear-gradient(180deg, rgba(0,0,0,${overlayOpacity / 100 * 0.3}) 0%, rgba(0,0,0,${overlayOpacity / 100}) 100%)`,
   };
 
   const blockProps = useBlockProps({ className: 'carousel-slide-editor' });
@@ -85,7 +89,28 @@ export default function Edit({ attributes, setAttributes }) {
             onChange={(value) => setAttributes({ overlayOpacity: value })}
             min={0}
             max={100}
-            style={{ marginTop: '16px' }}
+          />
+
+          <ToggleControl
+            label="Ken Burns effect"
+            help="Slow zoom + pan on the background image."
+            checked={kenBurns}
+            onChange={(value) => setAttributes({ kenBurns: value })}
+          />
+        </PanelBody>
+
+        <PanelBody title="Slide Content" initialOpen={false}>
+          <TextControl
+            label="Eyebrow"
+            help="Small uppercase line above the title."
+            value={eyebrow}
+            onChange={(value) => setAttributes({ eyebrow: value })}
+          />
+          <TextControl
+            label="Accent line"
+            help="Small italic line below the title (use to highlight a key phrase)."
+            value={accent}
+            onChange={(value) => setAttributes({ accent: value })}
           />
         </PanelBody>
 
@@ -119,29 +144,32 @@ export default function Edit({ attributes, setAttributes }) {
       </InspectorControls>
 
       <div {...blockProps}>
-        {/* Background */}
         <div
           className="carousel-slide-editor__bg"
           style={{
             backgroundImage: imageUrl ? `url(${imageUrl})` : 'none',
-            backgroundColor: !imageUrl ? '#1a1a2e' : undefined,
+            backgroundColor: !imageUrl ? '#1f4a3a' : undefined,
           }}
         />
 
-        {/* Overlay */}
         <div className="carousel-slide-editor__overlay" style={overlayStyle} />
 
-        {/* Content */}
         <div className="carousel-slide-editor__content">
           <div className="carousel-slide-editor__inner">
+            {eyebrow && (
+              <div className="carousel-slide-editor__eyebrow">{eyebrow}</div>
+            )}
             <RichText
               tagName="h1"
               className="carousel-slide-editor__title"
               value={title}
               onChange={(value) => setAttributes({ title: value })}
               placeholder="Enter slide title…"
-              allowedFormats={[]}
+              allowedFormats={['core/italic']}
             />
+            {accent && (
+              <div className="carousel-slide-editor__accent">{accent}</div>
+            )}
             <RichText
               tagName="p"
               className="carousel-slide-editor__subtitle"
@@ -151,12 +179,16 @@ export default function Edit({ attributes, setAttributes }) {
               allowedFormats={['core/bold', 'core/italic']}
             />
             <div className="carousel-slide-editor__buttons">
-              <span className="carousel-slide-editor__btn carousel-slide-editor__btn--primary">
-                {primaryButtonText || 'Get Started'}
-              </span>
-              <span className="carousel-slide-editor__btn carousel-slide-editor__btn--secondary">
-                {secondaryButtonText || 'Learn More'}
-              </span>
+              {primaryButtonText && (
+                <span className="carousel-slide-editor__btn carousel-slide-editor__btn--primary">
+                  {primaryButtonText}
+                </span>
+              )}
+              {secondaryButtonText && (
+                <span className="carousel-slide-editor__btn carousel-slide-editor__btn--secondary">
+                  {secondaryButtonText}
+                </span>
+              )}
             </div>
           </div>
         </div>

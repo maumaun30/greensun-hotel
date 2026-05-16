@@ -1,0 +1,8 @@
+.wp-block-greensun-hotel-about-teaser {}
+
+@media (max-width: 900px) {
+  .wp-block-greensun-hotel-about-teaser .shell {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+}

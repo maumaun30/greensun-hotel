@@ -1,0 +1,24 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/events-teaser",
+  "title": "Events Teaser",
+  "category": "design",
+  "icon": "calendar-alt",
+  "description": "Grid of event cards with image, title, description and a CTA.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow":      { "type": "string", "default": "What's on" },
+    "sectionTitle": { "type": "string", "default": "Seasonal <em>gatherings</em>." },
+    "subtitle":     { "type": "string", "default": "Harvest dinners, foraging walks, and live evenings on the terrace." },
+    "events": {
+      "type": "array",
+      "default": [
+        { "imageUrl": "", "imageId": 0, "imageAlt": "", "title": "Harvest Dinner", "description": "A long-table feast in the orchard.", "ctaText": "Reserve", "ctaUrl": "#" },
+        { "imageUrl": "", "imageId": 0, "imageAlt": "", "title": "Forest Yoga", "description": "Sunrise practice in the pine grove.", "ctaText": "Reserve", "ctaUrl": "#" },
+        { "imageUrl": "", "imageId": 0, "imageAlt": "", "title": "Cellar Tasting", "description": "Estate wines paired by the sommelier.", "ctaText": "Reserve", "ctaUrl": "#" }
+      ]
+    }
+  }
+}

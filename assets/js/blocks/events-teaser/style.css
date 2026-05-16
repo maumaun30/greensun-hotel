@@ -1,0 +1,9 @@
+@media (max-width: 900px) {
+  .wp-block-greensun-hotel-events-teaser .events-teaser__head {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .wp-block-greensun-hotel-events-teaser .events-teaser__grid {
+    grid-template-columns: 1fr !important;
+  }
+}

@@ -8,8 +8,8 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<header class="site-header bg-dark-2">
-    <div class="container site-header__inner">
+<header class="site-header">
+    <div class="shell site-header__inner">
         <div class="site-header__row">
             
             <div class="site-branding">
@@ -30,7 +30,7 @@
                 aria-expanded="false"
                 type="button"
             >
-                â˜°
+                &#9776;
             </button>
 
             <nav id="site-navigation" class="site-navigation" aria-label="<?php esc_attr_e('Primary Menu', 'greensun-hotel'); ?>">

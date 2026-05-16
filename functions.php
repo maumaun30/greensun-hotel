@@ -18,6 +18,20 @@ add_filter('acf/settings/dir', function ($dir) {
     return get_stylesheet_directory_uri() . '/acf/';
 });
 
+// Local JSON sync — keep ACF field groups in version control under /acf-json/.
+add_filter('acf/settings/save_json', function () {
+    return get_stylesheet_directory() . '/acf-json';
+});
+add_filter('acf/settings/load_json', function ($paths) {
+    $paths[] = get_stylesheet_directory() . '/acf-json';
+    return $paths;
+});
+
+// Modular includes: CPTs, taxonomies, helpers, fonts. Add new files under /inc/.
+require_once get_stylesheet_directory() . '/inc/fonts.php';
+require_once get_stylesheet_directory() . '/inc/helpers/icons.php';
+require_once get_stylesheet_directory() . '/inc/cpt-loader.php';
+
 function greensun_hotel_setup()
 {
     add_theme_support('title-tag');

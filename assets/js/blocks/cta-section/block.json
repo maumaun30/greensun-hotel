@@ -1,0 +1,22 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/cta-section",
+  "title": "CTA Section",
+  "category": "design",
+  "icon": "megaphone",
+  "description": "Full-width call-to-action with background image, eyebrow, title, subtitle and button.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow":       { "type": "string", "default": "Reserve your stay" },
+    "title":         { "type": "string", "default": "Wake to <em>birdsong</em>, not alarms." },
+    "subtitle":      { "type": "string", "default": "Book direct for our best rate and a welcome glass of estate wine." },
+    "ctaText":       { "type": "string", "default": "Check availability" },
+    "ctaUrl":        { "type": "string", "default": "#" },
+    "imageUrl":      { "type": "string", "default": "" },
+    "imageId":       { "type": "number", "default": 0 },
+    "imageAlt":      { "type": "string", "default": "" },
+    "overlayOpacity":{ "type": "number", "default": 55 }
+  }
+}

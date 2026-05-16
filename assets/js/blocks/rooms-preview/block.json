@@ -1,0 +1,20 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/rooms-preview",
+  "title": "Rooms Preview",
+  "category": "design",
+  "icon": "admin-multisite",
+  "description": "Featured rooms picked from the Room CPT (falls back to most recent).",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow":      { "type": "string", "default": "Rooms & suites" },
+    "sectionTitle": { "type": "string", "default": "A room for <em>every</em> mood." },
+    "subtitle":     { "type": "string", "default": "Hand-picked stays from our collection." },
+    "ctaText":      { "type": "string", "default": "View all rooms" },
+    "ctaUrl":       { "type": "string", "default": "/rooms" },
+    "featuredRooms":{ "type": "array",  "default": [] },
+    "fallbackCount":{ "type": "number", "default": 3 }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/amenities-grid",
+  "title": "Amenities Grid",
+  "category": "design",
+  "icon": "grid-view",
+  "description": "Grid of amenity icons with labels. Upload SVGs per item.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow":      { "type": "string", "default": "Amenities" },
+    "sectionTitle": { "type": "string", "default": "Quiet comforts, <em>thoughtfully</em> chosen." },
+    "columns":      { "type": "number", "default": 4 },
+    "items": {
+      "type": "array",
+      "default": [
+        { "svgId": 0, "svgUrl": "", "label": "Heated infinity pool" },
+        { "svgId": 0, "svgUrl": "", "label": "Garden-to-table dining" },
+        { "svgId": 0, "svgUrl": "", "label": "Forest spa" },
+        { "svgId": 0, "svgUrl": "", "label": "Cellar tastings" },
+        { "svgId": 0, "svgUrl": "", "label": "Trail concierge" },
+        { "svgId": 0, "svgUrl": "", "label": "Pet friendly" },
+        { "svgId": 0, "svgUrl": "", "label": "Private beach access" },
+        { "svgId": 0, "svgUrl": "", "label": "EV chargers" }
+      ]
+    }
+  }
+}

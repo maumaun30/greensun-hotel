@@ -303,6 +303,22 @@
 }
 
 /* ============================================================
+   MAIN LAYOUT — fixed header offset
+   ============================================================ */
+@layer base {
+  body { background: var(--ivory); color: var(--ink); }
+
+  .site-main { padding-top: 84px; }
+
+  /* If the first child is a full-bleed hero, let it run under the header */
+  .site-main:has(> .wp-block-greensun-hotel-hero-carousel:first-child),
+  .site-main:has(> .gs-hero-carousel:first-child),
+  .site-main:has(> .gs-hero:first-child) {
+    padding-top: 0;
+  }
+}
+
+/* ============================================================
    UTILITIES
    ============================================================ */
 @layer utilities {
@@ -310,4 +326,7 @@
   .between { justify-content: space-between; align-items: center; }
   .center-row { justify-content: center; align-items: center; }
   .col { display: flex; flex-direction: column; }
+  .gap-12 { gap: 12px; }
+  .gap-24 { gap: 24px; }
+  .gap-32 { gap: 32px; }
 }

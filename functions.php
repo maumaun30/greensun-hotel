@@ -30,6 +30,7 @@ add_filter('acf/settings/load_json', function ($paths) {
 // Modular includes: CPTs, taxonomies, helpers, fonts. Add new files under /inc/.
 require_once get_stylesheet_directory() . '/inc/fonts.php';
 require_once get_stylesheet_directory() . '/inc/helpers/icons.php';
+require_once get_stylesheet_directory() . '/inc/helpers/logo.php';
 require_once get_stylesheet_directory() . '/inc/cpt-loader.php';
 
 function greensun_hotel_setup()
@@ -42,7 +43,9 @@ function greensun_hotel_setup()
     add_theme_support('custom-logo');
 
     register_nav_menus([
-        'primary' => __('Primary Menu', 'greensun-hotel'),
+        'primary'      => __('Primary Menu', 'greensun-hotel'),
+        'footer-stay'  => __('Footer — Stay column', 'greensun-hotel'),
+        'footer-hotel' => __('Footer — Hotel column', 'greensun-hotel'),
     ]);
 }
 add_action('after_setup_theme', 'greensun_hotel_setup');
@@ -77,11 +80,20 @@ function greensun_hotel_enqueue_assets()
         filemtime(get_theme_file_path('/style.css'))
     );
 
+    // Lenis smooth scroll — loaded before critical.js so window.Lenis is ready.
+    wp_enqueue_script(
+        'lenis',
+        'https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js',
+        [],
+        '1.1.20',
+        false
+    );
+
     if (file_exists($critical_js)) {
         wp_enqueue_script(
             'greensun-hotel-critical',
             get_theme_file_uri('/assets/js/critical.js'),
-            [],
+            ['lenis'],
             filemtime($critical_js),
             false
         );
@@ -122,44 +134,21 @@ function greensun_hotel_register_blocks()
 add_action('init', 'greensun_hotel_register_blocks');
 
 /**
- * Enqueue Swiper.js + carousel frontend script.
- *
- * Add this to your theme's functions.php (or a dedicated assets loader file).
- * Adjust the version strings as needed.
+ * Enqueue hero-carousel frontend JS only on pages that use the block.
  */
-function greensun_hotel_enqueue_carousel_assets() {
-    // Only load on pages that actually have the carousel block
-    if ( ! has_block( 'greensun-hotel/carousel' ) ) {
+function greensun_hotel_enqueue_hero_carousel_assets() {
+    if ( ! has_block( 'greensun-hotel/hero-carousel' ) ) {
         return;
     }
- 
-    // Swiper CSS (CDN â€” swap for local if preferred)
-    wp_enqueue_style(
-        'swiper',
-        'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css',
-        [],
-        '11'
-    );
- 
-    // Swiper JS (CDN)
     wp_enqueue_script(
-        'swiper',
-        'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
+        'greensun-hotel-hero-carousel',
+        get_theme_file_uri( '/assets/js/hero-carousel.js' ),
         [],
-        '11',
-        true // load in footer
-    );
- 
-    // Our carousel initializer
-    wp_enqueue_script(
-        'greensun-hotel-carousel',
-        get_template_directory_uri() . '/assets/js/greensun-hotel-carousel.js',
-        [ 'swiper' ],
-        wp_get_theme()->get( 'Version' ),
+        filemtime( get_theme_file_path( '/assets/js/hero-carousel.js' ) ),
         true
     );
 }
-add_action( 'wp_enqueue_scripts', 'greensun_hotel_enqueue_carousel_assets' );
+add_action( 'wp_enqueue_scripts', 'greensun_hotel_enqueue_hero_carousel_assets' );
 
 /**
  * Enqueue booking-bar frontend JS only on pages that use the block.

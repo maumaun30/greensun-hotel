@@ -1,0 +1,52 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/hero-carousel",
+  "title": "Hero Carousel",
+  "category": "design",
+  "icon": "format-image",
+  "description": "Full-bleed crossfading hero with editorial indicators and Ken Burns drift. Server-rendered, single block (slides live as attributes).",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "intervalMs":  { "type": "number",  "default": 6500 },
+    "showMark":    { "type": "boolean", "default": true },
+    "markText":    { "type": "string",  "default": "Est. 2014 · Magallanes, Makati" },
+    "primaryCta":  { "type": "string",  "default": "Reserve a room" },
+    "primaryUrl":  { "type": "string",  "default": "/booking" },
+    "secondaryCta":{ "type": "string",  "default": "Explore rooms" },
+    "secondaryUrl":{ "type": "string",  "default": "/rooms" },
+    "slides": {
+      "type": "array",
+      "default": [
+        {
+          "eyebrow": "Welcome to Green Sun",
+          "title": "A delightful stay <em>at our hotel.</em>",
+          "subtitle": "Modern industrial design, practical comfort, and a quiet Magallanes address — minutes from the airport.",
+          "accent": "In Makati, since 2014",
+          "imageUrl": "",
+          "imageId": 0,
+          "imageAlt": ""
+        },
+        {
+          "eyebrow": "Happy Holidays",
+          "title": "Spend slow days <em>with the sun.</em>",
+          "subtitle": "Big skylights, hush corridors, and a courtyard that catches afternoon light.",
+          "accent": "Now booking through 2026",
+          "imageUrl": "",
+          "imageId": 0,
+          "imageAlt": ""
+        },
+        {
+          "eyebrow": "For builders & dreamers",
+          "title": "Work, rest, repeat — <em>beautifully.</em>",
+          "subtitle": "A workshop of focus rooms, a stage in The Eye, and beds that have hosted ten years of long workdays.",
+          "accent": "Where Magallanes meets the city",
+          "imageUrl": "",
+          "imageId": 0,
+          "imageAlt": ""
+        }
+      ]
+    }
+  }
+}

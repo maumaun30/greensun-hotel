@@ -1,0 +1,25 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/reviews",
+  "title": "Reviews / Testimonials",
+  "category": "design",
+  "icon": "format-quote",
+  "description": "Crossfading testimonials with stars, big italic quote, author + caption, prev/next arrows and dot pagination.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow":      { "type": "string", "default": "Testimonials" },
+    "sectionTitle": { "type": "string", "default": "Reviews from <em>our guests.</em>" },
+    "autoplayMs":   { "type": "number", "default": 7000 },
+    "reviews": {
+      "type": "array",
+      "default": [
+        { "name": "Hernan", "caption": "Guest, Verified stay", "text": "Clean rooms, value for money. Stayed for a few hours from the airport.", "stars": 5 },
+        { "name": "Bruce",  "caption": "Guest, Verified stay", "text": "Exceeded our expectations. Excellent service from the security guards, front desk, housekeeping. Rooms are spacious; pillows and beds are comfortable.", "stars": 5 },
+        { "name": "Oli",    "caption": "Guest, Verified stay", "text": "My go-to hotel for work errands in Makati. Rooms are clean, price is affordable, the staff are helpful and friendly.", "stars": 5 },
+        { "name": "Marie",  "caption": "Guest, Verified stay", "text": "A quiet floor near the airport, a clean room, and friendly service. We slept like rocks before our 6am flight.", "stars": 5 }
+      ]
+    }
+  }
+}

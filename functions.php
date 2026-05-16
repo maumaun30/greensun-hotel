@@ -151,6 +151,23 @@ function greensun_hotel_enqueue_hero_carousel_assets() {
 add_action( 'wp_enqueue_scripts', 'greensun_hotel_enqueue_hero_carousel_assets' );
 
 /**
+ * Enqueue reviews carousel JS only on pages that use the block.
+ */
+function greensun_hotel_enqueue_reviews_assets() {
+    if ( ! has_block( 'greensun-hotel/reviews' ) ) {
+        return;
+    }
+    wp_enqueue_script(
+        'greensun-hotel-reviews',
+        get_theme_file_uri( '/assets/js/reviews.js' ),
+        [],
+        filemtime( get_theme_file_path( '/assets/js/reviews.js' ) ),
+        true
+    );
+}
+add_action( 'wp_enqueue_scripts', 'greensun_hotel_enqueue_reviews_assets' );
+
+/**
  * Enqueue booking-bar frontend JS only on pages that use the block.
  * Passes the REST URL + nonce so the bar can call /wp-json/greensun/v1/booking-search.
  */

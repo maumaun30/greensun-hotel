@@ -3,61 +3,91 @@
 <main class="site-main">
 
   <?php while (have_posts()) : the_post();
-    $room_id    = get_the_ID();
-    $price      = function_exists('get_field') ? get_field('price_per_night', $room_id) : null;
-    $currency   = function_exists('get_field') ? (get_field('currency', $room_id) ?: 'USD') : 'USD';
-    $size       = function_exists('get_field') ? get_field('room_size', $room_id) : null;
-    $guests     = function_exists('get_field') ? get_field('max_guests', $room_id) : null;
-    $beds       = function_exists('get_field') ? get_field('bed_configuration', $room_id) : null;
-    $tagline    = function_exists('get_field') ? get_field('tagline', $room_id) : null;
-    $inclusions = function_exists('get_field') ? get_field('inclusions', $room_id) : [];
-    $gallery    = function_exists('get_field') ? get_field('gallery', $room_id) : [];
-    $ezee_id    = function_exists('get_field') ? get_field('ezee_room_type_id', $room_id) : '';
-    $thumb      = get_the_post_thumbnail_url($room_id, 'full');
+    $room_id     = get_the_ID();
+    $price       = function_exists('get_field') ? get_field('price_per_night', $room_id) : null;
+    $currency    = function_exists('get_field') ? (get_field('currency', $room_id) ?: 'USD') : 'USD';
+    $size        = function_exists('get_field') ? get_field('room_size', $room_id) : null;
+    $guests      = function_exists('get_field') ? get_field('max_guests', $room_id) : null;
+    $beds        = function_exists('get_field') ? get_field('bed_configuration', $room_id) : null;
+    $tagline     = function_exists('get_field') ? get_field('tagline', $room_id) : null;
+    $inclusions  = function_exists('get_field') ? get_field('inclusions', $room_id) : [];
+    $gallery     = function_exists('get_field') ? get_field('gallery', $room_id) : [];
+    $ezee_id     = function_exists('get_field') ? get_field('ezee_room_type_id', $room_id) : '';
+    $thumb       = get_the_post_thumbnail_url($room_id, 'full');
+    $phone       = function_exists('greensun_setting') ? greensun_setting('phone', '') : '';
+
+    $eyebrow_parts = array_filter([$size, $beds, $guests ? ($guests . ' ' . ($guests == 1 ? 'guest' : 'guests')) : '']);
+    $eyebrow_text  = implode(' · ', $eyebrow_parts);
   ?>
 
-    <section class="gs-hero" style="position:relative; min-height: 70vh; display:flex; align-items:flex-end; overflow:hidden;">
-      <?php if ($thumb) : ?>
-        <div class="kb" style="position:absolute; inset:0; z-index:0;">
-          <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" style="width:100%; height:100%; object-fit:cover;" />
-          <div style="position:absolute; inset:0; background: linear-gradient(180deg, rgba(15,32,24,0) 30%, rgba(15,32,24,0.65) 100%);"></div>
-        </div>
-      <?php else : ?>
-        <div style="position:absolute; inset:0; background: var(--forest, #1f4a3a); z-index:0;"></div>
-      <?php endif; ?>
-      <div class="shell" style="position:relative; z-index:1; padding-block: 80px; color: var(--ivory, #f7f6f0);">
-        <?php if ($tagline) : ?>
-          <div class="eyebrow reveal" style="color: var(--sun, #e8c46a);"><?php echo esc_html($tagline); ?></div>
+    <section class="gs-page-hero single-room__hero" style="min-height: 78vh; min-height: 560px;">
+      <div class="gs-page-hero__media kb">
+        <?php if ($thumb) : ?>
+          <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" />
         <?php endif; ?>
-        <h1 class="display reveal" style="font-size: clamp(48px, 7vw, 104px); margin-top: 16px; max-width: 18ch;">
+      </div>
+      <div class="gs-page-hero__scrim" style="background: linear-gradient(to bottom, rgba(13,42,32,.45), rgba(13,42,32,.85));"></div>
+      <div class="shell gs-page-hero__content">
+        <?php if ($eyebrow_text) : ?>
+          <div class="eyebrow reveal" style="color: var(--sun, #e8c46a);"><?php echo esc_html($eyebrow_text); ?></div>
+        <?php endif; ?>
+        <h1 class="display reveal reveal--lg" style="font-size: clamp(54px, 8vw, 120px); margin-top: 22px; font-weight: 500;">
           <?php the_title(); ?>
         </h1>
-        <?php if ($size || $guests || $beds) : ?>
-          <ul class="reveal" style="list-style:none; padding:0; margin: 22px 0 0; display:flex; flex-wrap:wrap; gap: 22px; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.9;">
-            <?php if ($size)   : ?><li><?php echo esc_html($size); ?></li><?php endif; ?>
-            <?php if ($guests) : ?><li><?php echo esc_html(sprintf(_n('%d guest', '%d guests', (int)$guests, 'greensun-hotel'), (int)$guests)); ?></li><?php endif; ?>
-            <?php if ($beds)   : ?><li><?php echo esc_html($beds); ?></li><?php endif; ?>
-          </ul>
+        <?php if ($tagline) : ?>
+          <p class="reveal" style="max-width: 600px; margin-top: 22px; font-size: 18px; color: rgba(255,255,255,.78); line-height: 1.7;">
+            <?php echo esc_html($tagline); ?>
+          </p>
         <?php endif; ?>
       </div>
     </section>
 
-    <section class="section">
-      <div class="shell" style="display:grid; grid-template-columns: 1.4fr 1fr; gap: 80px; align-items:start;">
+    <section class="section--tight" style="padding-top: 90px;">
+      <div class="shell single-room__layout" style="display:grid; grid-template-columns: 1.4fr 1fr; gap: 80px; align-items: start;">
 
-        <div class="room-detail__body">
-          <?php if (get_the_content()) : ?>
-            <div class="reveal" style="font-size: 18px; line-height: 1.8; color: var(--ink, #1a1f1a); max-width: 60ch;">
+        <div class="single-room__body">
+          <?php
+            $content = get_the_content();
+            if ($content) :
+              $excerpt_lead = $tagline ? '' : wp_strip_all_tags(get_the_excerpt());
+              $first_sentence = $excerpt_lead ? rtrim(preg_split('/[\.\!\?]/', $excerpt_lead)[0], '.') . '.' : '';
+          ?>
+            <?php if ($first_sentence) : ?>
+              <h2 class="display reveal" style="font-size: 36px; max-width: 22ch; margin: 0;">
+                <?php echo esc_html($first_sentence); ?>
+              </h2>
+            <?php endif; ?>
+            <div class="reveal" style="margin-top: 24px; color: var(--ink-2, #3d433d); font-size: 16.5px; line-height: 1.85;">
               <?php the_content(); ?>
             </div>
           <?php endif; ?>
+
+          <div class="reveal single-room__specs" style="margin-top: 50px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+            <?php
+              $specs = array_filter([
+                  $guests ? ['Sleeps', $guests . ' guests'] : null,
+                  $size   ? ['Size',   $size] : null,
+                  $beds   ? ['Bed',    $beds] : null,
+                  ['Bath',          'Hot/cold shower'],
+                  ['Entertainment', '43" LED Smart TV'],
+                  ['Wi-Fi',         'Complimentary'],
+              ]);
+              foreach ($specs as $spec) : list($k, $v) = $spec; ?>
+                <div style="border-top: 1px solid var(--line, #ede9d9); padding-top: 14px;">
+                  <div style="font-family: var(--font-mono, 'JetBrains Mono', monospace); color: var(--mute, #7b817b); font-size: 12px;">
+                    <?php echo esc_html($k); ?>
+                  </div>
+                  <div style="margin-top: 4px; font-weight: 500;"><?php echo esc_html($v); ?></div>
+                </div>
+            <?php endforeach; ?>
+          </div>
 
           <?php if (!empty($inclusions) && is_array($inclusions)) : ?>
             <div class="reveal" style="margin-top: 56px;">
               <div class="eyebrow">Inclusions</div>
               <ul style="list-style:none; padding:0; margin: 18px 0 0; display:grid; grid-template-columns: repeat(2, 1fr); gap: 12px 24px;">
                 <?php foreach ($inclusions as $item) :
-                  $label = is_array($item) ? ($item['inclusion'] ?? reset($item)) : $item;
+                  $label = is_array($item) ? ($item['text'] ?? $item['inclusion'] ?? reset($item)) : $item;
                 ?>
                   <li style="display:flex; gap: 12px; align-items: baseline;">
                     <span aria-hidden="true" style="color: var(--moss, #527a55);">·</span>
@@ -67,65 +97,76 @@
               </ul>
             </div>
           <?php endif; ?>
-
-          <?php if (!empty($gallery) && is_array($gallery)) : ?>
-            <div class="reveal" style="margin-top: 64px; display:grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
-              <?php foreach ($gallery as $i => $image) :
-                $url = is_array($image) ? ($image['sizes']['large'] ?? $image['url'] ?? '') : '';
-                $alt = is_array($image) ? ($image['alt'] ?? '') : '';
-                if (!$url) continue;
-                $is_wide = ($i % 3 === 0);
-              ?>
-                <div class="ph" style="aspect-ratio: <?php echo $is_wide ? '16 / 10' : '4 / 5'; ?>; <?php echo $is_wide ? 'grid-column: 1 / -1;' : ''; ?>">
-                  <img src="<?php echo esc_url($url); ?>" alt="<?php echo esc_attr($alt); ?>" style="width:100%; height:100%; object-fit:cover;" />
-                </div>
-              <?php endforeach; ?>
-            </div>
-          <?php endif; ?>
         </div>
 
-        <aside class="room-detail__sidebar reveal" style="position: sticky; top: 100px;">
-          <div style="background:#fff; border:1px solid var(--line, #ede9d9); border-radius: var(--radius-lg, 14px); padding: 32px;">
+        <aside class="single-room__sidebar reveal" style="position: sticky; top: 100px;">
+          <div style="background: var(--paper, #f8f5e9); border:1px solid var(--line, #ede9d9); border-radius: 4px; padding: 32px; box-shadow: 0 24px 40px -28px rgba(0,0,0,.15);">
+            <div style="font-family: var(--font-mono, 'JetBrains Mono', monospace); color: var(--mute, #7b817b); font-size: 12px;">From</div>
             <?php if ($price) : ?>
-              <div style="display:flex; align-items:baseline; gap: 8px;">
-                <span style="font-family: var(--font-display, 'Cormorant Garamond', serif); font-size: 48px; line-height: 1;"><?php echo esc_html($currency . ' ' . number_format_i18n((float) $price)); ?></span>
-                <span style="font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-2, #3d433d);">/ night</span>
+              <div class="display" style="font-size: 56px; color: var(--forest, #1f4a3a); line-height: 1; margin-top: 4px;">
+                <?php echo esc_html($currency . ' ' . number_format_i18n((float) $price)); ?>
               </div>
+              <div style="font-family: var(--font-mono, 'JetBrains Mono', monospace); color: var(--mute, #7b817b); font-size: 12px; margin-top: 6px;">per night, inclusive</div>
+            <?php else : ?>
+              <div class="display" style="font-size: 32px; color: var(--ink-2, #3d433d); line-height: 1; margin-top: 4px;">Ask for rate</div>
             <?php endif; ?>
 
-            <form class="booking-bar" action="<?php echo esc_url(home_url('/booking')); ?>" method="get" style="display:grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 24px;">
-              <input type="hidden" name="room_type" value="<?php echo esc_attr($ezee_id ?: get_post_field('post_name', $room_id)); ?>" />
-              <label class="field" style="grid-column: 1 / -1;">
-                <span style="display:block; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mute, #7b817b); margin-bottom: 6px;">Check-in</span>
-                <input type="date" name="checkin" min="<?php echo esc_attr(date('Y-m-d')); ?>" required style="width:100%; border:0; border-bottom:1px solid var(--line); padding: 8px 0; font: inherit; background: transparent;" />
-              </label>
-              <label class="field" style="grid-column: 1 / -1;">
-                <span style="display:block; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mute, #7b817b); margin-bottom: 6px;">Check-out</span>
-                <input type="date" name="checkout" min="<?php echo esc_attr(date('Y-m-d', strtotime('+1 day'))); ?>" required style="width:100%; border:0; border-bottom:1px solid var(--line); padding: 8px 0; font: inherit; background: transparent;" />
-              </label>
-              <label class="field" style="grid-column: 1 / -1;">
-                <span style="display:block; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mute, #7b817b); margin-bottom: 6px;">Guests</span>
-                <select name="guests" style="width:100%; border:0; border-bottom:1px solid var(--line); padding: 8px 0; font: inherit; background: transparent;">
-                  <?php for ($g = 1; $g <= ($guests ? (int)$guests : 6); $g++) : ?>
-                    <option value="<?php echo esc_attr($g); ?>" <?php selected($g, 2); ?>><?php echo esc_html(sprintf(_n('%d guest', '%d guests', $g, 'greensun-hotel'), $g)); ?></option>
-                  <?php endfor; ?>
-                </select>
-              </label>
-              <button type="submit" class="btn btn--sun" style="grid-column: 1 / -1; justify-content: center;">
-                <span class="ripple"></span>
-                <span>Check availability</span>
-              </button>
-            </form>
+            <div style="height: 1px; background: var(--line, #ede9d9); margin: 28px 0;"></div>
 
-            <p style="margin-top: 18px; font-size: 12px; color: var(--mute, #7b817b); text-align:center;">No charge until confirmation.</p>
+            <ul style="list-style:none; padding:0; margin:0; display:grid; gap: 12px; color: var(--ink-2, #3d433d); font-size: 14.5px;">
+              <?php
+                $perks = ['Free WiFi & breakfast voucher', '24/7 reception & room service', 'Flexible cancellation 48h prior', 'Direct-rate guarantee'];
+                foreach ($perks as $perk) :
+              ?>
+                <li style="display:flex; gap: 12px; align-items: center;">
+                  <svg width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                    <path d="M3 9 L7.5 13.5 L15 5" stroke="var(--moss, #527a55)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span><?php echo esc_html($perk); ?></span>
+                </li>
+              <?php endforeach; ?>
+            </ul>
+
+            <a href="<?php echo esc_url(add_query_arg('room_type', $ezee_id ?: $room_id, home_url('/booking'))); ?>" class="btn btn--sun" style="margin-top: 28px; width:100%; justify-content:center;">
+              <span class="ripple"></span>
+              <span>Book this room</span>
+            </a>
+
+            <?php if ($phone) : ?>
+              <div style="margin-top: 14px; text-align: center; font-size: 12px; color: var(--mute, #7b817b);">
+                Or call <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9+]/', '', $phone)); ?>" style="color: var(--forest, #1f4a3a); text-decoration: underline;"><?php echo esc_html($phone); ?></a>
+              </div>
+            <?php endif; ?>
           </div>
         </aside>
 
       </div>
     </section>
 
+    <?php if (!empty($gallery) && is_array($gallery)) : ?>
+      <section style="padding: 40px 0 120px;">
+        <div class="shell">
+          <div class="eyebrow reveal" style="margin-bottom: 20px;">The room</div>
+          <div class="single-room__gallery" style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap: 14px;">
+            <?php
+              $count = 0;
+              foreach ($gallery as $image) :
+                if ($count >= 4) break;
+                $url = is_array($image) ? ($image['sizes']['large'] ?? $image['url'] ?? '') : '';
+                $alt = is_array($image) ? ($image['alt'] ?? '') : '';
+                if (!$url) continue;
+                $is_hero = $count === 0;
+            ?>
+              <div class="ph reveal<?php echo $is_hero ? ' kb' : ''; ?>" style="height: <?php echo $is_hero ? '520px; grid-row: span 2;' : '253px;'; ?>">
+                <img src="<?php echo esc_url($url); ?>" alt="<?php echo esc_attr($alt); ?>" style="width:100%; height:100%; object-fit:cover;" />
+              </div>
+            <?php $count++; endforeach; ?>
+          </div>
+        </div>
+      </section>
+    <?php endif; ?>
+
     <?php
-    // Optional: surface other rooms below the detail.
     $more = new WP_Query([
         'post_type'      => 'room',
         'posts_per_page' => 3,
@@ -134,7 +175,7 @@
     ]);
     if ($more->have_posts()) :
     ?>
-      <section class="section" style="background: var(--paper, #f4f1e6);">
+      <section class="section" style="background: var(--paper, #f8f5e9);">
         <div class="shell">
           <header style="text-align:center; max-width: 720px; margin: 0 auto 56px;">
             <div class="eyebrow reveal">More to stay in</div>
@@ -174,9 +215,11 @@
 
 <style>
   @media (max-width: 1000px) {
-    .room-detail__body + .room-detail__sidebar,
-    .single-room main .shell { grid-template-columns: 1fr !important; }
-    .room-detail__sidebar { position: static !important; }
+    .single-room__layout { grid-template-columns: 1fr !important; gap: 48px !important; }
+    .single-room__sidebar { position: static !important; }
+    .single-room__specs { grid-template-columns: 1fr 1fr !important; }
+    .single-room__gallery { grid-template-columns: 1fr !important; }
+    .single-room__gallery .ph { grid-row: span 1 !important; height: 280px !important; }
   }
 </style>
 

@@ -1,0 +1,25 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/stay-smart",
+  "title": "Stay Smart Band",
+  "category": "design",
+  "icon": "location-alt",
+  "description": "Forest-green band with display title, paragraph and a 2x2 grid of distance / quick stats. Best below the rooms section.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "title":    { "type": "string", "default": "Stay smart. <em>Stay close.</em> Stay relaxed." },
+    "body":     { "type": "string", "default": "Touch down and check in — effortlessly. Our hotel puts you just minutes from the airport in a quiet, laid-back neighborhood, yet only moments from the city's business pulse." },
+    "stats": {
+      "type": "array",
+      "default": [
+        { "value": "8 min",   "label": "NAIA Airport"     },
+        { "value": "12 min",  "label": "Makati CBD"       },
+        { "value": "5 min",   "label": "Ayala Alabang"    },
+        { "value": "On-site", "label": "Free parking"     }
+      ]
+    },
+    "showOrnament": { "type": "boolean", "default": true }
+  }
+}

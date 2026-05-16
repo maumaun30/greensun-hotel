@@ -12,3 +12,17 @@ Thumbs.db
 
 .vscode/
 .idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.bak
+*.tmp
+
+# Claude Code local state
+.claude/
+CLAUDE.local.md
+
+# OS junk
+._*
+.AppleDouble
+desktop.ini

@@ -1,0 +1,25 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/timeline",
+  "title": "Timeline",
+  "category": "design",
+  "icon": "list-view",
+  "description": "Sticky title column + scrolling list of year-stamped story entries.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow":      { "type": "string", "default": "Our story" },
+    "sectionTitle": { "type": "string", "default": "Eleven years of <em>welcoming travelers.</em>" },
+    "entries": {
+      "type": "array",
+      "default": [
+        { "year": "2014",  "title": "Doors open",      "body": "Green Sun is built on Chino Roces — a 5-storey hotel and events venue in a neighborhood that had been quietly waiting for it." },
+        { "year": "2017",  "title": "The Eye opens",   "body": "Our flagship event hall hosts its first wedding. Then its first product launch. Then its first hundred dance floors." },
+        { "year": "2020",  "title": "A new rhythm",    "body": "When the city paused, we kept rooms ready for medical workers and stranded travelers. The hotel stayed warm." },
+        { "year": "2024",  "title": "A decade in",     "body": "Ten years of guests, partners, and crew. Refreshed rooms, new amenities, and a renewed commitment to quiet hospitality." },
+        { "year": "Today", "title": "Still here",      "body": "Magallanes is still our home. Travelers are still our guests. And there's still a sun on the wall." }
+      ]
+    }
+  }
+}

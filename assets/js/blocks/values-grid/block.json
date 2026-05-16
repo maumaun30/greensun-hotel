@@ -1,0 +1,25 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/values-grid",
+  "title": "Values Grid",
+  "category": "design",
+  "icon": "awards",
+  "description": "Three-up cards with oversized 01 / 02 / 03 numerals, title and body.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow":      { "type": "string", "default": "What we stand for" },
+    "sectionTitle": { "type": "string", "default": "A few principles, <em>worn smooth by time.</em>" },
+    "background":   { "type": "string", "default": "sage" },
+    "columns":      { "type": "number", "default": 3 },
+    "items": {
+      "type": "array",
+      "default": [
+        { "title": "Practical comfort", "body": "Nothing fussy. Just rooms that work, beds that recover you, and a desk where the wifi never wavers." },
+        { "title": "Quiet warmth",      "body": "No theatrical greetings. Real ones. The kind you remember on a Tuesday in March." },
+        { "title": "Local first",       "body": "Most of our team has been here years. The coffee comes from down the road. The art on the walls is by people we know." }
+      ]
+    }
+  }
+}

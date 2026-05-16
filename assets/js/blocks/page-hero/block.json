@@ -1,0 +1,22 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/page-hero",
+  "title": "Page Hero",
+  "category": "design",
+  "icon": "cover-image",
+  "description": "Single-image hero for subpages: eyebrow + display title (em accent) + subtitle over a Ken Burns background.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow":     { "type": "string", "default": "About Green Sun" },
+    "title":       { "type": "string", "default": "A small hotel <em>with a steady warmth.</em>" },
+    "subtitle":    { "type": "string", "default": "Since 2014, Green Sun has been the quiet alternative in Magallanes." },
+    "imageUrl":    { "type": "string", "default": "" },
+    "imageId":     { "type": "number", "default": 0 },
+    "imageAlt":    { "type": "string", "default": "" },
+    "minHeight":   { "type": "number", "default": 92 },
+    "overlayOpacity": { "type": "number", "default": 70 },
+    "kenBurns":    { "type": "boolean","default": true }
+  }
+}

@@ -1,106 +1,12 @@
-Gutenberg Tailwind Starter Theme
+# Greensun Hotel
 
-A lightweight WordPress theme using:
+A classic PHP WordPress theme for the Greensun Hotel site, hosting dynamic Gutenberg blocks and styled with Tailwind CSS v3.
 
-- Classic PHP templates (index.php, header.php, footer.php)
-- Custom Gutenberg blocks (React)
-- Tailwind CSS v3
-- Auto block generator (npm run create-block)
+Built from a custom starter: classic `index.php` / `header.php` / `footer.php` templates, server-rendered React blocks, and a one-command block generator.
 
 ---
 
-FEATURES
-
-- Simple classic theme (no block theme complexity)
-- Auto-register Gutenberg blocks
-- One-command block generator
-- Tailwind styling system
-- Dynamic block build + watch
-
----
-
-INSTALLATION
-
-1. Install dependencies:
-   npm install
-
-2. Build assets:
-   npm run build
-
-3. Activate theme in WordPress
-
----
-
-CREATING A BLOCK
-
-npm run create-block hero
-
-This will:
-- Create block folder
-- Generate:
-  - block.json
-  - edit.js
-  - index.js
-  - render.php
-  - style.css
-- Auto build the block
-
----
-
-BUILD COMMANDS
-
-Build everything:
-npm run build
-
-Dev (watch mode):
-npm run dev
-
----
-
-PROJECT STRUCTURE
-
-assets/
-  css/
-  js/
-    blocks/
-      hero/
-      cta/
-
-scripts/
-  create-block.js
-  build-blocks.js
-  dev-blocks.js
-
----
-
-BLOCK REGISTRATION
-
-Blocks are auto-registered via:
-register_block_type($block_path);
-
-No manual registration needed.
-
----
-
-STYLING
-
-Main styles:
-assets/css/main.css
-
-Compiled output:
-assets/css/main.min.css
-
----
-
-NOTES
-
-- Blocks are dynamic (rendered via PHP)
-- Uses Tailwind utility classes + custom design system
-- No need to edit functions.php when adding blocks
-
----
-
-REQUIREMENTS
+## Requirements
 
 - Node.js 18+
 - WordPress 6.6+
@@ -108,19 +14,37 @@ REQUIREMENTS
 
 ---
 
-TIPS
+## Installation
 
-- Use kebab-case for block names:
-  hero-banner
-  feature-grid
-  pricing-table
+```bash
+npm install
+npm run build
+```
 
-- Always run:
-  npm run dev
-  while developing
+Then activate **Greensun Hotel** under Appearance → Themes.
 
 ---
 
-LICENSE
+## Commands
+
+- `npm run dev` — watch mode (blocks + CSS)
+- `npm run build` — production build (blocks + minified CSS)
+- `npm run create-block <slug>` — scaffold a new block under `assets/js/blocks/<slug>/` and build it
+
+Block slugs use kebab-case (e.g. `hero-banner`, `feature-grid`).
+
+---
+
+## Architecture
+
+Blocks live in `assets/js/blocks/<slug>/` and are **server-rendered** via `render.php` (JS `save` returns `null`). They are auto-registered by scanning the blocks directory on `init` — no manual registration in `functions.php`.
+
+The `greensun-hotel/carousel` block loads Swiper from CDN on-demand only on pages that use it. Follow this pattern for any other block needing heavyweight third-party assets.
+
+See `CLAUDE.md` for full conventions and the asset-loading pipeline.
+
+---
+
+## License
 
 GPL-2.0-or-later

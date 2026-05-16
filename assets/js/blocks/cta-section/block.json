@@ -17,6 +17,7 @@
     "imageUrl":      { "type": "string", "default": "" },
     "imageId":       { "type": "number", "default": 0 },
     "imageAlt":      { "type": "string", "default": "" },
-    "overlayOpacity":{ "type": "number", "default": 55 }
+    "overlayOpacity":{ "type": "number", "default": 55 },
+    "layout":        { "type": "string", "default": "centered" }
   }
 }

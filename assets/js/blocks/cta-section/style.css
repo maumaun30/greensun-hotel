@@ -1,3 +1,10 @@
 .wp-block-greensun-hotel-cta-section {
   padding-block: clamp(80px, 12vw, 160px);
 }
+
+@media (max-width: 900px) {
+  .wp-block-greensun-hotel-cta-section .greensun-cta-section__split {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+}

@@ -1,0 +1,69 @@
+.wp-block-greensun-hotel-venues-list .venues-list__stack {
+  display: grid;
+  gap: 80px;
+}
+.wp-block-greensun-hotel-venues-list .venues-list__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.wp-block-greensun-hotel-venues-list .venues-list__row.is-flipped .venues-list__media { order: 2; }
+.wp-block-greensun-hotel-venues-list .venues-list__row.is-flipped .venues-list__body  { order: 1; }
+
+.wp-block-greensun-hotel-venues-list .venues-list__media {
+  position: relative;
+}
+.wp-block-greensun-hotel-venues-list .venues-list__media .ph {
+  overflow: hidden;
+  border-radius: 4px;
+}
+.wp-block-greensun-hotel-venues-list .venues-list__badge {
+  position: absolute;
+  top: 20px;
+  left: -20px;
+  background: var(--sun, #e8c46a);
+  color: var(--forest-2, #0f2018);
+  padding: 8px 14px;
+  font-family: var(--font-display, "Cormorant Garamond", serif);
+  font-size: 32px;
+  line-height: 1;
+  border-radius: 2px;
+}
+.wp-block-greensun-hotel-venues-list .venues-list__row.is-flipped .venues-list__badge {
+  left: auto;
+  right: -20px;
+}
+
+.wp-block-greensun-hotel-venues-list .venues-list__caps {
+  margin-top: 24px;
+  display: grid;
+  gap: 14px;
+  max-width: 460px;
+}
+.wp-block-greensun-hotel-venues-list .venues-list__caps > div {
+  border-top: 1px solid var(--line, #ede9d9);
+  padding-top: 12px;
+}
+
+@media (max-width: 900px) {
+  .wp-block-greensun-hotel-venues-list .venues-list__row,
+  .wp-block-greensun-hotel-venues-list .venues-list__row.is-flipped {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .wp-block-greensun-hotel-venues-list .venues-list__row .venues-list__media,
+  .wp-block-greensun-hotel-venues-list .venues-list__row .venues-list__body,
+  .wp-block-greensun-hotel-venues-list .venues-list__row.is-flipped .venues-list__media,
+  .wp-block-greensun-hotel-venues-list .venues-list__row.is-flipped .venues-list__body {
+    order: unset;
+  }
+  .wp-block-greensun-hotel-venues-list .venues-list__media .ph {
+    height: 320px !important;
+  }
+  .wp-block-greensun-hotel-venues-list .venues-list__badge,
+  .wp-block-greensun-hotel-venues-list .venues-list__row.is-flipped .venues-list__badge {
+    left: 16px;
+    right: auto;
+  }
+}

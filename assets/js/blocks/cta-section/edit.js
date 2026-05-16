@@ -5,17 +5,28 @@ import {
   MediaUpload,
   MediaUploadCheck,
 } from '@wordpress/block-editor';
-import { PanelBody, TextControl, Button, RangeControl } from '@wordpress/components';
+import { PanelBody, TextControl, Button, RangeControl, SelectControl } from '@wordpress/components';
 
 export default function Edit({ attributes, setAttributes }) {
-  const { eyebrow, title, subtitle, ctaText, ctaUrl, imageUrl, imageId, imageAlt, overlayOpacity } = attributes;
+  const { eyebrow, title, subtitle, ctaText, ctaUrl, imageUrl, imageId, imageAlt, overlayOpacity, layout } = attributes;
 
   const overlayAlpha = Math.max(0, Math.min(100, overlayOpacity)) / 100;
 
   return (
     <>
       <InspectorControls>
-        <PanelBody title="Background image" initialOpen>
+        <PanelBody title="Layout" initialOpen>
+          <SelectControl
+            label="Layout"
+            value={layout}
+            options={[
+              { label: 'Centered',   value: 'centered' },
+              { label: 'Split (two-column)', value: 'split' },
+            ]}
+            onChange={(v) => setAttributes({ layout: v })}
+          />
+        </PanelBody>
+        <PanelBody title="Background image" initialOpen={false}>
           <MediaUploadCheck>
             <MediaUpload
               onSelect={(media) => setAttributes({ imageUrl: media.url, imageId: media.id, imageAlt: media.alt || '' })}

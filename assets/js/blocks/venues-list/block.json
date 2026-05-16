@@ -1,0 +1,66 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/venues-list",
+  "title": "Venues List",
+  "category": "design",
+  "icon": "store",
+  "description": "Alternating image + meta + capacity grid for event venues, function rooms, or showcase spaces.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "venues": {
+      "type": "array",
+      "default": [
+        {
+          "name": "The Eye",
+          "area": "Flagship hall",
+          "capacity": "120 pax",
+          "blurb": "A 200 sqm column-free hall built for weddings, product launches, and the long nights they turn into.",
+          "imageUrl": "",
+          "imageId": 0,
+          "imageAlt": "",
+          "capacities": [
+            { "layout": "Theatre",   "value": "120" },
+            { "layout": "Classroom", "value": "60"  },
+            { "layout": "Banquet",   "value": "80"  }
+          ],
+          "ctaText": "Inquire about The Eye",
+          "ctaUrl": "/contact"
+        },
+        {
+          "name": "The Loft",
+          "area": "Rooftop garden",
+          "capacity": "60 pax",
+          "blurb": "Open-air, plant-lined, and unmistakably ours. Best at sundown — and again at 11.",
+          "imageUrl": "",
+          "imageId": 0,
+          "imageAlt": "",
+          "capacities": [
+            { "layout": "Cocktail",  "value": "60" },
+            { "layout": "Banquet",   "value": "40" },
+            { "layout": "Theatre",   "value": "50" }
+          ],
+          "ctaText": "Inquire about The Loft",
+          "ctaUrl": "/contact"
+        },
+        {
+          "name": "Focus rooms",
+          "area": "Boardrooms",
+          "capacity": "8–14 pax",
+          "blurb": "Two well-wired boardrooms for offsites, hybrid meetings, and the kind of thinking that needs a closed door.",
+          "imageUrl": "",
+          "imageId": 0,
+          "imageAlt": "",
+          "capacities": [
+            { "layout": "Boardroom", "value": "14" },
+            { "layout": "U-shape",   "value": "10" },
+            { "layout": "Classroom", "value": "12" }
+          ],
+          "ctaText": "Inquire about Focus rooms",
+          "ctaUrl": "/contact"
+        }
+      ]
+    }
+  }
+}

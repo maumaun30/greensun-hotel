@@ -1,0 +1,23 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/contact-channels",
+  "title": "Contact Channels",
+  "category": "design",
+  "icon": "phone",
+  "description": "Stacked list of contact channels (label + lines). Pair with contact-form in a two-column layout.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "channels": {
+      "type": "array",
+      "default": [
+        { "title": "Front desk",   "lines": "+63 2 8548-9200\n24/7" },
+        { "title": "Reservations", "lines": "reservations@greensun.com.ph\nReplies within 2 hours, Mon–Sun" },
+        { "title": "WhatsApp",     "lines": "+63 917 807 1578\nFor quick questions and confirmations" },
+        { "title": "Visit",        "lines": "2285 Chino Roces Avenue,\nMagallanes, Makati 1232\nMetro Manila, Philippines" }
+      ]
+    },
+    "mapEmbed": { "type": "string", "default": "" }
+  }
+}

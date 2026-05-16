@@ -308,15 +308,7 @@
 @layer base {
   body { background: var(--ivory); color: var(--ink); }
 
-  .site-main { padding-top: 84px; }
-
-  /* If the first child is a full-bleed hero, let it run under the header */
-  .site-main:has(> .wp-block-greensun-hotel-hero-carousel:first-child),
-  .site-main:has(> .gs-hero-carousel:first-child),
-  .site-main:has(> .gs-hero:first-child),
-  .site-main:has(> .gs-page-hero:first-child) {
-    padding-top: 0;
-  }
+  .site-main { padding-top: 0; }
 }
 
 /* ============================================================

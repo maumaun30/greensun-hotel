@@ -25,15 +25,15 @@
             <button
                 id="mobile-menu-toggle"
                 class="mobile-menu-toggle"
-                aria-label="<?php esc_attr_e('Toggle Menu', 'mytheme'); ?>"
+                aria-label="<?php esc_attr_e('Toggle Menu', 'greensun-hotel'); ?>"
                 aria-controls="site-navigation"
                 aria-expanded="false"
                 type="button"
             >
-                ☰
+                â˜°
             </button>
 
-            <nav id="site-navigation" class="site-navigation" aria-label="<?php esc_attr_e('Primary Menu', 'mytheme'); ?>">
+            <nav id="site-navigation" class="site-navigation" aria-label="<?php esc_attr_e('Primary Menu', 'greensun-hotel'); ?>">
                 <?php
                 wp_nav_menu([
                     'theme_location' => 'primary',

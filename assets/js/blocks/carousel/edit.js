@@ -6,11 +6,11 @@ import {
   SelectControl,
 } from '@wordpress/components';
 
-const ALLOWED_BLOCKS = ['mytheme/carousel-slide'];
+const ALLOWED_BLOCKS = ['greensun-hotel/carousel-slide'];
 
 const TEMPLATE = [
-  ['mytheme/carousel-slide'],
-  ['mytheme/carousel-slide'],
+  ['greensun-hotel/carousel-slide'],
+  ['greensun-hotel/carousel-slide'],
 ];
 
 export default function Edit({ attributes, setAttributes }) {
@@ -83,7 +83,7 @@ export default function Edit({ attributes, setAttributes }) {
             display: 'inline-block',
           }}
         >
-          🎠 Carousel — {effect} · {autoplay ? `autoplay ${autoplayDelay}ms` : 'no autoplay'} ·{' '}
+          ðŸŽ  Carousel â€” {effect} Â· {autoplay ? `autoplay ${autoplayDelay}ms` : 'no autoplay'} Â·{' '}
           {loop ? 'loop' : 'no loop'}
         </div>
         <InnerBlocks

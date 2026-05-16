@@ -5,7 +5,7 @@ const { execSync } = require('child_process');
 const blockName = process.argv[2];
 
 if (!blockName) {
-  console.error('❌ Please provide a block name.');
+  console.error('âŒ Please provide a block name.');
   console.error('Example: npm run create-block hero');
   process.exit(1);
 }
@@ -19,7 +19,7 @@ const titleCase = slug
 const blockDir = path.join(__dirname, '../assets/js/blocks', slug);
 
 if (fs.existsSync(blockDir)) {
-  console.error(`❌ Block "${slug}" already exists.`);
+  console.error(`âŒ Block "${slug}" already exists.`);
   process.exit(1);
 }
 
@@ -27,7 +27,7 @@ fs.mkdirSync(blockDir, { recursive: true });
 
 const blockJson = `{
   "apiVersion": 3,
-  "name": "mytheme/${slug}",
+  "name": "greensun-hotel/${slug}",
   "title": "${titleCase}",
   "category": "design",
   "icon": "block-default",
@@ -126,7 +126,7 @@ $description = $attributes['description'] ?? '';
 </section>
 `;
 
-const styleCss = `.wp-block-mytheme-${slug} {}
+const styleCss = `.wp-block-greensun-hotel-${slug} {}
 `;
 
 fs.writeFileSync(path.join(blockDir, 'block.json'), blockJson);
@@ -135,16 +135,16 @@ fs.writeFileSync(path.join(blockDir, 'edit.js'), editJs);
 fs.writeFileSync(path.join(blockDir, 'render.php'), renderPhp);
 fs.writeFileSync(path.join(blockDir, 'style.css'), styleCss);
 
-console.log(`✅ Block "${slug}" created.`);
+console.log(`âœ… Block "${slug}" created.`);
 
 try {
-  console.log(`🔨 Building "${slug}"...`);
+  console.log(`ðŸ”¨ Building "${slug}"...`);
   execSync(
     `npx wp-scripts build ./assets/js/blocks/${slug}/index.js --output-path=./assets/js/blocks/${slug}/build`,
     { stdio: 'inherit' }
   );
-  console.log(`✅ Block "${slug}" built successfully.`);
+  console.log(`âœ… Block "${slug}" built successfully.`);
 } catch (error) {
-  console.error(`❌ Block "${slug}" was created, but build failed.`);
+  console.error(`âŒ Block "${slug}" was created, but build failed.`);
   process.exit(1);
 }

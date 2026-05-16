@@ -1,4 +1,4 @@
-/* ─── Editor Preview ────────────────────────────────────────────── */
+/* â”€â”€â”€ Editor Preview â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .carousel-slide-editor {
   position: relative;
   width: 100%;
@@ -72,15 +72,15 @@
   color: #fff;
 }
 
-/* ─── Frontend Slide ─────────────────────────────────────────────── */
-.wp-block-mytheme-carousel-slide.mytheme-carousel-slide {
+/* â”€â”€â”€ Frontend Slide â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.wp-block-greensun-hotel-carousel-slide.greensun-hotel-carousel-slide {
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
-.mytheme-carousel-slide__bg {
+.greensun-hotel-carousel-slide__bg {
   position: absolute;
   inset: 0;
   background-size: cover;
@@ -88,17 +88,17 @@
   transition: transform 8s ease;
 }
 
-.swiper-slide-active .mytheme-carousel-slide__bg {
+.swiper-slide-active .greensun-hotel-carousel-slide__bg {
   transform: scale(1.05);
 }
 
-.mytheme-carousel-slide__overlay {
+.greensun-hotel-carousel-slide__overlay {
   position: absolute;
   inset: 0;
   pointer-events: none;
 }
 
-.mytheme-carousel-slide__content {
+.greensun-hotel-carousel-slide__content {
   position: relative;
   height: 100%;
   max-width: 1280px;
@@ -108,11 +108,11 @@
   align-items: center;
 }
 
-.mytheme-carousel-slide__inner {
+.greensun-hotel-carousel-slide__inner {
   max-width: 640px;
 }
 
-.mytheme-carousel-slide__title {
+.greensun-hotel-carousel-slide__title {
   font-size: clamp(2.5rem, 6vw, 5rem);
   color: #fff;
   line-height: 1.1;
@@ -123,7 +123,7 @@
   transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
 }
 
-.mytheme-carousel-slide__subtitle {
+.greensun-hotel-carousel-slide__subtitle {
   font-size: clamp(1rem, 2vw, 1.375rem);
   color: rgba(255, 255, 255, 0.8);
   margin: 0 0 32px;
@@ -132,7 +132,7 @@
   transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
 }
 
-.mytheme-carousel-slide__buttons {
+.greensun-hotel-carousel-slide__buttons {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
@@ -142,14 +142,14 @@
 }
 
 /* Animate in on active slide */
-.swiper-slide-active .mytheme-carousel-slide__title,
-.swiper-slide-active .mytheme-carousel-slide__subtitle,
-.swiper-slide-active .mytheme-carousel-slide__buttons {
+.swiper-slide-active .greensun-hotel-carousel-slide__title,
+.swiper-slide-active .greensun-hotel-carousel-slide__subtitle,
+.swiper-slide-active .greensun-hotel-carousel-slide__buttons {
   opacity: 1;
   transform: translateY(0);
 }
 
-.mytheme-carousel-slide__btn {
+.greensun-hotel-carousel-slide__btn {
   display: inline-block;
   padding: 14px 32px;
   border-radius: 8px;
@@ -159,21 +159,21 @@
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
-.mytheme-carousel-slide__btn:hover {
+.greensun-hotel-carousel-slide__btn:hover {
   transform: scale(1.04);
 }
 
-.mytheme-carousel-slide__btn--primary {
+.greensun-hotel-carousel-slide__btn--primary {
   background-color: var(--color-primary, #4f46e5);
   color: #fff;
   box-shadow: var(--shadow-glow, 0 0 20px rgba(79, 70, 229, 0.4));
 }
 
-.mytheme-carousel-slide__btn--secondary {
+.greensun-hotel-carousel-slide__btn--secondary {
   border: 2px solid rgba(255, 255, 255, 0.5);
   color: #fff;
 }
 
-.mytheme-carousel-slide__btn--secondary:hover {
+.greensun-hotel-carousel-slide__btn--secondary:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }

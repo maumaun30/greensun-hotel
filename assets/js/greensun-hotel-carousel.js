@@ -1,18 +1,18 @@
 /**
- * mytheme-carousel.js
+ * greensun-hotel-carousel.js
  *
- * Initializes Swiper for all .mytheme-carousel blocks on the page.
+ * Initializes Swiper for all .greensun-hotel-carousel blocks on the page.
  * Enqueue this via functions.php after wp_enqueue_script('swiper').
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.mytheme-carousel.swiper').forEach((el) => {
+  document.querySelectorAll('.greensun-hotel-carousel.swiper').forEach((el) => {
     let config = {};
 
     try {
       config = JSON.parse(el.dataset.swiper || '{}');
     } catch (e) {
-      console.warn('[mytheme-carousel] Invalid swiper config on element:', el, e);
+      console.warn('[greensun-hotel-carousel] Invalid swiper config on element:', el, e);
     }
 
     new Swiper(el, {

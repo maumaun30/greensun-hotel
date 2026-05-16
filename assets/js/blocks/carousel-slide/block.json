@@ -1,11 +1,11 @@
 {
   "apiVersion": 3,
-  "name": "mytheme/carousel-slide",
+  "name": "greensun-hotel/carousel-slide",
   "title": "Carousel Slide",
   "category": "design",
   "icon": "format-image",
   "description": "A single hero slide. Use inside a Carousel block.",
-  "parent": ["mytheme/carousel"],
+  "parent": ["greensun-hotel/carousel"],
   "editorScript": "file:./build/index.js",
   "style": "file:./style.css",
   "render": "file:./render.php",

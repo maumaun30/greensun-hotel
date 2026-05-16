@@ -1,21 +1,21 @@
-.wp-block-mytheme-steps.mytheme-steps {
+.wp-block-greensun-hotel-steps.greensun-hotel-steps {
   background-color: var(--bg-dark-2, #111);
   padding: var(--section-py, 80px) 0;
 }
 
-.mytheme-steps__container {
+.greensun-hotel-steps__container {
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 24px;
 }
 
-/* ── Heading ─────────────────────────────────────────────────────── */
-.mytheme-steps__heading {
+/* â”€â”€ Heading â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.greensun-hotel-steps__heading {
   text-align: center;
   margin-bottom: 64px;
 }
 
-.mytheme-steps__title {
+.greensun-hotel-steps__title {
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(2rem, 4vw, 3.5rem);
   color: #fff;
@@ -23,28 +23,28 @@
   margin: 0 0 16px;
 }
 
-.mytheme-steps__subtitle {
+.greensun-hotel-steps__subtitle {
   font-family: 'Outfit', sans-serif;
   font-size: 1.25rem;
   color: rgba(255, 255, 255, 0.6);
   margin: 0;
 }
 
-/* ── Grid ────────────────────────────────────────────────────────── */
-.mytheme-steps__grid {
+/* â”€â”€ Grid â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.greensun-hotel-steps__grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 32px;
 }
 
 @media (min-width: 768px) {
-  .mytheme-steps__grid {
+  .greensun-hotel-steps__grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-/* ── Card ────────────────────────────────────────────────────────── */
-.mytheme-steps__card {
+/* â”€â”€ Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.greensun-hotel-steps__card {
   position: relative;
   padding: 32px;
   border-radius: 16px;
@@ -55,17 +55,17 @@
   overflow: hidden;
 }
 
-.mytheme-steps__card:hover {
+.greensun-hotel-steps__card:hover {
   transform: scale(1.05);
 }
 
 /* Connecting line between cards (desktop only) */
-.mytheme-steps__connector {
+.greensun-hotel-steps__connector {
   display: none;
 }
 
 @media (min-width: 768px) {
-  .mytheme-steps__connector {
+  .greensun-hotel-steps__connector {
     display: block;
     position: absolute;
     top: 64px;
@@ -77,8 +77,8 @@
   }
 }
 
-/* ── Number badge ────────────────────────────────────────────────── */
-.mytheme-steps__number {
+/* â”€â”€ Number badge â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.greensun-hotel-steps__number {
   display: inline-block;
   margin-bottom: 24px;
   padding: 12px 24px;
@@ -93,12 +93,12 @@
   transition: transform 0.3s ease;
 }
 
-.mytheme-steps__card:hover .mytheme-steps__number {
+.greensun-hotel-steps__card:hover .greensun-hotel-steps__number {
   transform: scale(1.1);
 }
 
-/* ── Card text ───────────────────────────────────────────────────── */
-.mytheme-steps__card-title {
+/* â”€â”€ Card text â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.greensun-hotel-steps__card-title {
   font-family: 'Outfit', sans-serif;
   font-weight: 600;
   font-size: 1.375rem;
@@ -106,14 +106,14 @@
   margin: 0 0 16px;
 }
 
-.mytheme-steps__card-desc {
+.greensun-hotel-steps__card-desc {
   color: rgba(255, 255, 255, 0.7);
   line-height: 1.7;
   margin: 0;
 }
 
-/* ── Hover glow ──────────────────────────────────────────────────── */
-.mytheme-steps__glow {
+/* â”€â”€ Hover glow â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.greensun-hotel-steps__glow {
   position: absolute;
   inset: 0;
   border-radius: 16px;
@@ -123,6 +123,6 @@
   transition: opacity 0.5s ease;
 }
 
-.mytheme-steps__card:hover .mytheme-steps__glow {
+.greensun-hotel-steps__card:hover .greensun-hotel-steps__glow {
   opacity: 1;
 }

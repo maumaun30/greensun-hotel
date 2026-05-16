@@ -18,7 +18,7 @@ add_filter('acf/settings/dir', function ($dir) {
     return get_stylesheet_directory_uri() . '/acf/';
 });
 
-function mytheme_setup()
+function greensun_hotel_setup()
 {
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
@@ -28,12 +28,12 @@ function mytheme_setup()
     add_theme_support('custom-logo');
 
     register_nav_menus([
-        'primary' => __('Primary Menu', 'mytheme'),
+        'primary' => __('Primary Menu', 'greensun-hotel'),
     ]);
 }
-add_action('after_setup_theme', 'mytheme_setup');
+add_action('after_setup_theme', 'greensun_hotel_setup');
 
-function mytheme_enqueue_assets()
+function greensun_hotel_enqueue_assets()
 {
     $critical_css = get_theme_file_path('/assets/css/critical.min.css');
     $main_css     = get_theme_file_path('/assets/css/main.min.css');
@@ -41,7 +41,7 @@ function mytheme_enqueue_assets()
 
     if (file_exists($critical_css)) {
         wp_enqueue_style(
-            'mytheme-critical',
+            'greensun-hotel-critical',
             get_theme_file_uri('/assets/css/critical.min.css'),
             filemtime($critical_css)
         );
@@ -49,23 +49,23 @@ function mytheme_enqueue_assets()
 
     if (file_exists($main_css)) {
         wp_enqueue_style(
-            'mytheme-main',
+            'greensun-hotel-main',
             get_theme_file_uri('/assets/css/main.min.css'),
-            ['mytheme-critical'],
+            ['greensun-hotel-critical'],
             filemtime($main_css)
         );
     }
 
     wp_enqueue_style(
-        'mytheme-style',
+        'greensun-hotel-style',
         get_stylesheet_uri(),
-        ['mytheme-main'],
+        ['greensun-hotel-main'],
         filemtime(get_theme_file_path('/style.css'))
     );
 
     if (file_exists($critical_js)) {
         wp_enqueue_script(
-            'mytheme-critical',
+            'greensun-hotel-critical',
             get_theme_file_uri('/assets/js/critical.js'),
             [],
             filemtime($critical_js),
@@ -73,17 +73,17 @@ function mytheme_enqueue_assets()
         );
     }
 }
-add_action('wp_enqueue_scripts', 'mytheme_enqueue_assets');
+add_action('wp_enqueue_scripts', 'greensun_hotel_enqueue_assets');
 
-function mytheme_editor_styles()
+function greensun_hotel_editor_styles()
 {
     if (file_exists(get_theme_file_path('/assets/css/main.min.css'))) {
         add_editor_style('assets/css/main.min.css');
     }
 }
-add_action('after_setup_theme', 'mytheme_editor_styles');
+add_action('after_setup_theme', 'greensun_hotel_editor_styles');
 
-function mytheme_register_blocks()
+function greensun_hotel_register_blocks()
 {
     $blocks_dir = get_theme_file_path('/assets/js/blocks');
 
@@ -105,7 +105,7 @@ function mytheme_register_blocks()
         }
     }
 }
-add_action('init', 'mytheme_register_blocks');
+add_action('init', 'greensun_hotel_register_blocks');
 
 /**
  * Enqueue Swiper.js + carousel frontend script.
@@ -113,13 +113,13 @@ add_action('init', 'mytheme_register_blocks');
  * Add this to your theme's functions.php (or a dedicated assets loader file).
  * Adjust the version strings as needed.
  */
-function mytheme_enqueue_carousel_assets() {
+function greensun_hotel_enqueue_carousel_assets() {
     // Only load on pages that actually have the carousel block
-    if ( ! has_block( 'mytheme/carousel' ) ) {
+    if ( ! has_block( 'greensun-hotel/carousel' ) ) {
         return;
     }
  
-    // Swiper CSS (CDN — swap for local if preferred)
+    // Swiper CSS (CDN â€” swap for local if preferred)
     wp_enqueue_style(
         'swiper',
         'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css',
@@ -138,12 +138,12 @@ function mytheme_enqueue_carousel_assets() {
  
     // Our carousel initializer
     wp_enqueue_script(
-        'mytheme-carousel',
-        get_template_directory_uri() . '/assets/js/mytheme-carousel.js',
+        'greensun-hotel-carousel',
+        get_template_directory_uri() . '/assets/js/greensun-hotel-carousel.js',
         [ 'swiper' ],
         wp_get_theme()->get( 'Version' ),
         true
     );
 }
-add_action( 'wp_enqueue_scripts', 'mytheme_enqueue_carousel_assets' );
+add_action( 'wp_enqueue_scripts', 'greensun_hotel_enqueue_carousel_assets' );
  

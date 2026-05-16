@@ -17,7 +17,7 @@ function save({ attributes }) {
   });
 
   const blockProps = useBlockProps.save({
-    className: 'swiper mytheme-carousel',
+    className: 'swiper greensun-hotel-carousel',
     'data-swiper': swiperConfig,
   });
 

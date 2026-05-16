@@ -1,21 +1,21 @@
-.wp-block-mytheme-carousel.mytheme-carousel {
+.wp-block-greensun-hotel-carousel.greensun-hotel-carousel {
   position: relative;
   width: 100%;
   height: 100vh;
   overflow: hidden;
 }
 
-.wp-block-mytheme-carousel .swiper-wrapper {
+.wp-block-greensun-hotel-carousel .swiper-wrapper {
   height: 100%;
 }
 
 /* Dot indicators */
-.wp-block-mytheme-carousel .swiper-pagination {
+.wp-block-greensun-hotel-carousel .swiper-pagination {
   bottom: 48px;
   z-index: 10;
 }
 
-.wp-block-mytheme-carousel .swiper-pagination-bullet {
+.wp-block-greensun-hotel-carousel .swiper-pagination-bullet {
   width: 12px;
   height: 12px;
   border-radius: 6px;
@@ -24,7 +24,7 @@
   transition: width 0.3s ease, background 0.3s ease;
 }
 
-.wp-block-mytheme-carousel .swiper-pagination-bullet-active {
+.wp-block-greensun-hotel-carousel .swiper-pagination-bullet-active {
   width: 48px;
   background: var(--color-primary, #fff);
 }

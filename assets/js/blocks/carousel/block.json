@@ -1,6 +1,6 @@
 {
   "apiVersion": 3,
-  "name": "mytheme/carousel",
+  "name": "greensun-hotel/carousel",
   "title": "Carousel",
   "category": "design",
   "icon": "slides",
@@ -29,5 +29,5 @@
       "default": "fade"
     }
   },
-  "allowedBlocks": ["mytheme/carousel-slide"]
+  "allowedBlocks": ["greensun-hotel/carousel-slide"]
 }

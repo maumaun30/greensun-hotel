@@ -160,4 +160,27 @@ function greensun_hotel_enqueue_carousel_assets() {
     );
 }
 add_action( 'wp_enqueue_scripts', 'greensun_hotel_enqueue_carousel_assets' );
- 
+
+/**
+ * Enqueue booking-bar frontend JS only on pages that use the block.
+ * Passes the REST URL + nonce so the bar can call /wp-json/greensun/v1/booking-search.
+ */
+function greensun_hotel_enqueue_booking_bar_assets() {
+    if ( ! has_block( 'greensun-hotel/booking-bar' ) ) {
+        return;
+    }
+    $handle = 'greensun-hotel-booking-bar';
+    wp_enqueue_script(
+        $handle,
+        get_theme_file_uri( '/assets/js/booking-bar.js' ),
+        [],
+        filemtime( get_theme_file_path( '/assets/js/booking-bar.js' ) ),
+        true
+    );
+    wp_localize_script( $handle, 'GreensunBooking', [
+        'restUrl' => esc_url_raw( rest_url( 'greensun/v1/' ) ),
+        'nonce'   => wp_create_nonce( 'wp_rest' ),
+    ] );
+}
+add_action( 'wp_enqueue_scripts', 'greensun_hotel_enqueue_booking_bar_assets' );
+

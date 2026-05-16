@@ -12,6 +12,8 @@ $greensun_hotel_module_dirs = [
     __DIR__ . '/post-types',
     __DIR__ . '/taxonomies',
     __DIR__ . '/fields',
+    __DIR__ . '/api',
+    __DIR__ . '/admin',
 ];
 
 foreach ($greensun_hotel_module_dirs as $dir) {

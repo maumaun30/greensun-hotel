@@ -1,92 +1,81 @@
-import { useBlockProps, RichText, InspectorControls, MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
-import {
-  PanelBody,
-  TextControl,
-  TextareaControl,
-  Button,
-  Card,
-  CardBody,
-  CardHeader,
-  Flex,
-  FlexItem,
-  FlexBlock,
-} from '@wordpress/components';
-import { plus, chevronUp, chevronDown, trash } from '@wordpress/icons';
+import { useBlockProps, RichText, InspectorControls } from '@wordpress/block-editor';
+import { PanelBody, TextControl, RangeControl, Button, ComboboxControl, Flex, FlexItem, FlexBlock } from '@wordpress/components';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { chevronUp, chevronDown, trash } from '@wordpress/icons';
 
 export default function Edit({ attributes, setAttributes }) {
-  const { eyebrow, sectionTitle, subtitle, events } = attributes;
+  const { eyebrow, sectionTitle, subtitle, ctaText, ctaUrl, featuredEvents, fallbackCount } = attributes;
 
-  const updateEvent = (i, field, value) => {
-    setAttributes({ events: events.map((e, idx) => (idx === i ? { ...e, [field]: value } : e)) });
+  const events = useSelect((select) =>
+    select(coreStore).getEntityRecords('postType', 'event', { per_page: 100, status: 'publish' }),
+    []
+  );
+
+  const eventOptions = (events || []).map((e) => ({
+    value: String(e.id),
+    label: e.title?.rendered || `Event #${e.id}`,
+  }));
+
+  const selectedEvents = (featuredEvents || []).map((id) => (events || []).find((e) => e.id === id)).filter(Boolean);
+
+  const addEvent = (id) => {
+    const numId = parseInt(id, 10);
+    if (!numId || featuredEvents.includes(numId)) return;
+    setAttributes({ featuredEvents: [...featuredEvents, numId] });
   };
-  const setEventImage = (i, media) => {
-    setAttributes({ events: events.map((e, idx) => idx === i ? { ...e, imageUrl: media.url, imageId: media.id, imageAlt: media.alt || '' } : e) });
-  };
-  const clearEventImage = (i) => {
-    setAttributes({ events: events.map((e, idx) => idx === i ? { ...e, imageUrl: '', imageId: 0, imageAlt: '' } : e) });
-  };
-  const addEvent = () => setAttributes({ events: [...events, { imageUrl: '', imageId: 0, imageAlt: '', title: 'New event', description: 'Describe this event.', ctaText: 'Reserve', ctaUrl: '#' }] });
-  const removeEvent = (i) => setAttributes({ events: events.filter((_, idx) => idx !== i) });
+  const removeEvent = (id) => setAttributes({ featuredEvents: featuredEvents.filter((e) => e !== id) });
   const moveEvent = (i, dir) => {
-    const next = [...events];
+    const next = [...featuredEvents];
     const target = i + dir;
     if (target < 0 || target >= next.length) return;
     [next[i], next[target]] = [next[target], next[i]];
-    setAttributes({ events: next });
+    setAttributes({ featuredEvents: next });
   };
+
+  const previewCount = Math.max(1, Math.min(3, selectedEvents.length || fallbackCount));
 
   return (
     <>
       <InspectorControls>
-        <PanelBody title={`Events (${events.length})`} initialOpen>
-          {events.map((ev, index) => (
-            <Card key={index} style={{ marginBottom: 12 }}>
-              <CardHeader>
-                <Flex align="center">
-                  <FlexItem><strong style={{ fontSize: 12 }}>Event {index + 1}</strong></FlexItem>
-                  <FlexBlock />
-                  <FlexItem><Button icon={chevronUp} isSmall disabled={index === 0} onClick={() => moveEvent(index, -1)} label="Move up" /></FlexItem>
-                  <FlexItem><Button icon={chevronDown} isSmall disabled={index === events.length - 1} onClick={() => moveEvent(index, 1)} label="Move down" /></FlexItem>
-                  <FlexItem><Button icon={trash} isSmall isDestructive disabled={events.length <= 1} onClick={() => removeEvent(index)} label="Remove" /></FlexItem>
-                </Flex>
-              </CardHeader>
-              <CardBody>
-                <MediaUploadCheck>
-                  <MediaUpload
-                    onSelect={(media) => setEventImage(index, media)}
-                    allowedTypes={['image']}
-                    value={ev.imageId}
-                    render={({ open }) => (
-                      <div style={{ marginBottom: 12 }}>
-                        {ev.imageUrl && <img src={ev.imageUrl} alt="" style={{ display: 'block', maxWidth: '100%', marginBottom: 8, borderRadius: 4 }} />}
-                        <Button variant="secondary" isSmall onClick={open}>{ev.imageUrl ? 'Replace image' : 'Select image'}</Button>
-                        {ev.imageUrl && <Button variant="tertiary" isSmall isDestructive onClick={() => clearEventImage(index)} style={{ marginLeft: 8 }}>Remove</Button>}
-                      </div>
-                    )}
-                  />
-                </MediaUploadCheck>
-                <TextControl label="Title" value={ev.title} onChange={(v) => updateEvent(index, 'title', v)} />
-                <TextareaControl label="Description" value={ev.description} onChange={(v) => updateEvent(index, 'description', v)} rows={2} />
-                <TextControl label="CTA text" value={ev.ctaText} onChange={(v) => updateEvent(index, 'ctaText', v)} />
-                <TextControl label="CTA URL" value={ev.ctaUrl} type="url" onChange={(v) => updateEvent(index, 'ctaUrl', v)} />
-              </CardBody>
-            </Card>
+        <PanelBody title="Featured events" initialOpen>
+          <ComboboxControl
+            label="Add an event"
+            value=""
+            options={eventOptions.filter((o) => !featuredEvents.includes(parseInt(o.value, 10)))}
+            onChange={(v) => v && addEvent(v)}
+          />
+          {selectedEvents.length === 0 && (
+            <p style={{ fontSize: 12, color: '#777' }}>
+              No events selected — the block will fall back to the next {fallbackCount} upcoming events.
+            </p>
+          )}
+          {selectedEvents.map((e, i) => (
+            <Flex key={e.id} align="center" style={{ marginBottom: 6, padding: '6px 8px', border: '1px solid #ddd', borderRadius: 4 }}>
+              <FlexBlock><span style={{ fontSize: 13 }}>{e.title?.rendered || `Event #${e.id}`}</span></FlexBlock>
+              <FlexItem><Button icon={chevronUp} isSmall disabled={i === 0} onClick={() => moveEvent(i, -1)} label="Move up" /></FlexItem>
+              <FlexItem><Button icon={chevronDown} isSmall disabled={i === selectedEvents.length - 1} onClick={() => moveEvent(i, 1)} label="Move down" /></FlexItem>
+              <FlexItem><Button icon={trash} isSmall isDestructive onClick={() => removeEvent(e.id)} label="Remove" /></FlexItem>
+            </Flex>
           ))}
-          <Button icon={plus} variant="secondary" onClick={addEvent} style={{ width: '100%', justifyContent: 'center' }}>Add event</Button>
+          <RangeControl
+            label="Fallback count (when none selected)"
+            value={fallbackCount}
+            min={1}
+            max={6}
+            onChange={(v) => setAttributes({ fallbackCount: v })}
+          />
+        </PanelBody>
+        <PanelBody title="Section CTA" initialOpen={false}>
+          <TextControl label="CTA text" value={ctaText} onChange={(v) => setAttributes({ ctaText: v })} />
+          <TextControl label="CTA URL"  value={ctaUrl}  onChange={(v) => setAttributes({ ctaUrl: v })} />
         </PanelBody>
       </InspectorControls>
 
       <section {...useBlockProps({ className: 'events-teaser-editor' })} style={{ padding: '40px 0' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'end', marginBottom: 48 }}>
           <div>
-            <RichText
-              tagName="div"
-              className="eyebrow"
-              value={eyebrow}
-              onChange={(v) => setAttributes({ eyebrow: v })}
-              placeholder="Eyebrow…"
-              allowedFormats={[]}
-            />
+            <RichText tagName="div" className="eyebrow" value={eyebrow} onChange={(v) => setAttributes({ eyebrow: v })} placeholder="Eyebrow…" allowedFormats={[]} />
             <RichText
               tagName="h2"
               className="display"
@@ -106,16 +95,19 @@ export default function Edit({ attributes, setAttributes }) {
             allowedFormats={['core/bold', 'core/italic']}
           />
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.min(events.length, 3)}, 1fr)`, gap: 28 }}>
-          {events.map((ev, i) => (
+        <div style={{ display: 'grid', gridTemplateColumns: `repeat(${previewCount}, 1fr)`, gap: 28 }}>
+          {(selectedEvents.length ? selectedEvents : new Array(fallbackCount).fill(null)).map((e, i) => (
             <article key={i} style={{ background: '#fff', borderRadius: 14, overflow: 'hidden', border: '1px solid #ede9d9' }}>
-              <div style={{ aspectRatio: '4 / 3', background: '#ede9d9', overflow: 'hidden' }}>
-                {ev.imageUrl && <img src={ev.imageUrl} alt={ev.imageAlt} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+              <div style={{ aspectRatio: '4 / 3', background: '#ede9d9', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#7b817b', fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase' }}>
+                Event image
               </div>
               <div style={{ padding: 24 }}>
-                <h3 style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: 28, margin: 0 }}>{ev.title}</h3>
-                <p style={{ marginTop: 10, color: '#3d433d', lineHeight: 1.6 }}>{ev.description}</p>
-                <div style={{ marginTop: 18, fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#1f4a3a' }}>{ev.ctaText} →</div>
+                <h3 style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: 28, margin: 0 }}>
+                  {e?.title?.rendered || 'Event title'}
+                </h3>
+                <p style={{ marginTop: 8, color: '#3d433d', fontSize: 13 }}>
+                  Date, location, and CTA render on the front-end from ACF fields.
+                </p>
               </div>
             </article>
           ))}

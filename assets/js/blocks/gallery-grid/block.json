@@ -1,0 +1,18 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/gallery-grid",
+  "title": "Gallery Grid",
+  "category": "design",
+  "icon": "format-gallery",
+  "description": "Masonry-style image grid with optional captions. Multi-select from the media library.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow":      { "type": "string", "default": "Gallery" },
+    "sectionTitle": { "type": "string", "default": "Light, <em>land</em>, hours that linger." },
+    "columns":      { "type": "number", "default": 3 },
+    "images":       { "type": "array",  "default": [] },
+    "showCaptions": { "type": "boolean","default": false }
+  }
+}

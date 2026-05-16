@@ -1,0 +1,10 @@
+@media (max-width: 900px) {
+  .wp-block-greensun-hotel-gallery-grid .gallery-grid__masonry {
+    column-count: 2 !important;
+  }
+}
+@media (max-width: 520px) {
+  .wp-block-greensun-hotel-gallery-grid .gallery-grid__masonry {
+    column-count: 1 !important;
+  }
+}

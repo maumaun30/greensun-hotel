@@ -28,6 +28,19 @@ add_action('rest_api_init', function () {
         'permission_callback' => 'greensun_rest_public_permission',
     ]);
 
+    register_rest_route('greensun/v1', '/contact', [
+        'methods'             => 'POST',
+        'callback'            => 'greensun_rest_contact',
+        'permission_callback' => 'greensun_rest_public_permission',
+        'args'                => [
+            'name'    => ['required' => true, 'type' => 'string'],
+            'email'   => ['required' => true, 'type' => 'string'],
+            'phone'   => ['required' => false, 'type' => 'string'],
+            'message' => ['required' => true, 'type' => 'string'],
+            '_hp'     => ['required' => false, 'type' => 'string'],
+        ],
+    ]);
+
     register_rest_route('greensun/v1', '/booking-status', [
         'methods'             => 'GET',
         'callback'            => 'greensun_rest_booking_status',
@@ -75,6 +88,39 @@ function greensun_rest_booking_create(WP_REST_Request $request) {
         return new WP_REST_Response(['error' => $result->get_error_message(), 'code' => $result->get_error_code()], 400);
     }
     return rest_ensure_response($result);
+}
+
+function greensun_rest_contact(WP_REST_Request $request) {
+    // Honeypot — silently succeed if filled so bots think they got through.
+    if (!empty($request->get_param('_hp'))) {
+        return rest_ensure_response(['ok' => true]);
+    }
+
+    $name    = sanitize_text_field((string) $request->get_param('name'));
+    $email   = sanitize_email((string) $request->get_param('email'));
+    $phone   = sanitize_text_field((string) $request->get_param('phone'));
+    $message = wp_strip_all_tags((string) $request->get_param('message'));
+
+    if (!is_email($email)) {
+        return new WP_REST_Response(['error' => 'Please provide a valid email address.'], 400);
+    }
+    if (mb_strlen($message) < 2) {
+        return new WP_REST_Response(['error' => 'Please add a message.'], 400);
+    }
+
+    $to      = apply_filters('greensun_contact_to', get_option('admin_email'));
+    $subject = sprintf('[%s] New enquiry from %s', wp_specialchars_decode(get_bloginfo('name'), ENT_QUOTES), $name);
+    $body    = sprintf(
+        "Name: %s\nEmail: %s\nPhone: %s\n\nMessage:\n%s",
+        $name, $email, $phone ?: '—', $message
+    );
+    $headers = ['Reply-To: ' . $name . ' <' . $email . '>'];
+
+    $sent = wp_mail($to, $subject, $body, $headers);
+    if (!$sent) {
+        return new WP_REST_Response(['error' => 'Could not send. Please email us directly.'], 500);
+    }
+    return rest_ensure_response(['ok' => true]);
 }
 
 function greensun_rest_booking_status() {

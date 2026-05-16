@@ -1,0 +1,20 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/contact-info",
+  "title": "Contact Info",
+  "category": "design",
+  "icon": "location",
+  "description": "Address, phone, email, hours — laid out in a clean editorial grid.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow":      { "type": "string", "default": "Visit" },
+    "sectionTitle": { "type": "string", "default": "Find <em>your way</em> to us." },
+    "address":      { "type": "string", "default": "1 Forest Lane\nCoastal Province\n9999 Country" },
+    "phone":        { "type": "string", "default": "+1 (555) 123 4567" },
+    "email":        { "type": "string", "default": "hello@greensun.com" },
+    "hours":        { "type": "string", "default": "Reception: 24/7\nDining: 6:30am – 10:30pm\nSpa: 9am – 9pm" },
+    "mapEmbed":     { "type": "string", "default": "" }
+  }
+}

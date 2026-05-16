@@ -184,3 +184,25 @@ function greensun_hotel_enqueue_booking_bar_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'greensun_hotel_enqueue_booking_bar_assets' );
 
+/**
+ * Enqueue contact-form frontend JS only on pages that use the block.
+ */
+function greensun_hotel_enqueue_contact_form_assets() {
+    if ( ! has_block( 'greensun-hotel/contact-form' ) ) {
+        return;
+    }
+    $handle = 'greensun-hotel-contact-form';
+    wp_enqueue_script(
+        $handle,
+        get_theme_file_uri( '/assets/js/contact-form.js' ),
+        [],
+        filemtime( get_theme_file_path( '/assets/js/contact-form.js' ) ),
+        true
+    );
+    wp_localize_script( $handle, 'GreensunContact', [
+        'restUrl' => esc_url_raw( rest_url( 'greensun/v1/' ) ),
+        'nonce'   => wp_create_nonce( 'wp_rest' ),
+    ] );
+}
+add_action( 'wp_enqueue_scripts', 'greensun_hotel_enqueue_contact_form_assets' );
+

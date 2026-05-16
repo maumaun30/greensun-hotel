@@ -1,0 +1,18 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/contact-form",
+  "title": "Contact Form",
+  "category": "design",
+  "icon": "email",
+  "description": "Name / email / message form. Submits to /wp-json/greensun/v1/contact and emails the site admin.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow":      { "type": "string", "default": "Write to us" },
+    "sectionTitle": { "type": "string", "default": "Tell us <em>everything</em>." },
+    "subtitle":     { "type": "string", "default": "Stay enquiries, private events, anything you'd like us to know." },
+    "submitText":   { "type": "string", "default": "Send" },
+    "successText":  { "type": "string", "default": "Thanks — we'll be in touch within a day." }
+  }
+}

@@ -113,14 +113,29 @@
   background: var(--forest, #1f4a3a);
 }
 
-.site-header__cta {
+/* Header Book-Now CTA — chained .btn--ghost to outrank the base ghost rule */
+.site-header__cta.btn--ghost,
+.site-header .site-header__cta {
   border: 1px solid rgba(255, 255, 255, 0.55);
   color: var(--ivory, #f7f6f0);
 }
+.site-header__cta.btn--ghost:hover,
+.site-header .site-header__cta:hover {
+  color: var(--ivory, #f7f6f0);
+}
+.site-header__cta .ripple { background: rgba(255, 255, 255, 0.18); }
 
+.site-header[data-scrolled="true"] .site-header__cta.btn--ghost,
 .site-header[data-scrolled="true"] .site-header__cta {
   border-color: var(--forest, #1f4a3a);
   color: var(--forest, #1f4a3a);
+}
+.site-header[data-scrolled="true"] .site-header__cta.btn--ghost:hover,
+.site-header[data-scrolled="true"] .site-header__cta:hover {
+  color: var(--forest, #1f4a3a);
+}
+.site-header[data-scrolled="true"] .site-header__cta .ripple {
+  background: rgba(31, 74, 58, 0.08);
 }
 
 /* hamburger (mobile) */

@@ -3,7 +3,19 @@
   function init() {
     var header = document.getElementById('site-header');
     if (!header) return;
+
+    // Pages without a dark hero at the top need the header in its solid
+    // ivory state from the start, otherwise the white menu text sits on
+    // an ivory body and goes invisible.
+    var main = document.querySelector('.site-main');
+    var firstChild = main ? main.firstElementChild : null;
+    var hasHero = !!(firstChild && firstChild.matches(
+      '.gs-hero, .gs-hero-carousel, .gs-page-hero, .wp-block-greensun-hotel-hero-carousel'
+    ));
+    if (!hasHero) document.body.classList.add('no-hero-top');
+
     var onScroll = function () {
+      if (!hasHero) { header.setAttribute('data-scrolled', 'true'); return; }
       header.setAttribute('data-scrolled', window.scrollY > 24 ? 'true' : 'false');
     };
     onScroll();

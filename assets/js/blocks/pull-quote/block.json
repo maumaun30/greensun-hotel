@@ -1,0 +1,17 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/pull-quote",
+  "title": "Editorial Quote",
+  "category": "design",
+  "icon": "format-quote",
+  "description": "Large editorial pull quote with optional attribution.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "quote":    { "type": "string", "default": "The best hotels feel less like rooms and more like <em>rooms in someone's home</em>." },
+    "author":   { "type": "string", "default": "Imogen Hart" },
+    "role":     { "type": "string", "default": "Innkeeper" },
+    "alignment":{ "type": "string", "default": "center" }
+  }
+}

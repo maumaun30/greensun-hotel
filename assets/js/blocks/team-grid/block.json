@@ -1,0 +1,24 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/team-grid",
+  "title": "Team Grid",
+  "category": "design",
+  "icon": "groups",
+  "description": "Grid of team members with portrait, name and role.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "eyebrow":      { "type": "string", "default": "Who you'll meet" },
+    "sectionTitle": { "type": "string", "default": "The <em>hands</em> behind the house." },
+    "columns":      { "type": "number", "default": 3 },
+    "members": {
+      "type": "array",
+      "default": [
+        { "imageUrl": "", "imageId": 0, "imageAlt": "", "name": "Imogen Hart", "role": "Innkeeper" },
+        { "imageUrl": "", "imageId": 0, "imageAlt": "", "name": "Marco Riu",   "role": "Head chef"  },
+        { "imageUrl": "", "imageId": 0, "imageAlt": "", "name": "Eli Park",    "role": "Sommelier"  }
+      ]
+    }
+  }
+}

@@ -40,3 +40,13 @@ add_action('init', function () {
         'capability_type'     => 'post',
     ]);
 });
+
+// Order venue archive by menu_order (page-attributes drag handle) so
+// editors control the sequence on /venues/.
+add_action('pre_get_posts', function ($query) {
+    if (is_admin() || !$query->is_main_query()) return;
+    if (!$query->is_post_type_archive('venue')) return;
+    $query->set('orderby', 'menu_order title');
+    $query->set('order',   'ASC');
+    $query->set('posts_per_page', -1);
+});

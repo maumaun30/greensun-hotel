@@ -301,6 +301,43 @@ add_filter('wp_get_attachment_image_attributes', function ($attr) {
     return $attr;
 });
 
+/**
+ * Body class flag: `gs-light-top` is added on pages that don't have a
+ * full-bleed dark hero behind the fixed header. Used by critical.css to
+ * force the header into its solid (scrolled) style so menu items stay
+ * readable on light backgrounds.
+ */
+add_filter('body_class', function ($classes) {
+    if (is_admin()) return $classes;
+
+    // Templates that render their own dark hero section at the top.
+    if (is_front_page() || is_404() || is_singular(['room', 'event', 'venue'])) {
+        return $classes;
+    }
+
+    // Singular pages whose first block is a dark hero block.
+    if (is_singular()) {
+        $post = get_post();
+        if ($post && has_blocks($post->post_content)) {
+            $blocks = parse_blocks($post->post_content);
+            // Skip empty leading "blocks" (whitespace-only).
+            foreach ($blocks as $b) {
+                if (empty($b['blockName'])) continue;
+                if (in_array($b['blockName'], [
+                    'greensun-hotel/hero-carousel',
+                    'greensun-hotel/page-hero',
+                ], true)) {
+                    return $classes;
+                }
+                break;
+            }
+        }
+    }
+
+    $classes[] = 'gs-light-top';
+    return $classes;
+});
+
 add_filter('the_content', function ($content) {
     if (is_admin()) return $content;
     // Add decoding="async" to <img> tags in post content that don't already declare it.

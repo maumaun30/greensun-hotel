@@ -138,6 +138,42 @@
   background: rgba(31, 74, 58, 0.08);
 }
 
+/* ----------------------------------------------------------
+   Light-top pages (no dark hero behind the fixed header).
+   Mirror the data-scrolled styling so menu items stay readable,
+   and push <main> below the now-opaque 84px header.
+   ---------------------------------------------------------- */
+body.gs-light-top .site-header {
+  background: rgba(247, 246, 240, 0.92);
+  border-bottom-color: var(--line, #ede9d9);
+  color: var(--ink, #1a1f1a);
+}
+body.gs-light-top .site-header__menu a {
+  color: rgba(13, 42, 32, 0.65);
+  text-shadow: none;
+}
+body.gs-light-top .site-header__menu a:hover,
+body.gs-light-top .site-header__menu .current-menu-item > a,
+body.gs-light-top .site-header__menu .current_page_item > a {
+  color: var(--forest, #1f4a3a);
+}
+body.gs-light-top .site-header__menu a::after {
+  background: var(--forest, #1f4a3a);
+}
+body.gs-light-top .site-header__cta.btn--ghost,
+body.gs-light-top .site-header .site-header__cta {
+  border-color: var(--forest, #1f4a3a);
+  color: var(--forest, #1f4a3a);
+}
+body.gs-light-top .site-header__cta:hover { color: var(--forest, #1f4a3a); }
+body.gs-light-top .site-header__cta .ripple { background: rgba(31, 74, 58, 0.08); }
+body.gs-light-top .site-main { padding-top: 84px; }
+
+/* Kill the 24px margin Gutenberg injects onto the first top-level block
+   inside <main>. The block-gap is desirable between siblings, not at the
+   very top where it collapses out of the page. */
+.site-main > *:first-child { margin-block-start: 0; }
+
 /* hamburger (mobile) */
 .site-header__toggle {
   display: none;

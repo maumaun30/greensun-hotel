@@ -1,7 +1,7 @@
 .greensun-gallery-grid { padding-block: 30px 100px; }
 
 .greensun-gallery-grid .gs-gallery__head {
-  text-align: center;
+  /* text-align: center; */
   margin-bottom: 36px;
 }
 .greensun-gallery-grid .gs-gallery__title {

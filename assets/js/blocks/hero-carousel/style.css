@@ -246,10 +246,24 @@
   .gs-hero-carousel__mark, .gs-hero-carousel__compass, .gs-hero-carousel__scroll-hint { display: none; }
 }
 
+/* Floating leaves over the hero (toggleable via "showLeaves" tweak) */
+.gs-hero-carousel__leaves {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.5;
+}
+@keyframes gs-leaf1 { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(8deg); } }
+@keyframes gs-leaf2 { 0%, 100% { transform: rotate(6deg) translateY(0); } 50% { transform: rotate(-4deg) translateY(-6px); } }
+
 @media (prefers-reduced-motion: reduce) {
   .gs-hero-carousel__slide { transition: none; }
   .gs-hero-carousel__copy-slide { transition: none; transform: none; }
   .gs-hero-carousel__scroll-line,
   .gs-hero-carousel__compass-ring,
   .gs-hero-carousel__compass-tick { animation: none; }
+  .gs-hero-carousel__leaves g > path { animation: none !important; }
 }

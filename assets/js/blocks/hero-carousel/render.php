@@ -30,6 +30,14 @@ $allowed_title_tags = ['em' => [], 'i' => [], 'strong' => [], 'b' => [], 'span' 
     <?php endforeach; ?>
   </div>
 
+  <svg class="gs-hero-carousel__leaves" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g fill="oklch(0.72 0.11 130)">
+      <path d="M 80 600 C 100 540, 180 520, 240 540 C 220 600, 140 640, 80 600 Z" opacity=".5" style="transform-origin:160px 580px; animation: gs-leaf1 9s ease-in-out infinite;"/>
+      <path d="M 1480 200 C 1500 140, 1580 120, 1640 140 C 1620 200, 1540 240, 1480 200 Z" opacity=".4" style="transform-origin:1560px 180px; animation: gs-leaf2 11s ease-in-out infinite;"/>
+      <path d="M 1200 740 C 1220 680, 1300 660, 1360 680 C 1340 740, 1260 780, 1200 740 Z" opacity=".3" style="transform-origin:1280px 720px; animation: gs-leaf1 13s ease-in-out infinite;"/>
+    </g>
+  </svg>
+
   <?php if ($show_mark && $mark_text) : ?>
     <div class="gs-hero-carousel__mark" aria-hidden="true">
       <span class="gs-hero-carousel__mark-rule"></span>

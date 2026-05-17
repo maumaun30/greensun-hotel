@@ -6,20 +6,23 @@
    GREENSUN HOTEL — Design tokens
    ============================================================ */
 :root {
-  /* Brand palette */
-  --forest:   oklch(0.32 0.08 148);
-  --forest-2: oklch(0.26 0.07 148);
-  --moss:     oklch(0.44 0.08 145);
+  /* Brand palette — sourced from design tweaks
+     forest #2a5a4a · sun #ffd266 · ivory #fbf7ec
+     -2 / moss / paper / bone derived via the same shade() ramp the
+     design uses (±0.15 for brand, +0.03 / -0.07 for neutrals). */
+  --forest:   #2a5a4a;
+  --forest-2: #043424;
+  --moss:     #508070;
   --sage:     oklch(0.82 0.045 135);
   --sage-2:   oklch(0.92 0.025 130);
-  --sun:      oklch(0.82 0.135 80);
-  --sun-2:    oklch(0.74 0.155 70);
+  --sun:      #ffd266;
+  --sun-2:    #d9ac40;
   --ember:    oklch(0.60 0.16 50);
 
   /* Neutral */
-  --ivory:    oklch(0.975 0.012 90);
-  --bone:     oklch(0.94 0.018 88);
-  --paper:    oklch(0.98 0.008 90);
+  --ivory:    #fbf7ec;
+  --bone:     #e9e5da;
+  --paper:    #fffff4;
   --ink:      oklch(0.16 0.018 150);
   --ink-2:    oklch(0.30 0.018 150);
   --mute:     oklch(0.55 0.012 150);

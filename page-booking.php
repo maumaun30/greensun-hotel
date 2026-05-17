@@ -54,18 +54,16 @@ $steps = ['Dates & guests', 'Choose a room', 'Your details', 'Review & confirm']
 
 <main class="site-main booking-flow" data-prefill="<?php echo esc_attr(wp_json_encode($prefill)); ?>" data-rooms="<?php echo esc_attr(wp_json_encode($rooms_data)); ?>">
 
-  <section class="gs-page-hero booking-flow__hero" style="min-height: 42vh; min-height: 360px;">
-    <div class="gs-page-hero__media kb" style="background: var(--forest, #1f4a3a);"></div>
-    <div class="gs-page-hero__scrim" style="background: linear-gradient(to bottom, rgba(13,42,32,.65), rgba(13,42,32,.92));"></div>
-    <div class="shell gs-page-hero__content">
-      <div class="eyebrow reveal" style="color: var(--sun, #e8c46a);">Reserve your stay</div>
-      <h1 class="display reveal reveal--lg" style="font-size: clamp(44px, 6vw, 88px); margin-top: 18px; font-weight: 500;">
+  <section class="booking-flow__header">
+    <div class="shell">
+      <div class="eyebrow reveal" style="margin-bottom: 22px;">Reserve your stay</div>
+      <h1 class="display reveal reveal--lg booking-flow__title">
         Book a room <em>in four easy steps.</em>
       </h1>
     </div>
   </section>
 
-  <section class="section--tight" style="padding-block: 70px 120px;">
+  <section style="padding-block: 30px 120px;">
     <div class="shell booking-flow__layout" style="display:grid; grid-template-columns: 1.5fr 1fr; gap: 70px; align-items:start;">
 
       <div class="booking-flow__main">

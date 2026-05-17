@@ -9,15 +9,16 @@
   "style": "file:./style.css",
   "render": "file:./render.php",
   "attributes": {
-    "eyebrow":      { "type": "string", "default": "Who you'll meet" },
-    "sectionTitle": { "type": "string", "default": "The <em>hands</em> behind the house." },
-    "columns":      { "type": "number", "default": 3 },
+    "eyebrow":      { "type": "string", "default": "The team" },
+    "sectionTitle": { "type": "string", "default": "Familiar faces at <em>the front desk.</em>" },
+    "columns":      { "type": "number", "default": 4 },
     "members": {
       "type": "array",
       "default": [
-        { "imageUrl": "", "imageId": 0, "imageAlt": "", "name": "Imogen Hart", "role": "Innkeeper" },
-        { "imageUrl": "", "imageId": 0, "imageAlt": "", "name": "Marco Riu",   "role": "Head chef"  },
-        { "imageUrl": "", "imageId": 0, "imageAlt": "", "name": "Eli Park",    "role": "Sommelier"  }
+        { "imageUrl": "", "imageId": 0, "imageAlt": "", "name": "Rina",  "role": "General manager"           },
+        { "imageUrl": "", "imageId": 0, "imageAlt": "", "name": "Marco", "role": "Head of guest experience"  },
+        { "imageUrl": "", "imageId": 0, "imageAlt": "", "name": "Lia",   "role": "Events director"           },
+        { "imageUrl": "", "imageId": 0, "imageAlt": "", "name": "Tom",   "role": "Executive chef"            }
       ]
     }
   }

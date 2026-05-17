@@ -1,5 +1,44 @@
+.greensun-values-grid .gs-values__head { margin-bottom: 60px; }
+.greensun-values-grid .gs-values__title {
+  font-size: clamp(36px, 5vw, 64px);
+  margin-top: 22px;
+  max-width: 18ch;
+  line-height: 1.05;
+}
+.greensun-values-grid .gs-values__title em { font-style: italic; }
+
+.greensun-values-grid .gs-values__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--gs-cols, 3), 1fr);
+  gap: 28px;
+}
+
+.greensun-values-grid .gs-values__card {
+  background: var(--paper, #f8f5e9);
+  padding: 36px;
+  border-radius: 4px;
+  border: 1px solid var(--line, #ede9d9);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.greensun-values-grid .gs-values__num {
+  font-size: 56px;
+  color: var(--sun-2, #d8a04c);
+  line-height: 1;
+}
+.greensun-values-grid .gs-values__title-card {
+  font-size: 26px;
+  margin: 6px 0 0;
+  line-height: 1.15;
+}
+.greensun-values-grid .gs-values__body {
+  margin-top: 14px;
+  color: var(--ink-2, #3d433d);
+  font-size: 15.5px;
+  line-height: 1.75;
+}
+
 @media (max-width: 900px) {
-  .wp-block-greensun-hotel-values-grid .values-grid__grid {
-    grid-template-columns: 1fr !important;
-  }
+  .greensun-values-grid .gs-values__grid { grid-template-columns: 1fr; }
 }

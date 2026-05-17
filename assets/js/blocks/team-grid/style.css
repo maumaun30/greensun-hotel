@@ -1,10 +1,48 @@
+.greensun-team-grid .gs-team__head { margin-bottom: 56px; }
+.greensun-team-grid .gs-team__title {
+  font-size: clamp(36px, 5vw, 64px);
+  margin-top: 22px;
+  max-width: 16ch;
+  line-height: 1.05;
+}
+.greensun-team-grid .gs-team__title em { font-style: italic; }
+
+.greensun-team-grid .gs-team__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--gs-cols, 4), 1fr);
+  gap: 22px;
+}
+
+.greensun-team-grid .gs-team__card { text-align: left; }
+.greensun-team-grid .gs-team__media {
+  aspect-ratio: 3 / 4;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--bone, #ede9d9);
+}
+.greensun-team-grid .gs-team__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.greensun-team-grid .gs-team__name {
+  font-size: 24px;
+  line-height: 1.1;
+  margin: 16px 0 0;
+}
+.greensun-team-grid .gs-team__role {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  color: var(--mute, #7b817b);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  margin-top: 4px;
+}
+
 @media (max-width: 900px) {
-  .wp-block-greensun-hotel-team-grid .team-grid__grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
+  .greensun-team-grid .gs-team__grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 520px) {
-  .wp-block-greensun-hotel-team-grid .team-grid__grid {
-    grid-template-columns: 1fr !important;
-  }
+  .greensun-team-grid .gs-team__grid { grid-template-columns: 1fr; }
 }

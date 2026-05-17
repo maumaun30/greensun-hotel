@@ -48,11 +48,8 @@
   position: relative;
   z-index: 2;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
   padding-top: 140px;
-  padding-bottom: 120px;
+  padding-bottom: 180px; /* room for the -72px booking-bar to overlap cleanly */
   display: grid;
   grid-template-columns: 1.4fr 1fr;
   gap: 80px;
@@ -149,7 +146,7 @@
 
 .gs-hero-carousel__scroll-hint {
   position: absolute;
-  bottom: 28px;
+  bottom: 100px; /* sits above the booking-bar overlap */
   left: 50%;
   transform: translateX(-50%);
   display: flex;

@@ -17,7 +17,7 @@ $rooms = get_posts([
     'order'          => 'ASC',
 ]);
 ?>
-<section <?php echo get_block_wrapper_attributes(['class' => 'section greensun-booking-bar', 'style' => 'padding-block: 24px;']); ?>>
+<section <?php echo get_block_wrapper_attributes(['class' => 'greensun-booking-bar', 'style' => 'position: relative; z-index: 10; margin-top: -72px; padding-block: 0 24px;']); ?>>
   <div class="shell">
     <form class="booking-bar reveal" action="<?php echo esc_url($action_url); ?>" method="get" style="display:grid; grid-template-columns: <?php echo $show_room ? '1fr 1fr 1fr 1fr auto' : '1fr 1fr 1fr auto'; ?>; gap: 14px; align-items:end; padding: 22px; background:#fff; border:1px solid var(--line, #ede9d9); border-radius: var(--radius-lg, 14px); box-shadow: 0 10px 40px rgba(15,32,24,0.06);">
       <label class="field">

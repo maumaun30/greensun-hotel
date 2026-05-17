@@ -44,16 +44,20 @@
   pointer-events: none;
 }
 
-.gs-hero-carousel__content {
+/* Chain .shell to outrank main.css's `.shell { padding: 0 32px }` shorthand,
+   which otherwise resets the vertical padding to 0. */
+.shell.gs-hero-carousel__content {
   position: relative;
   z-index: 2;
   min-height: 100vh;
-  padding-top: 140px;
-  padding-bottom: 180px; /* room for the -72px booking-bar to overlap cleanly */
+  padding: 140px 32px 180px; /* room for the -72px booking-bar overlap */
   display: grid;
   grid-template-columns: 1.4fr 1fr;
   gap: 80px;
   align-items: end;
+}
+@media (max-width: 720px) {
+  .shell.gs-hero-carousel__content { padding-left: 20px; padding-right: 20px; }
 }
 
 .gs-hero-carousel__copy {

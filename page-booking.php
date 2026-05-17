@@ -52,7 +52,7 @@ if ($rooms_q->have_posts()) {
 $steps = ['Dates & guests', 'Choose a room', 'Your details', 'Review & confirm'];
 ?>
 
-<main class="site-main booking-flow" data-prefill="<?php echo esc_attr(wp_json_encode($prefill)); ?>" data-rooms="<?php echo esc_attr(wp_json_encode($rooms_data)); ?>">
+<main id="site-main" class="site-main booking-flow" role="main" data-prefill="<?php echo esc_attr(wp_json_encode($prefill)); ?>" data-rooms="<?php echo esc_attr(wp_json_encode($rooms_data)); ?>">
 
   <section class="booking-flow__header">
     <div class="shell">

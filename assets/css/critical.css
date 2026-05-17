@@ -292,6 +292,52 @@
   .site-footer__grid { grid-template-columns: 1fr; }
 }
 
+/* ---------- A11y: skip-to-content + focus rings ---------- */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  z-index: 1000;
+  padding: 12px 22px;
+  background: var(--forest, #1f4a3a);
+  color: var(--sun, #e8c46a);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: top 250ms cubic-bezier(.16,1,.3,1);
+}
+.skip-link:focus { top: 16px; outline: 2px solid var(--sun, #e8c46a); outline-offset: 2px; }
+
+/* Reset default outline; provide a consistent forest/sun focus ring */
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--forest, #1f4a3a);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+/* On dark surfaces, switch focus ring to sun for contrast */
+.gs-hero-carousel :focus-visible,
+.gs-page-hero :focus-visible,
+.site-footer :focus-visible,
+.bf-summary :focus-visible,
+.gs-404 :focus-visible,
+[class*="__inquiry"] :focus-visible {
+  outline-color: var(--sun, #e8c46a);
+}
+
+.screen-reader-text {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ---------- Reveal-on-scroll ---------- */
 .reveal {
   opacity: 0;
@@ -301,7 +347,13 @@
 .reveal.in { opacity: 1; transform: none; }
 .reveal--lg { transform: translateY(56px); }
 
-/* Reduce motion */
+/* Reduce motion — turn off non-essential animation / scaling */
 @media (prefers-reduced-motion: reduce) {
   .reveal, .reveal--lg { opacity: 1 !important; transform: none !important; transition: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

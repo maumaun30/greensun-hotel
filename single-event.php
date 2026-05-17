@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<main class="site-main">
+<main id="site-main" class="site-main" role="main">
 
   <?php while (have_posts()) : the_post();
     $eid       = get_the_ID();

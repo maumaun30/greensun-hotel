@@ -10,7 +10,7 @@ $query  = trim(get_search_query());
 $total  = (int) $wp_query->found_posts;
 ?>
 
-<main class="site-main gs-search">
+<main id="site-main" class="site-main gs-search" role="main">
 
   <section class="gs-search__header">
     <div class="shell">

@@ -15,7 +15,7 @@ while (have_posts()) : the_post();
   $author_id = get_the_author_meta('ID');
 ?>
 
-<main class="site-main gs-post" <?php post_class(); ?>>
+<main id="site-main" class="site-main gs-post" role="main" <?php post_class(); ?>>
 
   <?php if ($thumb) : ?>
     <section class="gs-page-hero gs-post__hero" style="height: 70vh; min-height: 480px;">

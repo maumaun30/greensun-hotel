@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<main class="site-main events-archive">
+<main id="site-main" class="site-main events-archive" role="main">
 
   <section class="events-archive__header">
     <div class="shell">

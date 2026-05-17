@@ -8,7 +8,9 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<header id="site-header" class="site-header" data-scrolled="false">
+<a class="skip-link" href="#site-main"><?php esc_html_e('Skip to content', 'greensun-hotel'); ?></a>
+
+<header id="site-header" class="site-header" data-scrolled="false" role="banner">
   <div class="shell site-header__inner">
     <div class="site-header__brand">
       <?php

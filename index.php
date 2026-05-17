@@ -20,7 +20,7 @@ if (is_home() && ($posts_page = get_option('page_for_posts'))) {
 }
 ?>
 
-<main class="site-main gs-blog">
+<main id="site-main" class="site-main gs-blog" role="main">
 
   <section class="gs-blog__header">
     <div class="shell">

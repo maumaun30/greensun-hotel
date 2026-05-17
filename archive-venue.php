@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<main class="site-main archive-venue">
+<main id="site-main" class="site-main archive-venue" role="main">
 
   <section class="gs-page-hero archive-venue__hero" style="min-height: 60vh; min-height: 460px;">
     <div class="gs-page-hero__media kb" style="background: linear-gradient(160deg, #1f4a3a, #0f2018);"></div>

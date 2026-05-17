@@ -268,3 +268,33 @@ function greensun_hotel_enqueue_booking_flow_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'greensun_hotel_enqueue_booking_flow_assets' );
 
+
+/**
+ * A11y + perf: lightweight global filters.
+ *
+ * - aria-current="page" on the active nav menu item so screen readers
+ *   announce the current page (and CSS can style independently of the
+ *   .current-menu-item class).
+ * - decoding="async" + lazy default for content images, so the browser
+ *   can paint other things while images decode.
+ */
+add_filter('nav_menu_link_attributes', function ($atts, $item) {
+    if (!empty($item->current) || in_array('current-menu-item', (array) $item->classes, true) || in_array('current_page_item', (array) $item->classes, true)) {
+        $atts['aria-current'] = 'page';
+    }
+    return $atts;
+}, 10, 2);
+
+add_filter('wp_get_attachment_image_attributes', function ($attr) {
+    if (empty($attr['decoding'])) $attr['decoding'] = 'async';
+    if (empty($attr['loading']))  $attr['loading']  = 'lazy';
+    return $attr;
+});
+
+add_filter('the_content', function ($content) {
+    if (is_admin()) return $content;
+    // Add decoding="async" to <img> tags in post content that don't already declare it.
+    return preg_replace_callback('/<img\b(?![^>]*\bdecoding=)([^>]*)>/i', function ($m) {
+        return '<img decoding="async"' . $m[1] . '>';
+    }, $content);
+}, 20);

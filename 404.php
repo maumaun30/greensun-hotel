@@ -6,7 +6,7 @@
 get_header();
 ?>
 
-<main class="site-main gs-404">
+<main id="site-main" class="site-main gs-404" role="main">
   <section class="gs-404__hero" style="position: relative; overflow: hidden;">
     <div class="kb" style="position:absolute; inset:0; z-index:0; background: linear-gradient(160deg, var(--forest, #1f4a3a), var(--forest-2, #0f2018));"></div>
     <svg class="gs-404__leaves" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">

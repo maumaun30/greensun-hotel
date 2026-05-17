@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<main class="site-main rooms-archive">
+<main id="site-main" class="site-main rooms-archive" role="main">
 
   <section class="rooms-archive__header">
     <div class="shell">

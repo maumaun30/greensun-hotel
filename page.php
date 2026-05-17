@@ -19,7 +19,7 @@ while (have_posts()) : the_post();
   $has_blocks = function_exists('has_blocks') && has_blocks(get_the_content());
 ?>
 
-<main class="site-main gs-page" <?php post_class(); ?>>
+<main id="site-main" class="site-main gs-page" role="main" <?php post_class(); ?>>
 
   <?php if ($has_blocks) : ?>
     <?php the_content(); ?>

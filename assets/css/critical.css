@@ -167,7 +167,8 @@ body.gs-light-top .site-header .site-header__cta {
 }
 body.gs-light-top .site-header__cta:hover { color: var(--forest, #1f4a3a); }
 body.gs-light-top .site-header__cta .ripple { background: rgba(31, 74, 58, 0.08); }
-body.gs-light-top .site-main { padding-top: 84px; }
+/* No padding-top on main here: light-top templates already include their
+   own 160px section-header padding to clear the fixed header. */
 
 /* Kill the 24px margin Gutenberg injects onto the first top-level block
    inside <main>. The block-gap is desirable between siblings, not at the

@@ -315,6 +315,11 @@ add_filter('body_class', function ($classes) {
         return $classes;
     }
 
+    // single.php renders a dark cover hero when the post has a featured image.
+    if (is_singular('post') && has_post_thumbnail()) {
+        return $classes;
+    }
+
     // Singular pages whose first block is a dark hero block.
     if (is_singular()) {
         $post = get_post();

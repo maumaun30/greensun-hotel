@@ -247,10 +247,12 @@
     pointer-events: none;
     opacity: 0.6;
   }
-  .ph img {
-    width: 100%; height: 100%; object-fit: cover;
+  .ph img,
+  .ph .gs-img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
     transition: transform 2400ms var(--ease-out), filter 800ms var(--ease);
   }
+  .gs-img { max-width: 100%; height: auto; }
   .kb .ph img, .ph.kb img, .kb > img {
     animation: kenburns 22s ease-in-out infinite alternate;
   }

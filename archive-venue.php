@@ -38,10 +38,8 @@
       ?>
         <article class="archive-venue__row reveal reveal--lg<?php echo $flip ? ' is-flipped' : ''; ?>">
           <div class="archive-venue__media">
-            <a href="<?php the_permalink(); ?>" class="ph kb" style="display:block; height: 540px;">
-              <?php if ($thumb) : ?>
-                <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" style="width:100%; height:100%; object-fit:cover;" loading="lazy" />
-              <?php endif; ?>
+            <a href="<?php the_permalink(); ?>" class="ph kb archive-venue__img" style="display:block; height: 540px;">
+              <?php echo greensun_post_thumbnail_html($vid, 'full', '(max-width: 900px) 100vw, 50vw', 'archive-venue__img-el'); ?>
             </a>
             <div class="archive-venue__badge"><?php echo esc_html(str_pad((string) ($idx + 1), 2, '0', STR_PAD_LEFT)); ?></div>
           </div>
@@ -132,7 +130,8 @@
     overflow: hidden;
     background: var(--bone, #ede9d9);
   }
-  .archive-venue__media img {
+  .archive-venue__media img,
+  .archive-venue__img-el {
     width: 100%; height: 100%; object-fit: cover; display: block;
     transition: transform 800ms cubic-bezier(.16,1,.3,1);
   }

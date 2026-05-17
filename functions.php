@@ -30,6 +30,7 @@ add_filter('acf/settings/load_json', function ($paths) {
 // Modular includes: CPTs, taxonomies, helpers, fonts. Add new files under /inc/.
 require_once get_stylesheet_directory() . '/inc/fonts.php';
 require_once get_stylesheet_directory() . '/inc/helpers/icons.php';
+require_once get_stylesheet_directory() . '/inc/helpers/images.php';
 require_once get_stylesheet_directory() . '/inc/helpers/logo.php';
 require_once get_stylesheet_directory() . '/inc/cpt-loader.php';
 
@@ -80,13 +81,19 @@ function greensun_hotel_enqueue_assets()
         filemtime(get_theme_file_path('/style.css'))
     );
 
-    // Lenis smooth scroll — loaded before critical.js so window.Lenis is ready.
+    // Lenis smooth scroll + critical.js are both deferred so they don't
+    // block the first paint. critical.js depends on Lenis being defined
+    // but listens for DOMContentLoaded, by which point both deferred
+    // scripts have executed.
     wp_enqueue_script(
         'lenis',
         'https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js',
         [],
         '1.1.20',
-        false
+        [
+            'in_footer' => false,
+            'strategy'  => 'defer',
+        ]
     );
 
     if (file_exists($critical_js)) {
@@ -95,7 +102,10 @@ function greensun_hotel_enqueue_assets()
             get_theme_file_uri('/assets/js/critical.js'),
             ['lenis'],
             filemtime($critical_js),
-            false
+            [
+                'in_footer' => false,
+                'strategy'  => 'defer',
+            ]
         );
     }
 }

@@ -39,9 +39,7 @@
           ?>
             <article class="events-archive__card reveal">
               <a href="<?php the_permalink(); ?>" class="ph kb events-archive__media">
-                <?php if ($thumb) : ?>
-                  <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" loading="lazy" />
-                <?php endif; ?>
+                <?php echo greensun_post_thumbnail_html($eid, 'large', '(max-width: 900px) 100vw, 50vw'); ?>
                 <span class="events-archive__scrim" aria-hidden="true"></span>
                 <div class="events-archive__chips">
                   <?php if ($date_line) : ?>

@@ -38,15 +38,12 @@ if (is_home() && ($posts_page = get_option('page_for_posts'))) {
       <?php if (have_posts()) : ?>
         <div class="gs-blog__grid">
           <?php while (have_posts()) : the_post();
-            $thumb = get_the_post_thumbnail_url(get_the_ID(), 'large');
             $cats  = get_the_category();
             $cat   = !empty($cats) ? $cats[0]->name : '';
           ?>
             <article class="gs-blog__card reveal">
               <a href="<?php the_permalink(); ?>" class="ph kb gs-blog__media">
-                <?php if ($thumb) : ?>
-                  <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" loading="lazy" />
-                <?php endif; ?>
+                <?php echo greensun_post_thumbnail_html(get_the_ID(), 'large', '(max-width: 900px) 100vw, 50vw'); ?>
                 <span class="gs-blog__scrim" aria-hidden="true"></span>
                 <?php if ($cat) : ?>
                   <span class="chip gs-blog__cat"><span class="dot"></span><?php echo esc_html($cat); ?></span>

@@ -48,10 +48,8 @@
             <li>
               <article class="rooms-archive__row reveal reveal--lg<?php echo $flip ? ' is-flipped' : ''; ?>">
                 <div class="rooms-archive__media">
-                  <a href="<?php the_permalink(); ?>" class="ph kb" style="display:block; height: 520px; border-radius: 4px; overflow:hidden;">
-                    <?php if ($thumb) : ?>
-                      <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" style="width:100%; height:100%; object-fit:cover;" loading="lazy" />
-                    <?php endif; ?>
+                  <a href="<?php the_permalink(); ?>" class="ph kb rooms-archive__img" style="display:block; height: 520px; border-radius: 4px; overflow:hidden;">
+                    <?php echo greensun_post_thumbnail_html($room_id, 'large', '(max-width: 900px) 100vw, 60vw', 'rooms-archive__img-el'); ?>
                   </a>
                   <div class="rooms-archive__spec-card">
                     <?php if ($size) : ?>
@@ -170,6 +168,7 @@
   .rooms-archive__row.is-flipped .rooms-archive__media { order: 2; }
   .rooms-archive__row.is-flipped .rooms-archive__body  { order: 1; }
   .rooms-archive__media { position: relative; }
+  .rooms-archive__img-el { width: 100%; height: 100%; object-fit: cover; display: block; }
 
   .rooms-archive__spec-card {
     position: absolute;

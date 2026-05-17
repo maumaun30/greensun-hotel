@@ -4,15 +4,15 @@
   "title": "Gallery Grid",
   "category": "design",
   "icon": "format-gallery",
-  "description": "Masonry-style image grid with optional captions. Multi-select from the media library.",
+  "description": "Filterable spanning grid: 4 columns × 220px rows, with per-image category and 1–2 col/row spans. Click opens a lightbox.",
   "editorScript": "file:./build/index.js",
   "style": "file:./style.css",
   "render": "file:./render.php",
   "attributes": {
     "eyebrow":      { "type": "string", "default": "Gallery" },
-    "sectionTitle": { "type": "string", "default": "Light, <em>land</em>, hours that linger." },
-    "columns":      { "type": "number", "default": 3 },
-    "images":       { "type": "array",  "default": [] },
-    "showCaptions": { "type": "boolean","default": false }
+    "sectionTitle": { "type": "string", "default": "Moments from <em>the hotel.</em>" },
+    "showFilters":  { "type": "boolean","default": true },
+    "categories":   { "type": "array",  "default": ["Rooms", "Events", "Hotel"] },
+    "images":       { "type": "array",  "default": [] }
   }
 }

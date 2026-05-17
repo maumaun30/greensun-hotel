@@ -1,43 +1,83 @@
 <?php
 $eyebrow       = $attributes['eyebrow']       ?? '';
 $section_title = $attributes['sectionTitle']  ?? '';
-$columns       = max(2, min(4, (int) ($attributes['columns'] ?? 3)));
+$show_filters  = !empty($attributes['showFilters']);
+$categories    = $attributes['categories']    ?? [];
 $images        = $attributes['images']        ?? [];
-$show_captions = !empty($attributes['showCaptions']);
+
+// Build the filter list from configured categories ∪ image categories.
+$image_cats = array_values(array_unique(array_filter(array_map(function ($im) {
+    return $im['category'] ?? '';
+}, $images))));
+$filter_cats = array_values(array_unique(array_filter(array_merge((array) $categories, $image_cats))));
 ?>
-<section <?php echo get_block_wrapper_attributes(['class' => 'section greensun-gallery-grid']); ?>>
+<section <?php echo get_block_wrapper_attributes(['class' => 'greensun-gallery-grid']); ?>>
   <div class="shell">
-    <header style="text-align:center; max-width: 760px; margin: 0 auto 56px;">
+    <header class="gs-gallery__head">
       <?php if ($eyebrow) : ?>
-        <div class="eyebrow reveal"><?php echo esc_html($eyebrow); ?></div>
+        <div class="eyebrow reveal" style="justify-content:center; display:inline-flex;"><?php echo esc_html($eyebrow); ?></div>
       <?php endif; ?>
       <?php if ($section_title) : ?>
-        <h2 class="display reveal" style="font-size: clamp(36px, 5vw, 64px); margin-top: 14px;">
+        <h2 class="display reveal gs-gallery__title">
           <?php echo wp_kses_post($section_title); ?>
         </h2>
       <?php endif; ?>
     </header>
 
-    <?php if (!empty($images)) : ?>
-      <div class="gallery-grid__masonry" style="column-count: <?php echo esc_attr($columns); ?>; column-gap: 14px;">
-        <?php foreach ($images as $im) :
-          $url     = $im['url']     ?? '';
-          $full    = $im['full']    ?? $url;
-          $alt     = $im['alt']     ?? '';
-          $caption = $im['caption'] ?? '';
-          if (!$url) continue;
-        ?>
-          <figure class="reveal" style="break-inside: avoid; margin: 0 0 14px;">
-            <a href="<?php echo esc_url($full); ?>" target="_blank" rel="noopener" style="display:block;">
-              <img src="<?php echo esc_url($url); ?>" alt="<?php echo esc_attr($alt); ?>" loading="lazy" style="width:100%; display:block; border-radius: 10px;" />
-            </a>
-            <?php if ($show_captions && $caption) : ?>
-              <figcaption style="margin-top: 8px; font-size: 12px; color: var(--mute, #7b817b); letter-spacing: 0.04em;">
-                <?php echo esc_html($caption); ?>
-              </figcaption>
-            <?php endif; ?>
-          </figure>
+    <?php if ($show_filters && !empty($filter_cats)) : ?>
+      <div class="gs-gallery__filters reveal" role="tablist" aria-label="Filter gallery">
+        <button type="button" class="chip gs-gallery__chip is-active" data-filter="all" role="tab" aria-selected="true">
+          <span class="dot"></span>All
+        </button>
+        <?php foreach ($filter_cats as $cat) : ?>
+          <button type="button" class="chip gs-gallery__chip" data-filter="<?php echo esc_attr(sanitize_title($cat)); ?>" role="tab" aria-selected="false">
+            <span class="dot"></span><?php echo esc_html($cat); ?>
+          </button>
         <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
+
+    <?php if (!empty($images)) : ?>
+      <div class="gs-gallery__grid">
+        <?php foreach ($images as $idx => $im) :
+          $url      = $im['url']      ?? '';
+          $full     = $im['full']     ?? $url;
+          $alt      = $im['alt']      ?? '';
+          $caption  = $im['caption']  ?? '';
+          $category = $im['category'] ?? '';
+          $col_span = max(1, min(2, (int) ($im['colSpan'] ?? 1)));
+          $row_span = max(1, min(2, (int) ($im['rowSpan'] ?? 1)));
+          if (!$url) continue;
+          $delay = ($idx % 4) * 60;
+        ?>
+          <button type="button"
+                  class="gs-gallery__item reveal"
+                  style="grid-column: span <?php echo esc_attr($col_span); ?>; grid-row: span <?php echo esc_attr($row_span); ?>; transition-delay: <?php echo esc_attr($delay); ?>ms;"
+                  data-category="<?php echo esc_attr(sanitize_title($category)); ?>"
+                  data-full="<?php echo esc_url($full); ?>"
+                  data-alt="<?php echo esc_attr($alt); ?>"
+                  data-caption="<?php echo esc_attr($caption); ?>"
+                  aria-label="<?php echo esc_attr($alt ?: __('Open image', 'greensun-hotel')); ?>">
+            <img src="<?php echo esc_url($url); ?>" alt="<?php echo esc_attr($alt); ?>" loading="lazy" />
+            <span class="gs-gallery__overlay" aria-hidden="true"></span>
+            <?php if ($category) : ?>
+              <span class="chip gs-gallery__cat"><span class="dot"></span><?php echo esc_html($category); ?></span>
+            <?php endif; ?>
+          </button>
+        <?php endforeach; ?>
+      </div>
+
+      <div class="gs-gallery__empty" hidden>Nothing in this category yet.</div>
+
+      <!-- Lightbox -->
+      <div class="gs-gallery__lightbox" hidden role="dialog" aria-modal="true" aria-label="Gallery viewer">
+        <button type="button" class="gs-gallery__lb-close" aria-label="Close">×</button>
+        <button type="button" class="gs-gallery__lb-prev"  aria-label="Previous">‹</button>
+        <button type="button" class="gs-gallery__lb-next"  aria-label="Next">›</button>
+        <figure class="gs-gallery__lb-figure">
+          <img class="gs-gallery__lb-img" src="" alt="" />
+          <figcaption class="gs-gallery__lb-cap"></figcaption>
+        </figure>
       </div>
     <?php else : ?>
       <p style="text-align:center; color: var(--ink-2, #3d433d);">No images yet.</p>

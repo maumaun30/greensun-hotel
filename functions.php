@@ -213,6 +213,23 @@ function greensun_hotel_enqueue_contact_form_assets() {
 add_action( 'wp_enqueue_scripts', 'greensun_hotel_enqueue_contact_form_assets' );
 
 /**
+ * Enqueue gallery-grid filter + lightbox JS only when the block is on the page.
+ */
+function greensun_hotel_enqueue_gallery_grid_assets() {
+    if ( ! has_block( 'greensun-hotel/gallery-grid' ) ) {
+        return;
+    }
+    wp_enqueue_script(
+        'greensun-hotel-gallery-grid',
+        get_theme_file_uri( '/assets/js/gallery-grid.js' ),
+        [],
+        filemtime( get_theme_file_path( '/assets/js/gallery-grid.js' ) ),
+        true
+    );
+}
+add_action( 'wp_enqueue_scripts', 'greensun_hotel_enqueue_gallery_grid_assets' );
+
+/**
  * Enqueue events-teaser picker JS only on pages that use the block.
  */
 function greensun_hotel_enqueue_events_teaser_assets() {

@@ -4,18 +4,31 @@
   "title": "About Teaser",
   "category": "design",
   "icon": "info",
-  "description": "Two-column section: eyebrow + title (with italic accent) + body + CTA next to an image.",
+  "description": "Two-column intro: eyebrow + title + body + stats + CTA next to two overlapping images and a year badge.",
   "editorScript": "file:./build/index.js",
   "style": "file:./style.css",
   "render": "file:./render.php",
   "attributes": {
-    "eyebrow":      { "type": "string", "default": "About our hotel" },
-    "title":        { "type": "string", "default": "A quiet luxury rooted in <em>nature</em>." },
-    "subtitle":     { "type": "string", "default": "Tucked between the forest and the sea, every room frames a view, every meal honors the harvest." },
-    "ctaText":      { "type": "string", "default": "Discover our story" },
-    "ctaUrl":       { "type": "string", "default": "#" },
-    "imageUrl":     { "type": "string", "default": "" },
-    "imageId":      { "type": "number", "default": 0 },
-    "imageAlt":     { "type": "string", "default": "" }
+    "eyebrow":          { "type": "string", "default": "About our hotel" },
+    "title":            { "type": "string", "default": "A quieter way to <em>stay in Makati.</em>" },
+    "subtitle":         { "type": "string", "default": "Green Sun is a hotel and events venue that blends modern industrial design with practical comfort. Since 2014, it has been a go-to destination for travelers and event organizers looking for something different." },
+    "ctaText":          { "type": "string", "default": "Discover more" },
+    "ctaUrl":           { "type": "string", "default": "/about" },
+    "stats": {
+      "type": "array",
+      "default": [
+        { "value": "11", "label": "Years welcoming guests" },
+        { "value": "5",  "label": "Distinct room types" },
+        { "value": "3",  "label": "Event venues on-site" }
+      ]
+    },
+    "primaryImageUrl":   { "type": "string", "default": "" },
+    "primaryImageId":    { "type": "number", "default": 0 },
+    "primaryImageAlt":   { "type": "string", "default": "" },
+    "secondaryImageUrl": { "type": "string", "default": "" },
+    "secondaryImageId":  { "type": "number", "default": 0 },
+    "secondaryImageAlt": { "type": "string", "default": "" },
+    "badgeNumber":       { "type": "string", "default": "2014" },
+    "badgeCaption":      { "type": "string", "default": "Est. in Makati" }
   }
 }

@@ -1,8 +1,139 @@
-.wp-block-greensun-hotel-about-teaser {}
+.greensun-about-teaser .gs-about__layout {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 90px;
+  align-items: center;
+}
 
-@media (max-width: 900px) {
-  .wp-block-greensun-hotel-about-teaser .shell {
-    grid-template-columns: 1fr !important;
-    gap: 40px !important;
+.greensun-about-teaser .gs-about__title {
+  font-size: clamp(40px, 5.4vw, 76px);
+  margin-top: 22px;
+  max-width: 14ch;
+  line-height: 1.05;
+}
+.greensun-about-teaser .gs-about__title em { font-style: italic; }
+
+.greensun-about-teaser .gs-about__body {
+  margin-top: 28px;
+  color: var(--ink-2, #3d433d);
+  max-width: 480px;
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.greensun-about-teaser .gs-about__stats {
+  margin-top: 42px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.greensun-about-teaser .gs-about__stat {
+  padding-right: 24px;
+  border-right: 1px solid var(--line, #ede9d9);
+  min-width: 110px;
+}
+.greensun-about-teaser .gs-about__stat:last-child { border-right: 0; }
+.greensun-about-teaser .gs-about__stat-num {
+  font-size: 44px;
+  color: var(--forest, #1f4a3a);
+  line-height: 1;
+}
+.greensun-about-teaser .gs-about__stat-label {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute, #7b817b);
+  margin-top: 6px;
+}
+
+/* Right column — overlapping images + year badge */
+.greensun-about-teaser .gs-about__visual {
+  position: relative;
+  height: 620px;
+}
+.greensun-about-teaser .gs-about__img {
+  position: absolute;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.greensun-about-teaser .gs-about__img--primary {
+  top: 0;
+  right: 30px;
+  width: 360px;
+  height: 460px;
+}
+.greensun-about-teaser .gs-about__img--secondary {
+  bottom: 0;
+  left: 0;
+  width: 320px;
+  height: 380px;
+  box-shadow: 0 24px 50px -28px rgba(0, 0, 0, 0.4);
+}
+.greensun-about-teaser .gs-about__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.greensun-about-teaser .gs-about__badge {
+  position: absolute;
+  top: 36%;
+  right: 0;
+  background: var(--forest, #1f4a3a);
+  color: var(--sun, #e8c46a);
+  padding: 18px 22px;
+  border-radius: 4px;
+  box-shadow: 0 16px 30px -20px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+.greensun-about-teaser .gs-about__badge-num {
+  font-size: 56px;
+  line-height: 1;
+}
+.greensun-about-teaser .gs-about__badge-cap {
+  font-family: var(--font-sans, "Manrope", sans-serif);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-top: 8px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 1100px) {
+  .greensun-about-teaser .gs-about__layout {
+    grid-template-columns: 1fr;
+    gap: 56px;
   }
+  .greensun-about-teaser .gs-about__visual {
+    height: 540px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .greensun-about-teaser .gs-about__visual {
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .greensun-about-teaser .gs-about__img--primary,
+  .greensun-about-teaser .gs-about__img--secondary {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 320px;
+  }
+  .greensun-about-teaser .gs-about__badge {
+    position: relative;
+    top: auto;
+    right: auto;
+    justify-self: end;
+    margin-top: -56px;
+    z-index: 3;
+  }
+  .greensun-about-teaser .gs-about__stats { gap: 12px; }
+  .greensun-about-teaser .gs-about__stat { min-width: 90px; padding-right: 16px; }
+  .greensun-about-teaser .gs-about__stat-num { font-size: 36px; }
 }

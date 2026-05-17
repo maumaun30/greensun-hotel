@@ -126,17 +126,21 @@
                 foreach ($perks as $perk) :
               ?>
                 <li style="display:flex; gap: 12px; align-items: center;">
-                  <svg width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                    <path d="M3 9 L7.5 13.5 L15 5" stroke="var(--moss, #527a55)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" style="flex: 0 0 18px;">
+                    <circle cx="9" cy="9" r="9" fill="var(--moss, #527a55)" opacity=".15"/>
+                    <path d="M5 9 L8 12 L13 6" stroke="var(--moss, #527a55)" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                   <span><?php echo esc_html($perk); ?></span>
                 </li>
               <?php endforeach; ?>
             </ul>
 
-            <a href="<?php echo esc_url($cta_url); ?>" class="btn btn--sun" style="margin-top: 28px; width:100%; justify-content:center;">
+            <a href="<?php echo esc_url($cta_url); ?>" class="btn btn--sun btn--lg" style="margin-top: 28px; width:100%; justify-content:center;">
               <span class="ripple"></span>
               <span><?php echo esc_html($cta_text); ?></span>
+              <svg width="14" height="10" viewBox="0 0 22 8" fill="none" aria-hidden="true" style="margin-left: 8px;">
+                <path d="M0 4 L20 4 M14 0 L20 4 L14 8" stroke="currentColor" stroke-width="1.4" fill="none"/>
+              </svg>
             </a>
 
             <?php if ($brochure) : ?>
@@ -220,6 +224,34 @@
       </section>
     <?php endif; ?>
 
+    <section class="single-venue__inquiry" style="background: var(--forest, #1f4a3a); color: var(--ivory, #f7f6f0); padding: 90px 0;">
+      <div class="shell single-venue__inquiry-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items:center;">
+        <h2 class="display reveal reveal--lg" style="font-size: clamp(36px, 5vw, 60px); color: var(--sun, #e8c46a); max-width: 14ch;">
+          Planning <em>something special?</em>
+        </h2>
+        <div>
+          <p class="reveal" style="font-size: 17px; line-height: 1.75; color: rgba(255,255,255,.78); max-width: 480px;">
+            Tell us about your event — guest count, dates, the feel you're after. Our team will send back venue options, pricing, and a layout sketch within one business day.
+          </p>
+          <div class="reveal" style="margin-top: 28px; display:flex; gap: 14px; flex-wrap: wrap;">
+            <a href="<?php echo esc_url($cta_url); ?>" class="btn btn--sun btn--lg">
+              <span class="ripple"></span>
+              <span>Send an inquiry</span>
+              <svg width="14" height="10" viewBox="0 0 22 8" fill="none" aria-hidden="true" style="margin-left: 8px;">
+                <path d="M0 4 L20 4 M14 0 L20 4 L14 8" stroke="currentColor" stroke-width="1.4" fill="none"/>
+              </svg>
+            </a>
+            <?php if ($brochure) : ?>
+              <a href="<?php echo esc_url($brochure); ?>" target="_blank" rel="noopener" class="btn btn--ghost btn--light btn--lg">
+                <span class="ripple"></span>
+                <span>Download brochure</span>
+              </a>
+            <?php endif; ?>
+          </div>
+        </div>
+      </div>
+    </section>
+
   <?php endwhile; ?>
 
 </main>
@@ -231,6 +263,7 @@
     .single-venue__specs { grid-template-columns: 1fr 1fr !important; }
     .single-venue__gallery { grid-template-columns: 1fr !important; }
     .single-venue__gallery .ph { grid-row: span 1 !important; height: 280px !important; }
+    .single-venue__inquiry-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
   }
 </style>
 

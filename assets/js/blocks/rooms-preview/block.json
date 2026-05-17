@@ -9,10 +9,10 @@
   "style": "file:./style.css",
   "render": "file:./render.php",
   "attributes": {
-    "eyebrow":      { "type": "string", "default": "Rooms & suites" },
-    "sectionTitle": { "type": "string", "default": "A room for <em>every</em> mood." },
-    "subtitle":     { "type": "string", "default": "Hand-picked stays from our collection." },
-    "ctaText":      { "type": "string", "default": "View all rooms" },
+    "eyebrow":      { "type": "string", "default": "The rooms" },
+    "sectionTitle": { "type": "string", "default": "Relax and connect <em>in your own space.</em>" },
+    "subtitle":     { "type": "string", "default": "" },
+    "ctaText":      { "type": "string", "default": "All rooms" },
     "ctaUrl":       { "type": "string", "default": "/rooms" },
     "featuredRooms":{ "type": "array",  "default": [] },
     "fallbackCount":{ "type": "number", "default": 3 }

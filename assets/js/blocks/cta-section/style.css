@@ -1,10 +1,26 @@
-.wp-block-greensun-hotel-cta-section {
-  padding-block: clamp(80px, 12vw, 160px);
+.greensun-cta-section .greensun-cta-section__inner {
+  position: relative;
+  z-index: 1;
+  padding-block: 140px;
+  color: var(--ivory, #f7f6f0);
+}
+.greensun-cta-section .greensun-cta-section__centered .greensun-cta-section__copy {
+  max-width: 720px;
+}
+.greensun-cta-section .greensun-cta-section__split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  padding-block: 100px;
+}
+.greensun-cta-section .greensun-cta-section__buttons {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
 }
 
 @media (max-width: 900px) {
-  .wp-block-greensun-hotel-cta-section .greensun-cta-section__split {
-    grid-template-columns: 1fr !important;
-    gap: 24px !important;
-  }
+  .greensun-cta-section .greensun-cta-section__inner { padding-block: 90px; }
+  .greensun-cta-section .greensun-cta-section__split { grid-template-columns: 1fr; gap: 32px; }
 }

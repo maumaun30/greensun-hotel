@@ -8,7 +8,7 @@ import {
 import { PanelBody, TextControl, Button, RangeControl, SelectControl } from '@wordpress/components';
 
 export default function Edit({ attributes, setAttributes }) {
-  const { eyebrow, title, subtitle, ctaText, ctaUrl, imageUrl, imageId, imageAlt, overlayOpacity, layout } = attributes;
+  const { eyebrow, title, subtitle, ctaText, ctaUrl, secondaryCtaText, secondaryCtaUrl, imageUrl, imageId, imageAlt, overlayOpacity, layout } = attributes;
 
   const overlayAlpha = Math.max(0, Math.min(100, overlayOpacity)) / 100;
 
@@ -53,9 +53,13 @@ export default function Edit({ attributes, setAttributes }) {
             onChange={(v) => setAttributes({ overlayOpacity: v })}
           />
         </PanelBody>
-        <PanelBody title="Call to action" initialOpen={false}>
+        <PanelBody title="Primary CTA" initialOpen={false}>
           <TextControl label="Button text" value={ctaText} onChange={(v) => setAttributes({ ctaText: v })} />
-          <TextControl label="Button URL" value={ctaUrl} type="url" onChange={(v) => setAttributes({ ctaUrl: v })} />
+          <TextControl label="Button URL"  value={ctaUrl}  type="url" onChange={(v) => setAttributes({ ctaUrl: v })} />
+        </PanelBody>
+        <PanelBody title="Secondary CTA (ghost)" initialOpen={false}>
+          <TextControl label="Button text" value={secondaryCtaText} onChange={(v) => setAttributes({ secondaryCtaText: v })} help="Leave empty to hide the secondary button." />
+          <TextControl label="Button URL"  value={secondaryCtaUrl}  type="url" onChange={(v) => setAttributes({ secondaryCtaUrl: v })} />
         </PanelBody>
       </InspectorControls>
 
@@ -98,10 +102,17 @@ export default function Edit({ attributes, setAttributes }) {
           placeholder="Subtitle…"
           allowedFormats={['core/bold', 'core/italic']}
         />
-        <div style={{ marginTop: 36 }}>
-          <span style={{ display: 'inline-block', padding: '14px 28px', background: '#e8c46a', color: '#1f4a3a', fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', borderRadius: 999, fontWeight: 600 }}>
-            {ctaText || 'Button'}
-          </span>
+        <div style={{ marginTop: 36, display: 'inline-flex', gap: 14 }}>
+          {ctaText && (
+            <span style={{ display: 'inline-block', padding: '14px 28px', background: '#e8c46a', color: '#1f4a3a', fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', borderRadius: 999, fontWeight: 600 }}>
+              {ctaText}
+            </span>
+          )}
+          {secondaryCtaText && (
+            <span style={{ display: 'inline-block', padding: '13px 26px', background: 'transparent', color: '#f7f6f0', border: '1px solid rgba(255,255,255,0.55)', fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', borderRadius: 999, fontWeight: 600 }}>
+              {secondaryCtaText}
+            </span>
+          )}
         </div>
       </section>
     </>

@@ -7,33 +7,35 @@ $items         = $attributes['items'] ?? [];
 ?>
 <section <?php echo get_block_wrapper_attributes(['class' => 'section greensun-amenities-grid']); ?>>
   <div class="shell">
-    <header style="text-align:center; max-width: 720px; margin: 0 auto 64px;">
+    <header class="gs-amenities__head">
       <?php if ($eyebrow) : ?>
-        <div class="eyebrow reveal"><?php echo esc_html($eyebrow); ?></div>
+        <div class="eyebrow reveal" style="justify-content:center; display:inline-flex;"><?php echo esc_html($eyebrow); ?></div>
       <?php endif; ?>
       <?php if ($section_title) : ?>
-        <h2 class="display reveal" style="font-size: clamp(36px, 5vw, 64px); margin-top: 14px;">
+        <h2 class="display reveal gs-amenities__title">
           <?php echo wp_kses_post($section_title); ?>
         </h2>
       <?php endif; ?>
+      <div class="linedot reveal" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
     </header>
-    <div class="amenities-list" style="display:grid; grid-template-columns: repeat(<?php echo esc_attr($columns); ?>, 1fr); gap: 40px 32px;">
+
+    <div class="gs-amenities__grid" style="--gs-cols: <?php echo esc_attr($columns); ?>;">
       <?php foreach ($items as $item) :
         $svg_id  = (int) ($item['svgId'] ?? 0);
         $svg_url = $item['svgUrl'] ?? '';
         $label   = $item['label']  ?? '';
       ?>
-        <div class="amenity reveal" style="text-align:center;">
-          <div class="amenity__icon" style="width:72px; height:72px; margin-inline:auto; border-radius:999px; background: var(--bone, #ede9d9); display:flex; align-items:center; justify-content:center; margin-bottom:18px; color: var(--forest, #1f4a3a);">
+        <div class="gs-amenity reveal">
+          <div class="gs-amenity__glyph">
             <?php if ($svg_url && function_exists('greensun_hotel_render_svg_icon')) :
-              greensun_hotel_render_svg_icon($svg_id, $svg_url, 'amenity__svg');
+              greensun_hotel_render_svg_icon($svg_id, $svg_url, 'gs-amenity__svg');
             elseif ($svg_url) : ?>
-              <img src="<?php echo esc_url($svg_url); ?>" alt="" style="width:34px; height:34px; object-fit:contain;" />
+              <img src="<?php echo esc_url($svg_url); ?>" alt="" />
             <?php endif; ?>
           </div>
-          <div class="amenity__label" style="font-size: 15px; color: var(--ink, #1a1f1a); line-height: 1.5;">
-            <?php echo esc_html($label); ?>
-          </div>
+          <div class="gs-amenity__label"><?php echo esc_html($label); ?></div>
         </div>
       <?php endforeach; ?>
     </div>

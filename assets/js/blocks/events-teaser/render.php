@@ -5,7 +5,7 @@ $subtitle       = $attributes['subtitle']       ?? '';
 $cta_text       = $attributes['ctaText']        ?? '';
 $cta_url        = $attributes['ctaUrl']         ?? '/events';
 $featured_ids   = array_values(array_filter(array_map('intval', $attributes['featuredEvents'] ?? [])));
-$fallback_count = max(1, min(6, (int) ($attributes['fallbackCount'] ?? 3)));
+$fallback_count = max(1, min(6, (int) ($attributes['fallbackCount'] ?? 4)));
 
 if (!empty($featured_ids)) {
     $query_args = [
@@ -37,77 +37,109 @@ if (!empty($featured_ids)) {
     ];
 }
 $events_query = new WP_Query($query_args);
-$count_cols   = max(1, min(3, $events_query->post_count ?: 1));
+
+$events = [];
+if ($events_query->have_posts()) {
+    while ($events_query->have_posts()) {
+        $events_query->the_post();
+        $eid = get_the_ID();
+        $events[] = [
+            'id'        => $eid,
+            'title'     => get_the_title(),
+            'permalink' => get_permalink($eid),
+            'thumb'     => get_the_post_thumbnail_url($eid, 'full'),
+            'excerpt'   => wp_strip_all_tags(get_the_excerpt()),
+            'start'     => function_exists('get_field') ? get_field('event_start',    $eid) : '',
+            'time'      => function_exists('get_field') ? get_field('event_time',     $eid) : '',
+            'location'  => function_exists('get_field') ? get_field('event_location', $eid) : '',
+            'capacity'  => function_exists('get_field') ? (int) get_field('event_capacity', $eid) : 0,
+        ];
+    }
+    wp_reset_postdata();
+}
+$count = count($events);
 ?>
 <section <?php echo get_block_wrapper_attributes(['class' => 'section greensun-events-teaser']); ?>>
   <div class="shell">
-    <header class="events-teaser__head" style="display:grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items:end; margin-bottom: 64px;">
-      <div>
-        <?php if ($eyebrow) : ?>
-          <div class="eyebrow reveal"><?php echo esc_html($eyebrow); ?></div>
-        <?php endif; ?>
-        <?php if ($section_title) : ?>
-          <h2 class="display reveal" style="font-size: clamp(36px, 5vw, 72px); margin-top: 14px; max-width: 14ch;">
-            <?php echo wp_kses_post($section_title); ?>
-          </h2>
-        <?php endif; ?>
-      </div>
+    <header class="gs-events__head">
+      <?php if ($eyebrow) : ?>
+        <div class="eyebrow reveal" style="display:inline-flex; justify-content:center;"><?php echo esc_html($eyebrow); ?></div>
+      <?php endif; ?>
+      <?php if ($section_title) : ?>
+        <h2 class="display reveal gs-events__title"><?php echo wp_kses_post($section_title); ?></h2>
+      <?php endif; ?>
+      <div class="linedot reveal" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
       <?php if ($subtitle) : ?>
-        <p class="reveal" style="color: var(--ink-2, #3d433d); line-height: 1.75; max-width: 52ch;">
-          <?php echo wp_kses_post($subtitle); ?>
-        </p>
+        <p class="reveal gs-events__subtitle"><?php echo wp_kses_post($subtitle); ?></p>
       <?php endif; ?>
     </header>
 
-    <?php if ($events_query->have_posts()) : ?>
-      <div class="events-teaser__grid" style="display:grid; grid-template-columns: repeat(<?php echo esc_attr($count_cols); ?>, 1fr); gap: 28px;">
-        <?php while ($events_query->have_posts()) : $events_query->the_post();
-          $eid       = get_the_ID();
-          $start     = function_exists('get_field') ? get_field('event_start', $eid) : '';
-          $time      = function_exists('get_field') ? get_field('event_time', $eid) : '';
-          $location  = function_exists('get_field') ? get_field('event_location', $eid) : '';
-          $cta_t     = function_exists('get_field') ? (get_field('event_cta_text', $eid) ?: 'Reserve') : 'Reserve';
-          $cta_u     = function_exists('get_field') ? get_field('event_cta_url', $eid) : '';
-          if (!$cta_u) $cta_u = get_permalink();
-          $thumb     = get_the_post_thumbnail_url($eid, 'large');
-          $start_fmt = $start ? date_i18n('M j, Y', strtotime($start)) : '';
-        ?>
-          <article class="gs-card reveal" style="background:#fff; border-radius: var(--radius-lg, 14px); overflow:hidden; border:1px solid var(--line, #ede9d9); display:flex; flex-direction:column;">
-            <a href="<?php the_permalink(); ?>" class="ph kb" style="aspect-ratio: 4 / 3; display:block;">
-              <?php if ($thumb) : ?>
-                <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" style="width:100%; height:100%; object-fit:cover;" />
+    <?php if ($count > 0) : ?>
+      <div class="gs-events__split" data-active="0">
+
+        <div class="gs-events__stage">
+          <?php foreach ($events as $idx => $e) : ?>
+            <a class="gs-events__slide<?php echo $idx === 0 ? ' is-active' : ''; ?>"
+               data-index="<?php echo esc_attr($idx); ?>"
+               href="<?php echo esc_url($e['permalink']); ?>">
+              <?php if ($e['thumb']) : ?>
+                <img class="kb" src="<?php echo esc_url($e['thumb']); ?>" alt="<?php echo esc_attr($e['title']); ?>" loading="lazy" />
               <?php endif; ?>
-            </a>
-            <div style="padding: 28px; display:flex; flex-direction:column; flex:1;">
-              <?php if ($start_fmt || $time || $location) : ?>
-                <div class="eyebrow" style="color: var(--moss, #527a55);">
-                  <?php echo esc_html(trim(implode(' · ', array_filter([$start_fmt, $time, $location])))); ?>
+              <span class="gs-events__scrim" aria-hidden="true"></span>
+              <div class="gs-events__caption">
+                <div class="gs-events__counter">
+                  <?php echo esc_html(str_pad((string)($idx + 1), 2, '0', STR_PAD_LEFT)); ?> / <?php echo esc_html(str_pad((string)$count, 2, '0', STR_PAD_LEFT)); ?>
                 </div>
-              <?php endif; ?>
-              <h3 class="display" style="font-size: 30px; margin: 8px 0 0;">
-                <a href="<?php the_permalink(); ?>" style="color: inherit; text-decoration: none;"><?php the_title(); ?></a>
-              </h3>
-              <?php if (get_the_excerpt()) : ?>
-                <p style="margin-top: 12px; color: var(--ink-2, #3d433d); line-height: 1.6;"><?php echo esc_html(get_the_excerpt()); ?></p>
-              <?php endif; ?>
-              <a href="<?php echo esc_url($cta_u); ?>" class="linedot" style="margin-top:auto; padding-top: 22px; display:inline-flex; align-items:center; gap: 10px; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--forest, #1f4a3a); text-decoration: none;">
-                <?php echo esc_html($cta_t); ?> <span aria-hidden="true">→</span>
-              </a>
-            </div>
-          </article>
-        <?php endwhile; wp_reset_postdata(); ?>
+                <h3 class="display gs-events__caption-title"><?php echo esc_html($e['title']); ?></h3>
+                <div class="gs-events__chips">
+                  <?php if ($e['capacity']) : ?>
+                    <span class="chip gs-events__chip"><span class="dot"></span><?php echo esc_html(sprintf(_n('%d guest', '%d guests', $e['capacity'], 'greensun-hotel'), $e['capacity'])); ?></span>
+                  <?php endif; ?>
+                  <?php if ($e['location']) : ?>
+                    <span class="chip gs-events__chip"><span class="dot"></span><?php echo esc_html($e['location']); ?></span>
+                  <?php endif; ?>
+                </div>
+              </div>
+            </a>
+          <?php endforeach; ?>
+        </div>
+
+        <div class="gs-events__list">
+          <div class="gs-events__list-inner">
+            <?php foreach ($events as $idx => $e) :
+              $start_fmt = $e['start'] ? date_i18n('M j, Y', strtotime($e['start'])) : '';
+            ?>
+              <button type="button"
+                      class="gs-events__pick<?php echo $idx === 0 ? ' is-active' : ''; ?>"
+                      data-index="<?php echo esc_attr($idx); ?>"
+                      aria-controls="gs-events-slide-<?php echo esc_attr($idx); ?>">
+                <div class="gs-events__pick-head">
+                  <h4 class="display gs-events__pick-title"><?php echo esc_html($e['title']); ?></h4>
+                  <span class="gs-events__pick-num"><?php echo esc_html(str_pad((string)($idx + 1), 2, '0', STR_PAD_LEFT)); ?></span>
+                </div>
+                <?php if ($e['excerpt'] || $start_fmt) : ?>
+                  <p class="gs-events__pick-body">
+                    <?php echo esc_html($e['excerpt'] ?: $start_fmt); ?>
+                  </p>
+                <?php endif; ?>
+              </button>
+            <?php endforeach; ?>
+          </div>
+
+          <?php if ($cta_text) : ?>
+            <a class="btn btn--ghost reveal gs-events__cta" href="<?php echo esc_url($cta_url); ?>">
+              <span class="ripple"></span>
+              <span><?php echo esc_html($cta_text); ?></span>
+              <svg width="14" height="10" viewBox="0 0 22 8" fill="none" aria-hidden="true" style="margin-left: 8px;">
+                <path d="M0 4 L20 4 M14 0 L20 4 L14 8" stroke="currentColor" stroke-width="1.4" fill="none"/>
+              </svg>
+            </a>
+          <?php endif; ?>
+        </div>
+
       </div>
     <?php else : ?>
       <p style="text-align:center; color: var(--ink-2, #3d433d);">No upcoming events.</p>
-    <?php endif; ?>
-
-    <?php if ($cta_text) : ?>
-      <div class="btn-row reveal" style="margin-top: 48px; text-align:center;">
-        <a href="<?php echo esc_url($cta_url); ?>" class="btn">
-          <span class="ripple"></span>
-          <span><?php echo esc_html($cta_text); ?></span>
-        </a>
-      </div>
     <?php endif; ?>
   </div>
 </section>

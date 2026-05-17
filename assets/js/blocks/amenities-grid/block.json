@@ -9,8 +9,8 @@
   "style": "file:./style.css",
   "render": "file:./render.php",
   "attributes": {
-    "eyebrow":      { "type": "string", "default": "Amenities" },
-    "sectionTitle": { "type": "string", "default": "Quiet comforts, <em>thoughtfully</em> chosen." },
+    "eyebrow":      { "type": "string", "default": "Feature" },
+    "sectionTitle": { "type": "string", "default": "Hotel amenities" },
     "columns":      { "type": "number", "default": 4 },
     "items": {
       "type": "array",

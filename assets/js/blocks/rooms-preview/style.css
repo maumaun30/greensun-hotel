@@ -1,5 +1,123 @@
+.greensun-rooms-preview .gs-rooms__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 64px;
+}
+.greensun-rooms-preview .gs-rooms__title {
+  font-size: clamp(40px, 5.4vw, 76px);
+  margin-top: 18px;
+  max-width: 13ch;
+  line-height: 1.05;
+}
+.greensun-rooms-preview .gs-rooms__title em { font-style: italic; }
+.greensun-rooms-preview .gs-rooms__subtitle {
+  margin-top: 18px;
+  color: var(--ink-2, #3d433d);
+  line-height: 1.7;
+  max-width: 56ch;
+}
+
+.greensun-rooms-preview .gs-rooms__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--gs-cols, 3), 1fr);
+  gap: 28px;
+}
+
+.greensun-rooms-preview .gs-room {
+  display: block;
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+.greensun-rooms-preview .gs-room__media {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  aspect-ratio: 4 / 3;
+  background: var(--bone, #ede9d9);
+}
+.greensun-rooms-preview .gs-room__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 700ms cubic-bezier(.16,1,.3,1);
+}
+.greensun-rooms-preview .gs-room:hover .gs-room__media img { transform: scale(1.04); }
+
+.greensun-rooms-preview .gs-room__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(13,42,32,.6), transparent 55%);
+  pointer-events: none;
+}
+.greensun-rooms-preview .gs-room__chips {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.greensun-rooms-preview .gs-room__chips .chip { background: rgba(255, 255, 255, 0.85); }
+
+.greensun-rooms-preview .gs-room__pill {
+  position: absolute;
+  bottom: 18px;
+  right: 18px;
+  background: var(--ivory, #f7f6f0);
+  color: var(--forest, #1f4a3a);
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  transform: translateY(4px);
+  opacity: 0.9;
+  transition: transform 350ms cubic-bezier(.16,1,.3,1), opacity 350ms cubic-bezier(.16,1,.3,1);
+}
+.greensun-rooms-preview .gs-room:hover .gs-room__pill { transform: none; opacity: 1; }
+
+.greensun-rooms-preview .gs-room__body {
+  padding-top: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+.greensun-rooms-preview .gs-room__title {
+  font-size: 28px;
+  color: var(--ink, #1a1f1a);
+  margin: 0;
+  line-height: 1.1;
+}
+.greensun-rooms-preview .gs-room__meta {
+  color: var(--mute, #7b817b);
+  font-size: 14px;
+  margin-top: 4px;
+}
+.greensun-rooms-preview .gs-room__price { text-align: right; }
+.greensun-rooms-preview .gs-room__from,
+.greensun-rooms-preview .gs-room__per {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  color: var(--mute, #7b817b);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+.greensun-rooms-preview .gs-room__rate {
+  font-size: 28px;
+  color: var(--forest, #1f4a3a);
+  line-height: 1.1;
+  margin-block: 2px;
+}
+
 @media (max-width: 900px) {
-  .wp-block-greensun-hotel-rooms-preview .rooms-preview__grid {
-    grid-template-columns: 1fr !important;
-  }
+  .greensun-rooms-preview .gs-rooms__grid { grid-template-columns: 1fr; }
 }

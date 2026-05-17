@@ -10,14 +10,16 @@
   "render": "file:./render.php",
   "attributes": {
     "eyebrow":       { "type": "string", "default": "Reserve your stay" },
-    "title":         { "type": "string", "default": "Wake to <em>birdsong</em>, not alarms." },
-    "subtitle":      { "type": "string", "default": "Book direct for our best rate and a welcome glass of estate wine." },
-    "ctaText":       { "type": "string", "default": "Check availability" },
-    "ctaUrl":        { "type": "string", "default": "#" },
+    "title":         { "type": "string", "default": "A room is waiting <em>for you.</em>" },
+    "subtitle":      { "type": "string", "default": "Direct booking, best available rates. Reach our team for tailored stays, long-term bookings, and event packages." },
+    "ctaText":       { "type": "string", "default": "Book a room" },
+    "ctaUrl":        { "type": "string", "default": "/booking" },
+    "secondaryCtaText": { "type": "string", "default": "Talk to our team" },
+    "secondaryCtaUrl":  { "type": "string", "default": "/contact" },
     "imageUrl":      { "type": "string", "default": "" },
     "imageId":       { "type": "number", "default": 0 },
     "imageAlt":      { "type": "string", "default": "" },
-    "overlayOpacity":{ "type": "number", "default": 55 },
+    "overlayOpacity":{ "type": "number", "default": 70 },
     "layout":        { "type": "string", "default": "centered" }
   }
 }

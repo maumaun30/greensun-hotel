@@ -213,6 +213,23 @@ function greensun_hotel_enqueue_contact_form_assets() {
 add_action( 'wp_enqueue_scripts', 'greensun_hotel_enqueue_contact_form_assets' );
 
 /**
+ * Enqueue events-teaser picker JS only on pages that use the block.
+ */
+function greensun_hotel_enqueue_events_teaser_assets() {
+    if ( ! has_block( 'greensun-hotel/events-teaser' ) ) {
+        return;
+    }
+    wp_enqueue_script(
+        'greensun-hotel-events-teaser',
+        get_theme_file_uri( '/assets/js/events-teaser.js' ),
+        [],
+        filemtime( get_theme_file_path( '/assets/js/events-teaser.js' ) ),
+        true
+    );
+}
+add_action( 'wp_enqueue_scripts', 'greensun_hotel_enqueue_events_teaser_assets' );
+
+/**
  * Enqueue the multi-step booking flow JS only on the booking template.
  */
 function greensun_hotel_enqueue_booking_flow_assets() {

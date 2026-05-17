@@ -75,8 +75,3 @@ jobs:
             -e "ssh -p ${PORT} -o StrictHostKeyChecking=yes" \
             ./.deploy/ \
             "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/"
-
-      - name: Bust opcache (optional)
-        if: ${{ secrets.DEPLOY_OPCACHE_URL != '' }}
-        run: |
-          curl -fsS --max-time 10 "${{ secrets.DEPLOY_OPCACHE_URL }}" || true

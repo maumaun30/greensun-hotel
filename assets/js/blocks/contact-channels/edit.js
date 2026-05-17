@@ -3,7 +3,7 @@ import { PanelBody, TextControl, TextareaControl, Button, Card, CardBody, CardHe
 import { plus, chevronUp, chevronDown, trash } from '@wordpress/icons';
 
 export default function Edit({ attributes, setAttributes }) {
-  const { channels, mapEmbed } = attributes;
+  const { channels, mapEmbed, mapLabel, mapCaption } = attributes;
 
   const update = (i, field, value) => setAttributes({ channels: channels.map((c, idx) => idx === i ? { ...c, [field]: value } : c) });
   const add    = () => setAttributes({ channels: [...channels, { title: 'New channel', lines: '' }] });
@@ -19,14 +19,16 @@ export default function Edit({ attributes, setAttributes }) {
   return (
     <>
       <InspectorControls>
-        <PanelBody title="Map embed" initialOpen={false}>
+        <PanelBody title="Map" initialOpen={false}>
           <TextareaControl
-            label="iframe HTML"
-            help="Optional. A Google Maps / OpenStreetMap iframe rendered below the channels."
+            label="iframe HTML (overrides illustration)"
+            help="Optional. Paste a Google Maps / OpenStreetMap iframe. Leave blank to render the design's stylized SVG map."
             value={mapEmbed}
             onChange={(v) => setAttributes({ mapEmbed: v })}
             rows={6}
           />
+          <TextControl label="Illustration caption" value={mapCaption || ''} onChange={(v) => setAttributes({ mapCaption: v })} help="Italic label drawn over the SVG map." />
+          <TextControl label="Bottom-right tag"     value={mapLabel || ''}   onChange={(v) => setAttributes({ mapLabel: v })}   help="Small mono label in the corner." />
         </PanelBody>
         <PanelBody title={`Channels (${channels.length})`} initialOpen>
           {channels.map((c, index) => (

@@ -33,10 +33,11 @@ add_action('rest_api_init', function () {
         'callback'            => 'greensun_rest_contact',
         'permission_callback' => 'greensun_rest_public_permission',
         'args'                => [
-            'name'    => ['required' => true, 'type' => 'string'],
-            'email'   => ['required' => true, 'type' => 'string'],
+            'name'    => ['required' => true,  'type' => 'string'],
+            'email'   => ['required' => true,  'type' => 'string'],
             'phone'   => ['required' => false, 'type' => 'string'],
-            'message' => ['required' => true, 'type' => 'string'],
+            'subject' => ['required' => false, 'type' => 'string'],
+            'message' => ['required' => true,  'type' => 'string'],
             '_hp'     => ['required' => false, 'type' => 'string'],
         ],
     ]);
@@ -99,6 +100,7 @@ function greensun_rest_contact(WP_REST_Request $request) {
     $name    = sanitize_text_field((string) $request->get_param('name'));
     $email   = sanitize_email((string) $request->get_param('email'));
     $phone   = sanitize_text_field((string) $request->get_param('phone'));
+    $subject_in = sanitize_text_field((string) $request->get_param('subject'));
     $message = wp_strip_all_tags((string) $request->get_param('message'));
 
     if (!is_email($email)) {
@@ -108,11 +110,12 @@ function greensun_rest_contact(WP_REST_Request $request) {
         return new WP_REST_Response(['error' => 'Please add a message.'], 400);
     }
 
-    $to      = apply_filters('greensun_contact_to', get_option('admin_email'));
-    $subject = sprintf('[%s] New enquiry from %s', wp_specialchars_decode(get_bloginfo('name'), ENT_QUOTES), $name);
-    $body    = sprintf(
-        "Name: %s\nEmail: %s\nPhone: %s\n\nMessage:\n%s",
-        $name, $email, $phone ?: '—', $message
+    $to       = apply_filters('greensun_contact_to', get_option('admin_email'));
+    $subj_tag = $subject_in ?: 'Enquiry';
+    $subject  = sprintf('[%s] %s — %s', wp_specialchars_decode(get_bloginfo('name'), ENT_QUOTES), $subj_tag, $name);
+    $body     = sprintf(
+        "Name: %s\nEmail: %s\nPhone: %s\nSubject: %s\n\nMessage:\n%s",
+        $name, $email, $phone ?: '—', $subject_in ?: '—', $message
     );
     $headers = ['Reply-To: ' . $name . ' <' . $email . '>'];
 

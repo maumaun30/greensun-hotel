@@ -4,15 +4,19 @@
   "title": "Contact Form",
   "category": "design",
   "icon": "email",
-  "description": "Name / email / message form. Submits to /wp-json/greensun/v1/contact and emails the site admin.",
+  "description": "Self-contained paper-card contact form (name / email / subject / message). Submits to /wp-json/greensun/v1/contact and emails the site admin.",
   "editorScript": "file:./build/index.js",
   "style": "file:./style.css",
   "render": "file:./render.php",
   "attributes": {
-    "eyebrow":      { "type": "string", "default": "Write to us" },
-    "sectionTitle": { "type": "string", "default": "Tell us <em>everything</em>." },
-    "subtitle":     { "type": "string", "default": "Stay enquiries, private events, anything you'd like us to know." },
-    "submitText":   { "type": "string", "default": "Send" },
-    "successText":  { "type": "string", "default": "Thanks — we'll be in touch within a day." }
+    "title":        { "type": "string", "default": "Send us a note" },
+    "subtitle":     { "type": "string", "default": "We reply within 2 hours during the day." },
+    "submitText":   { "type": "string", "default": "Send message" },
+    "successTitle": { "type": "string", "default": "Message sent." },
+    "successText":  { "type": "string", "default": "We'll be in touch shortly. Thank you." },
+    "subjects": {
+      "type": "array",
+      "default": ["Reservation", "Events inquiry", "Long stay", "Press / partnerships", "Other"]
+    }
   }
 }

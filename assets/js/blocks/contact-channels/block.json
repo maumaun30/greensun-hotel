@@ -18,6 +18,8 @@
         { "title": "Visit",        "lines": "2285 Chino Roces Avenue,\nMagallanes, Makati 1232\nMetro Manila, Philippines" }
       ]
     },
-    "mapEmbed": { "type": "string", "default": "" }
+    "mapEmbed":    { "type": "string", "default": "" },
+    "mapLabel":    { "type": "string", "default": "Magallanes · Makati" },
+    "mapCaption":  { "type": "string", "default": "Green Sun" }
   }
 }

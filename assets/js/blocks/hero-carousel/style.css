@@ -50,7 +50,7 @@
   position: relative;
   z-index: 2;
   min-height: 100vh;
-  padding: 140px 32px 180px; /* room for the -72px booking-bar overlap */
+  padding: 140px 32px 120px;
   display: grid;
   grid-template-columns: 1.4fr 1fr;
   gap: 80px;
@@ -86,12 +86,22 @@
   text-shadow: 0 1px 16px rgba(0,0,0,.4);
 }
 .gs-hero-carousel__title {
-  font-size: clamp(54px, 8vw, 124px);
-  max-width: 14ch;
+  font-size: clamp(44px, 6.4vw, 104px);
+  line-height: 1.05;
+  max-width: 18ch;
   color: var(--ivory, #f7f6f0);
   font-weight: 500;
   text-shadow: 0 2px 32px rgba(0,0,0,.45), 0 1px 2px rgba(0,0,0,.3);
   margin: 0;
+  /* Cap at two visual lines; if a title is too long, the rest is clipped
+     rather than wrapping into the indicators / scroll-hint. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+@media (max-width: 900px) {
+  .gs-hero-carousel__title { max-width: none; }
 }
 .gs-hero-carousel__title em { font-style: italic; }
 .gs-hero-carousel__subtitle {

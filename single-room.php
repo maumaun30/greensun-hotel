@@ -16,7 +16,8 @@
     $thumb       = get_the_post_thumbnail_url($room_id, 'full');
     $phone       = function_exists('greensun_setting') ? greensun_setting('phone', '') : '';
 
-    $eyebrow_parts = array_filter([$size, $beds, $guests ? ($guests . ' ' . ($guests == 1 ? 'guest' : 'guests')) : '']);
+    // Design uses just size · beds in the hero eyebrow (rooms.jsx:104).
+    $eyebrow_parts = array_filter([$size, $beds]);
     $eyebrow_text  = implode(' · ', $eyebrow_parts);
   ?>
 
@@ -119,17 +120,21 @@
                 foreach ($perks as $perk) :
               ?>
                 <li style="display:flex; gap: 12px; align-items: center;">
-                  <svg width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                    <path d="M3 9 L7.5 13.5 L15 5" stroke="var(--moss, #527a55)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" style="flex: 0 0 18px;">
+                    <circle cx="9" cy="9" r="9" fill="var(--moss, #527a55)" opacity=".15"/>
+                    <path d="M5 9 L8 12 L13 6" stroke="var(--moss, #527a55)" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                   <span><?php echo esc_html($perk); ?></span>
                 </li>
               <?php endforeach; ?>
             </ul>
 
-            <a href="<?php echo esc_url(add_query_arg('room_type', $ezee_id ?: $room_id, home_url('/booking'))); ?>" class="btn btn--sun" style="margin-top: 28px; width:100%; justify-content:center;">
+            <a href="<?php echo esc_url(add_query_arg('room_type', $ezee_id ?: $room_id, home_url('/booking'))); ?>" class="btn btn--sun btn--lg" style="margin-top: 28px; width:100%; justify-content:center;">
               <span class="ripple"></span>
               <span>Book this room</span>
+              <svg width="14" height="10" viewBox="0 0 22 8" fill="none" aria-hidden="true" style="margin-left: 8px;">
+                <path d="M0 4 L20 4 M14 0 L20 4 L14 8" stroke="currentColor" stroke-width="1.4" fill="none"/>
+              </svg>
             </a>
 
             <?php if ($phone) : ?>
@@ -208,6 +213,40 @@
         </div>
       </section>
     <?php endif; ?>
+
+    <section class="single-room__cta" style="position: relative; overflow: hidden;">
+      <?php $cta_bg = $thumb; ?>
+      <div class="kb" style="position:absolute; inset:0; z-index:0;">
+        <?php if ($cta_bg) : ?>
+          <img src="<?php echo esc_url($cta_bg); ?>" alt="" style="width:100%; height:100%; object-fit:cover;" loading="lazy" />
+        <?php endif; ?>
+      </div>
+      <div style="position:absolute; inset:0; z-index:0; background: linear-gradient(95deg, rgba(13,42,32,.86), rgba(13,42,32,.4));"></div>
+      <div class="shell reveal" style="position:relative; z-index:1; color: var(--ivory, #f7f6f0); padding-block: 140px;">
+        <div style="max-width: 720px;">
+          <div class="eyebrow" style="color: var(--sun, #e8c46a);">Reserve your stay</div>
+          <h2 class="display reveal--lg" style="font-size: clamp(48px, 6.8vw, 92px); margin-top: 22px; color: var(--ivory, #f7f6f0); max-width: 16ch;">
+            A room is waiting <em>for you.</em>
+          </h2>
+          <p style="margin-top: 28px; line-height: 1.7; color: rgba(255,255,255,0.78); max-width: 540px; font-size: 17px;">
+            Direct booking, best available rates. Reach our team for tailored stays, long-term bookings, and event packages.
+          </p>
+          <div class="btn-row" style="margin-top: 40px; display:flex; gap: 14px; flex-wrap: wrap;">
+            <a href="<?php echo esc_url(add_query_arg('room_type', $ezee_id ?: $room_id, home_url('/booking'))); ?>" class="btn btn--sun btn--lg">
+              <span class="ripple"></span>
+              <span>Book this room</span>
+              <svg width="14" height="10" viewBox="0 0 22 8" fill="none" aria-hidden="true" style="margin-left: 8px;">
+                <path d="M0 4 L20 4 M14 0 L20 4 L14 8" stroke="currentColor" stroke-width="1.4" fill="none"/>
+              </svg>
+            </a>
+            <a href="<?php echo esc_url(home_url('/contact')); ?>" class="btn btn--ghost btn--light btn--lg">
+              <span class="ripple"></span>
+              <span>Talk to our team</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
 
   <?php endwhile; ?>
 

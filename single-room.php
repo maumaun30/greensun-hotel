@@ -21,18 +21,18 @@
     $eyebrow_text  = implode(' · ', $eyebrow_parts);
   ?>
 
-    <section class="gs-page-hero single-room__hero" style="min-height: 78vh; min-height: 560px;">
+    <section class="gs-page-hero single-room__hero" style="height: 78vh; min-height: 560px;">
       <div class="gs-page-hero__media kb">
         <?php if ($thumb) : ?>
           <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" />
         <?php endif; ?>
       </div>
       <div class="gs-page-hero__scrim" style="background: linear-gradient(to bottom, rgba(13,42,32,.45), rgba(13,42,32,.85));"></div>
-      <div class="shell gs-page-hero__content">
+      <div class="shell gs-page-hero__content" style="padding-block: 100px 70px;">
         <?php if ($eyebrow_text) : ?>
           <div class="eyebrow reveal" style="color: var(--sun, #e8c46a);"><?php echo esc_html($eyebrow_text); ?></div>
         <?php endif; ?>
-        <h1 class="display reveal reveal--lg" style="font-size: clamp(54px, 8vw, 120px); margin-top: 22px; font-weight: 500;">
+        <h1 class="display reveal reveal--lg" style="font-size: clamp(54px, 8vw, 120px); line-height: 1.05; max-width: 16ch; margin-top: 22px; font-weight: 500;">
           <?php the_title(); ?>
         </h1>
         <?php if ($tagline) : ?>
@@ -48,16 +48,16 @@
 
         <div class="single-room__body">
           <?php
-            $content = get_the_content();
-            if ($content) :
-              $excerpt_lead = $tagline ? '' : wp_strip_all_tags(get_the_excerpt());
-              $first_sentence = $excerpt_lead ? rtrim(preg_split('/[\.\!\?]/', $excerpt_lead)[0], '.') . '.' : '';
+            $content        = get_the_content();
+            $excerpt_lead   = wp_strip_all_tags(get_the_excerpt());
+            $first_sentence = $excerpt_lead ? rtrim(preg_split('/[\.\!\?]/', $excerpt_lead)[0], '.') . '.' : '';
+            if ($first_sentence) :
           ?>
-            <?php if ($first_sentence) : ?>
-              <h2 class="display reveal" style="font-size: 36px; max-width: 22ch; margin: 0;">
-                <?php echo esc_html($first_sentence); ?>
-              </h2>
-            <?php endif; ?>
+            <h2 class="display reveal" style="font-size: 36px; max-width: 22ch; margin: 0; line-height: 1.15;">
+              <?php echo esc_html($first_sentence); ?>
+            </h2>
+          <?php endif; ?>
+          <?php if ($content) : ?>
             <div class="reveal" style="margin-top: 24px; color: var(--ink-2, #3d433d); font-size: 16.5px; line-height: 1.85;">
               <?php the_content(); ?>
             </div>

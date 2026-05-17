@@ -41,13 +41,12 @@
     root.addEventListener('mouseenter', function () { hovered = true; });
     root.addEventListener('mouseleave', function () { hovered = false; });
 
+    start();
     if ('IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) { if (entry.isIntersecting) start(); else stop(); });
       }, { threshold: 0.2 });
       io.observe(root);
-    } else {
-      start();
     }
   }
   document.addEventListener('DOMContentLoaded', function () {

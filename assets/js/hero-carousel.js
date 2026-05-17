@@ -40,6 +40,9 @@
     root.addEventListener('mouseenter', function () { hovered = true; });
     root.addEventListener('mouseleave', function () { hovered = false; });
 
+    // Start autoplay immediately on init — IntersectionObserver only
+    // pauses the timer when the hero scrolls out of view.
+    start();
     if ('IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
@@ -48,8 +51,6 @@
         });
       }, { threshold: 0.1 });
       io.observe(root);
-    } else {
-      start();
     }
   }
 

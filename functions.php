@@ -311,7 +311,7 @@ add_filter('body_class', function ($classes) {
     if (is_admin()) return $classes;
 
     // Templates that render their own dark hero section at the top.
-    if (is_front_page() || is_404() || is_singular(['room', 'event', 'venue'])) {
+    if (is_front_page() || is_404() || is_singular(['room', 'event', 'venue']) || is_post_type_archive('venue')) {
         return $classes;
     }
 

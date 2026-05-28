@@ -32,6 +32,7 @@ require_once get_stylesheet_directory() . '/inc/fonts.php';
 require_once get_stylesheet_directory() . '/inc/helpers/icons.php';
 require_once get_stylesheet_directory() . '/inc/helpers/images.php';
 require_once get_stylesheet_directory() . '/inc/helpers/logo.php';
+require_once get_stylesheet_directory() . '/inc/block-editing.php';
 require_once get_stylesheet_directory() . '/inc/cpt-loader.php';
 
 function greensun_hotel_setup()

@@ -22,6 +22,9 @@ function greensun_theme_setting_keys() {
         'social_instagram'   => ['label' => 'Instagram URL',                 'type' => 'url'],
         'social_tripadvisor' => ['label' => 'Tripadvisor URL',               'type' => 'url'],
         'footer_legal_html'  => ['label' => 'Footer bottom-row links (HTML)','type' => 'textarea'],
+        'rooms_archive_page'  => ['label' => 'Rooms archive layout (Page)',  'type' => 'page'],
+        'venues_archive_page' => ['label' => 'Venues archive layout (Page)', 'type' => 'page'],
+        'events_archive_page' => ['label' => 'Events archive layout (Page)', 'type' => 'page'],
     ];
 }
 
@@ -44,7 +47,8 @@ add_action('admin_init', function () {
     foreach (greensun_theme_setting_keys() as $key => $meta) {
         $sanitizer = $meta['type'] === 'url'
             ? 'esc_url_raw'
-            : ($meta['type'] === 'textarea' ? function ($v) { return wp_kses_post(wp_unslash($v)); } : 'sanitize_text_field');
+            : ($meta['type'] === 'page' ? 'absint'
+            : ($meta['type'] === 'textarea' ? function ($v) { return wp_kses_post(wp_unslash($v)); } : 'sanitize_text_field'));
         register_setting('greensun_theme', 'greensun_' . $key, [
             'type'              => 'string',
             'sanitize_callback' => $sanitizer,
@@ -68,7 +72,16 @@ function greensun_theme_settings_page() {
             <tr>
               <th scope="row"><label for="<?php echo esc_attr($option); ?>"><?php echo esc_html($meta['label']); ?></label></th>
               <td>
-                <?php if ($meta['type'] === 'textarea') : ?>
+                <?php if ($meta['type'] === 'page') : ?>
+                  <?php wp_dropdown_pages([
+                      'name'              => $option,
+                      'id'                => $option,
+                      'selected'          => (int) $value,
+                      'show_option_none'  => '— Use designed template —',
+                      'option_none_value' => 0,
+                  ]); ?>
+                  <p class="description">Pick a Page built with theme blocks to replace this archive's design, or leave as default.</p>
+                <?php elseif ($meta['type'] === 'textarea') : ?>
                   <textarea name="<?php echo esc_attr($option); ?>" id="<?php echo esc_attr($option); ?>" rows="3" class="large-text"><?php echo esc_textarea($value); ?></textarea>
                 <?php elseif ($meta['type'] === 'url') : ?>
                   <input type="url" name="<?php echo esc_attr($option); ?>" id="<?php echo esc_attr($option); ?>" value="<?php echo esc_attr($value); ?>" class="regular-text" />

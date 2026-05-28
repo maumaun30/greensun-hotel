@@ -28,7 +28,7 @@ add_action('init', function () {
         'has_archive'         => 'rooms',
         'rewrite'             => ['slug' => 'rooms', 'with_front' => false],
         'show_in_rest'        => true,
-        'menu_icon'           => 'dashicons-bed',
+        'menu_icon'           => 'dashicons-admin-home',
         'menu_position'       => 5,
         'supports'            => ['title', 'editor', 'thumbnail', 'excerpt', 'page-attributes'],
         'hierarchical'        => false,

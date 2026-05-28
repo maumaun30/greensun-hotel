@@ -1,0 +1,18 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/rooms-archive",
+  "title": "Rooms Archive",
+  "category": "design",
+  "icon": "admin-multisite",
+  "description": "Full rooms listing (every published Room) in the alternating editorial layout. Place on the Page selected as the Rooms archive layout.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": { "html": false, "multiple": false },
+  "attributes": {
+    "eyebrow": { "type": "string", "default": "Our rooms" },
+    "title":   { "type": "string", "default": "Relax and connect <em>in your own space.</em>" },
+    "lead":    { "type": "string", "default": "Five distinct rooms — from quiet quarters for the working traveler to a 60 sqm family suite. All air-conditioned, all WiFi-equipped, all built for restful nights." },
+    "perPage": { "type": "number", "default": 12 }
+  }
+}

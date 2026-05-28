@@ -2,6 +2,8 @@
 
 <main id="site-main" class="site-main rooms-archive" role="main">
 
+  <?php if (!greensun_render_archive_blocks('rooms_archive_page')) : // else: designed fallback below ?>
+
   <section class="rooms-archive__header">
     <div class="shell">
       <div class="eyebrow reveal" style="margin-bottom: 22px;">Our rooms</div>
@@ -131,6 +133,8 @@
       <?php endif; ?>
     </div>
   </section>
+
+  <?php endif; // greensun_render_archive_blocks ?>
 
 </main>
 

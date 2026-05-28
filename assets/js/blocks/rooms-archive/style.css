@@ -1,0 +1,149 @@
+.rooms-archive-block .rooms-archive__header { padding: 120px 0 60px; }
+.rooms-archive-block .rooms-archive__title {
+  font-size: clamp(48px, 7vw, 96px);
+  max-width: 14ch;
+  margin: 0;
+  line-height: 1.05;
+  font-weight: 500;
+}
+.rooms-archive-block .rooms-archive__title em { font-style: italic; }
+.rooms-archive-block .rooms-archive__lead {
+  max-width: 540px;
+  margin-top: 28px;
+  color: var(--ink-2, #3d433d);
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.rooms-archive-block .rooms-archive__stack {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 70px;
+}
+.rooms-archive-block .rooms-archive__row {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 70px;
+  align-items: center;
+}
+.rooms-archive-block .rooms-archive__row.is-flipped .rooms-archive__media { order: 2; }
+.rooms-archive-block .rooms-archive__row.is-flipped .rooms-archive__body  { order: 1; }
+.rooms-archive-block .rooms-archive__media { position: relative; }
+.rooms-archive-block .rooms-archive__img-el { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.rooms-archive-block .rooms-archive__spec-card {
+  position: absolute;
+  bottom: -20px;
+  left: -20px;
+  background: var(--paper, #f8f5e9);
+  padding: 14px 18px;
+  border-radius: 4px;
+  border: 1px solid var(--line, #ede9d9);
+  box-shadow: 0 18px 40px -20px rgba(0, 0, 0, 0.18);
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+.rooms-archive-block .rooms-archive__row.is-flipped .rooms-archive__spec-card { left: auto; right: -20px; }
+.rooms-archive-block .rooms-archive__spec { text-align: center; min-width: 56px; }
+.rooms-archive-block .rooms-archive__spec .display {
+  font-size: 26px;
+  color: var(--forest, #1f4a3a);
+  line-height: 1;
+}
+.rooms-archive-block .rooms-archive__spec-unit {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 11px;
+  color: var(--mute, #7b817b);
+  letter-spacing: 0.06em;
+  margin-top: 6px;
+}
+
+.rooms-archive-block .rooms-archive__num {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  color: var(--mute, #7b817b);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+.rooms-archive-block .rooms-archive__name {
+  font-size: clamp(36px, 4.4vw, 60px);
+  margin-top: 12px;
+  max-width: 14ch;
+  line-height: 1.05;
+}
+.rooms-archive-block .rooms-archive__name em {
+  font-style: italic;
+  font-size: 0.7em;
+  color: var(--moss, #527a55);
+  font-weight: 400;
+}
+.rooms-archive-block .rooms-archive__blurb {
+  margin-top: 22px;
+  color: var(--ink-2, #3d433d);
+  font-size: 16.5px;
+  line-height: 1.75;
+  max-width: 520px;
+}
+.rooms-archive-block .rooms-archive__chips {
+  margin-top: 26px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.rooms-archive-block .rooms-archive__cta-row {
+  margin-top: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.rooms-archive-block .rooms-archive__from {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  color: var(--mute, #7b817b);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+.rooms-archive-block .rooms-archive__price {
+  font-size: 38px;
+  color: var(--forest, #1f4a3a);
+  line-height: 1.1;
+  margin-top: 4px;
+}
+.rooms-archive-block .rooms-archive__per {
+  font-family: var(--font-sans, "Manrope", sans-serif);
+  font-size: 12px;
+  margin-left: 8px;
+  color: var(--mute, #7b817b);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.rooms-archive-block .rooms-archive__buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+  .rooms-archive-block .rooms-archive__header { padding: 80px 0 40px; }
+  .rooms-archive-block .rooms-archive__row,
+  .rooms-archive-block .rooms-archive__row.is-flipped {
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+  .rooms-archive-block .rooms-archive__row .rooms-archive__media,
+  .rooms-archive-block .rooms-archive__row.is-flipped .rooms-archive__media,
+  .rooms-archive-block .rooms-archive__row .rooms-archive__body,
+  .rooms-archive-block .rooms-archive__row.is-flipped .rooms-archive__body { order: unset; }
+  .rooms-archive-block .rooms-archive__media .ph { height: 360px !important; }
+  .rooms-archive-block .rooms-archive__spec-card,
+  .rooms-archive-block .rooms-archive__row.is-flipped .rooms-archive__spec-card {
+    left: 16px;
+    right: auto;
+    bottom: -20px;
+    gap: 20px;
+    padding: 12px 14px;
+  }
+}

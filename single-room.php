@@ -2,7 +2,13 @@
 
 <main id="site-main" class="site-main" role="main">
 
-  <?php while (have_posts()) : the_post();
+  <?php while (have_posts()) : the_post(); ?>
+
+    <?php if (greensun_post_uses_blocks()) : // editor-built Gutenberg layout takes over ?>
+      <?php the_content(); ?>
+      <?php continue; endif; ?>
+
+  <?php
     $room_id     = get_the_ID();
     $price       = function_exists('get_field') ? get_field('price_per_night', $room_id) : null;
     $currency    = function_exists('get_field') ? (get_field('currency', $room_id) ?: 'USD') : 'USD';

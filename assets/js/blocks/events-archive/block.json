@@ -1,0 +1,22 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/events-archive",
+  "title": "Events Archive",
+  "category": "design",
+  "icon": "calendar-alt",
+  "description": "Full events listing (every published Event) as a card grid with inquiry strip. Place on the Page selected as the Events archive layout.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": { "html": false, "multiple": false },
+  "attributes": {
+    "eyebrow":       { "type": "string", "default": "What's on" },
+    "title":         { "type": "string", "default": "Gather with us <em>this season.</em>" },
+    "lead":          { "type": "string", "default": "Long-table dinners, tastings, and quiet evenings on the terrace — open to guests and neighbours alike." },
+    "perPage":       { "type": "number", "default": 12 },
+    "inquiryTitle":  { "type": "string", "default": "Want a date all <em>to yourselves?</em>" },
+    "inquiryText":   { "type": "string", "default": "We host private dinners, launches, and reunions in any of our venues. Tell us about your evening and we'll send back options within one business day." },
+    "inquiryCtaText":{ "type": "string", "default": "Plan a private event" },
+    "inquiryCtaUrl": { "type": "string", "default": "/contact" }
+  }
+}

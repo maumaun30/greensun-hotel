@@ -2,6 +2,8 @@
 
 <main id="site-main" class="site-main events-archive" role="main">
 
+  <?php if (!greensun_render_archive_blocks('events_archive_page')) : // else: designed fallback below ?>
+
   <section class="events-archive__header">
     <div class="shell">
       <div class="eyebrow reveal" style="margin-bottom: 22px;">What's on</div>
@@ -118,6 +120,8 @@
       </div>
     </div>
   </section>
+
+  <?php endif; // greensun_render_archive_blocks ?>
 
 </main>
 

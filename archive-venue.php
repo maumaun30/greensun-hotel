@@ -2,6 +2,8 @@
 
 <main id="site-main" class="site-main archive-venue" role="main">
 
+  <?php if (!greensun_render_archive_blocks('venues_archive_page')) : // else: designed fallback below ?>
+
   <section class="gs-page-hero archive-venue__hero" style="min-height: 60vh; min-height: 460px;">
     <div class="gs-page-hero__media kb" style="background: linear-gradient(160deg, #1f4a3a, #0f2018);"></div>
     <div class="gs-page-hero__scrim" style="background: linear-gradient(to bottom, rgba(13,42,32,.5), rgba(13,42,32,.88));"></div>
@@ -111,6 +113,8 @@
       </div>
     </div>
   </section>
+
+  <?php endif; // greensun_render_archive_blocks ?>
 
 </main>
 

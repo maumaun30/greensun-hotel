@@ -1,0 +1,21 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/venues-archive",
+  "title": "Venues Archive",
+  "category": "design",
+  "icon": "store",
+  "description": "Full venues listing (every published Venue) with the alternating layout and inquiry strip. Place on the Page selected as the Venues archive layout.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": { "html": false, "multiple": false },
+  "attributes": {
+    "eyebrow":       { "type": "string", "default": "Event venues" },
+    "title":         { "type": "string", "default": "Three venues. <em>One unforgettable evening.</em>" },
+    "lead":          { "type": "string", "default": "From a 120-pax flagship hall to focus rooms wired for hybrid work — Greensun hosts the meetings, weddings, and quiet board offsites of Makati." },
+    "inquiryTitle":  { "type": "string", "default": "Planning <em>something special?</em>" },
+    "inquiryText":   { "type": "string", "default": "Tell us about your event — guest count, dates, the feel you're after. Our team will send back venue options, pricing, and a layout sketch within one business day." },
+    "inquiryCtaText":{ "type": "string", "default": "Send an inquiry" },
+    "inquiryCtaUrl": { "type": "string", "default": "/contact" }
+  }
+}

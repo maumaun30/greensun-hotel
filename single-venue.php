@@ -2,7 +2,13 @@
 
 <main id="site-main" class="site-main" role="main">
 
-  <?php while (have_posts()) : the_post();
+  <?php while (have_posts()) : the_post(); ?>
+
+    <?php if (greensun_post_uses_blocks()) : // editor-built Gutenberg layout takes over ?>
+      <?php the_content(); ?>
+      <?php continue; endif; ?>
+
+  <?php
     $vid       = get_the_ID();
     $tagline   = function_exists('get_field') ? get_field('venue_tagline', $vid) : '';
     $capacity  = function_exists('get_field') ? get_field('venue_capacity', $vid) : '';

@@ -2,7 +2,13 @@
 
 <main id="site-main" class="site-main" role="main">
 
-  <?php while (have_posts()) : the_post();
+  <?php while (have_posts()) : the_post(); ?>
+
+    <?php if (greensun_post_uses_blocks()) : // editor-built Gutenberg layout takes over ?>
+      <?php the_content(); ?>
+      <?php continue; endif; ?>
+
+  <?php
     $eid       = get_the_ID();
     $start     = function_exists('get_field') ? get_field('event_start', $eid) : '';
     $end       = function_exists('get_field') ? get_field('event_end', $eid) : '';

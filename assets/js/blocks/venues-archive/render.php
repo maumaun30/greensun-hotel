@@ -17,23 +17,21 @@ $venues = new WP_Query([
 ?>
 <section <?php echo get_block_wrapper_attributes(['class' => 'venues-archive-block']); ?>>
 
-  <div class="venues-archive__hero gs-page-hero" style="min-height: 460px;">
-    <div class="gs-page-hero__media kb" style="background: linear-gradient(160deg, #1f4a3a, #0f2018);"></div>
-    <div class="gs-page-hero__scrim" style="background: linear-gradient(to bottom, rgba(13,42,32,.5), rgba(13,42,32,.88));"></div>
-    <div class="shell gs-page-hero__content">
+  <div class="venues-archive__header">
+    <div class="shell">
       <?php if ($eyebrow) : ?>
-        <div class="eyebrow reveal" style="color: var(--sun, #e8c46a);"><?php echo esc_html($eyebrow); ?></div>
+        <div class="eyebrow reveal" style="margin-bottom: 22px;"><?php echo esc_html($eyebrow); ?></div>
       <?php endif; ?>
       <?php if ($title) : ?>
-        <h1 class="display reveal reveal--lg" style="font-size: clamp(48px, 7vw, 104px); margin-top: 22px; max-width: 16ch; font-weight: 500;"><?php echo wp_kses_post($title); ?></h1>
+        <h1 class="display reveal reveal--lg venues-archive__heading"><?php echo wp_kses_post($title); ?></h1>
       <?php endif; ?>
       <?php if ($lead) : ?>
-        <p class="reveal" style="max-width: 620px; margin-top: 28px; color: rgba(255,255,255,.82); font-size: 18px; line-height: 1.75;"><?php echo wp_kses_post($lead); ?></p>
+        <p class="reveal venues-archive__lead"><?php echo wp_kses_post($lead); ?></p>
       <?php endif; ?>
     </div>
   </div>
 
-  <div class="shell venues-archive__stack" style="padding: 30px 0 120px;">
+  <div class="shell venues-archive__stack">
     <?php $idx = 0; if ($venues->have_posts()) : while ($venues->have_posts()) : $venues->the_post();
       $vid      = get_the_ID();
       $flip     = ($idx % 2) === 1;

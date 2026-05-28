@@ -1,12 +1,21 @@
-.venues-archive-block .venues-archive__hero {
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  overflow: hidden;
+.venues-archive-block .venues-archive__header { padding: 120px 0 60px; }
+.venues-archive-block .venues-archive__heading {
+  font-size: clamp(48px, 7vw, 96px);
+  max-width: 16ch;
+  margin: 0;
+  line-height: 1.05;
+  font-weight: 500;
 }
-.venues-archive-block .gs-page-hero__content { position: relative; z-index: 2; padding-block: 90px; }
+.venues-archive-block .venues-archive__heading em { font-style: italic; }
+.venues-archive-block .venues-archive__lead {
+  max-width: 620px;
+  margin-top: 28px;
+  color: var(--ink-2, #3d433d);
+  font-size: 17px;
+  line-height: 1.7;
+}
 
-.venues-archive-block .venues-archive__stack { display: grid; gap: 80px; }
+.venues-archive-block .venues-archive__stack { display: grid; gap: 80px; padding: 40px 0 120px; }
 .venues-archive-block .venues-archive__row {
   display: grid;
   grid-template-columns: 1fr 1fr;

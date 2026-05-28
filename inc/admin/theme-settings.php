@@ -34,9 +34,10 @@ function greensun_setting($key, $default = '') {
 }
 
 add_action('admin_menu', function () {
-    add_options_page(
-        'Greensun Theme',
-        'Greensun Theme',
+    add_submenu_page(
+        'greensun-dashboard',
+        'Theme Settings',
+        'Theme Settings',
         'manage_options',
         'greensun-theme',
         'greensun_theme_settings_page'

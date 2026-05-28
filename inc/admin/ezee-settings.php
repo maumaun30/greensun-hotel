@@ -9,7 +9,8 @@ if (!defined('ABSPATH')) {
 }
 
 add_action('admin_menu', function () {
-    add_options_page(
+    add_submenu_page(
+        'greensun-dashboard',
         'Booking (eZee)',
         'Booking (eZee)',
         'manage_options',

@@ -110,6 +110,20 @@ function greensun_rest_contact(WP_REST_Request $request) {
         return new WP_REST_Response(['error' => 'Please add a message.'], 400);
     }
 
+    // Persist the lead first so nothing is lost even if email delivery fails.
+    $submission_id = 0;
+    if (function_exists('greensun_store_submission')) {
+        $submission_id = greensun_store_submission([
+            'name'    => $name,
+            'email'   => $email,
+            'phone'   => $phone,
+            'subject' => $subject_in,
+            'message' => $message,
+            'ip'      => $_SERVER['REMOTE_ADDR'] ?? '',
+            'source'  => 'contact-form',
+        ]);
+    }
+
     $to       = apply_filters('greensun_contact_to', get_option('admin_email'));
     $subj_tag = $subject_in ?: 'Enquiry';
     $subject  = sprintf('[%s] %s — %s', wp_specialchars_decode(get_bloginfo('name'), ENT_QUOTES), $subj_tag, $name);
@@ -120,7 +134,12 @@ function greensun_rest_contact(WP_REST_Request $request) {
     $headers = ['Reply-To: ' . $name . ' <' . $email . '>'];
 
     $sent = wp_mail($to, $subject, $body, $headers);
-    if (!$sent) {
+    if (!$sent && $submission_id) {
+        update_post_meta($submission_id, '_gs_mail_failed', '1');
+    }
+
+    // The lead is captured if either the email sent or it was stored.
+    if (!$sent && !$submission_id) {
         return new WP_REST_Response(['error' => 'Could not send. Please email us directly.'], 500);
     }
     return rest_ensure_response(['ok' => true]);

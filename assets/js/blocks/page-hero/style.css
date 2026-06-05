@@ -29,7 +29,7 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  padding-block: 100px !important;
+  padding-block: 120px !important;
   display: flex;
   flex-direction: column;
 }

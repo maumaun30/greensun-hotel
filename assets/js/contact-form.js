@@ -20,11 +20,14 @@
 
       var fd = new FormData(form);
       var body = {
-        name:    fd.get('name')    || '',
-        email:   fd.get('email')   || '',
-        subject: fd.get('subject') || '',
-        message: fd.get('message') || '',
-        _hp:     fd.get('_hp')     || '',
+        name:      fd.get('name')    || '',
+        email:     fd.get('email')   || '',
+        phone:     fd.get('phone')   || '',
+        subject:   fd.get('subject') || '',
+        space:     fd.get('space')   || '',
+        message:   fd.get('message') || '',
+        marketing: fd.get('marketing') ? '1' : '0',
+        _hp:       fd.get('_hp')     || '',
       };
 
       fetch(config.restUrl + 'contact', {

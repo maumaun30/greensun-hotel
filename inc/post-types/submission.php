@@ -51,7 +51,7 @@ function greensun_store_submission(array $data) {
         return 0;
     }
 
-    foreach (['name', 'email', 'phone', 'subject', 'message', 'ip', 'source'] as $key) {
+    foreach (['name', 'email', 'phone', 'subject', 'space', 'marketing', 'message', 'ip', 'source'] as $key) {
         if (isset($data[$key]) && $data[$key] !== '') {
             update_post_meta($post_id, '_gs_' . $key, $data[$key]);
         }

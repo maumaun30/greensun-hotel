@@ -17,8 +17,13 @@
 
 .greensun-contact-form .gs-contact-form__fields {
   display: grid;
-  gap: 26px;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px 32px;
   margin-top: 28px;
+}
+.greensun-contact-form .gs-cf-field--full { grid-column: 1 / -1; }
+@media (max-width: 560px) {
+  .greensun-contact-form .gs-contact-form__fields { grid-template-columns: 1fr; }
 }
 
 .greensun-contact-form .gs-cf-field {
@@ -84,4 +89,55 @@
 @keyframes gsCfFadeUp {
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: none; }
+}
+
+/* Prefilled event-space chip (deep-link from an event page) */
+.greensun-contact-form .gs-contact-form__space-note {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* Marketing opt-in — custom checkbox */
+.greensun-contact-form .gs-contact-form__optin {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border-bottom: 0;
+  padding-bottom: 0;
+  cursor: pointer;
+  user-select: none;
+}
+.greensun-contact-form .gs-contact-form__optin input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.greensun-contact-form .gs-contact-form__optin-box {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  border: 1px solid var(--line, #ede9d9);
+  border-radius: 5px;
+  background: var(--ivory, #f7f6f0);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  transition: background 200ms ease, border-color 200ms ease, color 200ms ease;
+}
+.greensun-contact-form .gs-contact-form__optin input:checked + .gs-contact-form__optin-box {
+  background: var(--forest, #1f4a3a);
+  border-color: var(--forest, #1f4a3a);
+  color: var(--ivory, #f7f6f0);
+}
+.greensun-contact-form .gs-contact-form__optin input:focus-visible + .gs-contact-form__optin-box {
+  outline: 2px solid var(--forest, #1f4a3a);
+  outline-offset: 2px;
+}
+.greensun-contact-form .gs-contact-form__optin-text {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-2, #3d433d);
 }

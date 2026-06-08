@@ -11,26 +11,26 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        forest:   "#1f4a3a",
-        "forest-2":"#173a2d",
-        moss:     "#4a6f55",
-        sage:     "#bcc9b6",
-        "sage-2": "#dbe3d5",
-        sun:      "#d8b25a",
-        "sun-2":  "#caa14a",
+        forest:   "#5a7755",
+        "forest-2":"#3f5a3b",
+        moss:     "#6e8f67",
+        sage:     "#b8c7b1",
+        "sage-2": "#dde5d6",
+        sun:      "#e8c46a",
+        "sun-2":  "#cda64a",
         ember:    "#b9612a",
-        ivory:    "#f7f6f0",
-        bone:     "#ede9d9",
-        paper:    "#faf8f1",
-        ink:      "#1f231f",
-        "ink-2":  "#3d433d",
-        mute:     "#7b817b",
-        line:     "#d8dcd5"
+        ivory:    "#fbf7ec",
+        bone:     "#e9e5da",
+        paper:    "#fffff4",
+        ink:      "#403e3f",
+        "ink-2":  "#615e5f",
+        mute:     "#918d89",
+        line:     "#e6e1d6"
       },
       fontFamily: {
-        display: ['"Cormorant Garamond"', '"Cormorant"', '"Times New Roman"', 'serif'],
-        sans:    ['Manrope', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        mono:    ['"JetBrains Mono"', '"DM Mono"', 'ui-monospace', 'monospace']
+        display: ['"Roca Two"', '"Cormorant Garamond"', 'Georgia', 'serif'],
+        sans:    ['"Codec Pro"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        mono:    ['"Codec Pro"', 'ui-sans-serif', 'system-ui', 'sans-serif']
       },
       maxWidth: {
         shell: '1320px'

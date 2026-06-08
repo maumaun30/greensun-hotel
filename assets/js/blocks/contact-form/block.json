@@ -16,7 +16,16 @@
     "successText":  { "type": "string", "default": "We'll be in touch shortly. Thank you." },
     "subjects": {
       "type": "array",
-      "default": ["Reservation", "Events inquiry", "Long stay", "Press / partnerships", "Other"]
+      "default": [
+        "Make a reservation",
+        "Book an ocular visit",
+        "Events inquiry",
+        "Partnership inquiry",
+        "Long stay / corporate rate",
+        "Press / media",
+        "Careers",
+        "Something else"
+      ]
     }
   }
 }

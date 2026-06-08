@@ -27,6 +27,9 @@
   color: var(--sun, #e8c46a);
   margin: 0;
 }
+.gs-stay-smart__title.display em {
+  color: var(--ivory, #f7f6f0);
+}
 .gs-stay-smart__body {
   font-size: 18px;
   line-height: 1.8;

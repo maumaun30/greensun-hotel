@@ -18,6 +18,7 @@
     $tagline     = function_exists('get_field') ? get_field('tagline', $room_id) : null;
     $inclusions  = function_exists('get_field') ? get_field('inclusions', $room_id) : [];
     $gallery     = function_exists('get_field') ? get_field('gallery', $room_id) : [];
+    $gallery_groups = function_exists('get_field') ? get_field('gallery_groups', $room_id) : [];
     $ezee_id     = function_exists('get_field') ? get_field('ezee_room_type_id', $room_id) : '';
     $thumb       = get_the_post_thumbnail_url($room_id, 'full');
     $phone       = function_exists('greensun_setting') ? greensun_setting('phone', '') : '';
@@ -154,7 +155,97 @@
       </div>
     </section>
 
-    <?php if (!empty($gallery) && is_array($gallery)) : ?>
+    <?php
+      // Normalise gallery_groups → only keep groups that have photos.
+      $rmg_groups = [];
+      if (!empty($gallery_groups) && is_array($gallery_groups)) {
+          foreach ($gallery_groups as $grp) {
+              $imgs = !empty($grp['gallery']) && is_array($grp['gallery']) ? $grp['gallery'] : [];
+              if (empty($imgs)) continue;
+              $rmg_groups[] = [
+                  'category'   => $grp['category'] ?? '',
+                  'gallery'    => $imgs,
+                  'inclusions' => !empty($grp['inclusions']) && is_array($grp['inclusions']) ? $grp['inclusions'] : [],
+              ];
+          }
+      }
+    ?>
+
+    <?php if (!empty($rmg_groups)) : // ── Interactive multi-gallery (grouped by inclusion category) ── ?>
+      <section class="single-room__multigallery" style="padding: 40px 0 120px;">
+        <div class="shell">
+          <div class="eyebrow reveal" style="margin-bottom: 24px;">What's included</div>
+          <div class="rmg reveal" data-rmg>
+            <div class="rmg__tabs" role="tablist" aria-label="Room galleries by category">
+              <?php foreach ($rmg_groups as $gi => $grp) : ?>
+                <button type="button" class="rmg__tab<?php echo $gi === 0 ? ' is-active' : ''; ?>" data-rmg-tab="<?php echo esc_attr($gi); ?>" role="tab" aria-selected="<?php echo $gi === 0 ? 'true' : 'false'; ?>">
+                  <?php echo esc_html($grp['category']); ?>
+                </button>
+              <?php endforeach; ?>
+            </div>
+
+            <div class="rmg__body">
+              <div class="rmg__viewer">
+                <?php foreach ($rmg_groups as $gi => $grp) : ?>
+                  <div class="rmg__panel<?php echo $gi === 0 ? ' is-active' : ''; ?>" data-rmg-panel="<?php echo esc_attr($gi); ?>">
+                    <div class="rmg__main ph">
+                      <?php foreach ($grp['gallery'] as $ii => $image) :
+                        $url = is_array($image) ? ($image['sizes']['large'] ?? $image['url'] ?? '') : '';
+                        $alt = is_array($image) ? ($image['alt'] ?? '') : '';
+                        if (!$url) continue;
+                      ?>
+                        <img class="rmg__img<?php echo $ii === 0 ? ' is-active' : ''; ?>" data-rmg-img="<?php echo esc_attr($ii); ?>" src="<?php echo esc_url($url); ?>" alt="<?php echo esc_attr($alt); ?>" loading="lazy" />
+                      <?php endforeach; ?>
+                      <?php if (count($grp['gallery']) > 1) : ?>
+                        <button type="button" class="rmg__nav rmg__nav--prev" data-rmg-prev aria-label="Previous photo">‹</button>
+                        <button type="button" class="rmg__nav rmg__nav--next" data-rmg-next aria-label="Next photo">›</button>
+                      <?php endif; ?>
+                    </div>
+                    <?php if (count($grp['gallery']) > 1) : ?>
+                      <div class="rmg__thumbs">
+                        <?php foreach ($grp['gallery'] as $ii => $image) :
+                          $thumb_url = is_array($image) ? ($image['sizes']['thumbnail'] ?? $image['sizes']['medium'] ?? $image['url'] ?? '') : '';
+                          if (!$thumb_url) continue;
+                        ?>
+                          <button type="button" class="rmg__thumb<?php echo $ii === 0 ? ' is-active' : ''; ?>" data-rmg-thumb="<?php echo esc_attr($ii); ?>" aria-label="<?php echo esc_attr(sprintf('Show photo %d', $ii + 1)); ?>">
+                            <img src="<?php echo esc_url($thumb_url); ?>" alt="" loading="lazy" />
+                          </button>
+                        <?php endforeach; ?>
+                      </div>
+                    <?php endif; ?>
+                  </div>
+                <?php endforeach; ?>
+              </div>
+
+              <aside class="rmg__incl">
+                <?php foreach ($rmg_groups as $gi => $grp) : ?>
+                  <div class="rmg__incl-panel<?php echo $gi === 0 ? ' is-active' : ''; ?>" data-rmg-incl="<?php echo esc_attr($gi); ?>">
+                    <div class="rmg__incl-head"><?php echo esc_html($grp['category']); ?></div>
+                    <?php if (!empty($grp['inclusions'])) : ?>
+                      <ul class="rmg__incl-list">
+                        <?php foreach ($grp['inclusions'] as $item) :
+                          $label = is_array($item) ? ($item['text'] ?? reset($item)) : $item;
+                          if (!$label) continue;
+                        ?>
+                          <li>
+                            <svg width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                              <circle cx="9" cy="9" r="9" fill="var(--moss, #527a55)" opacity=".15"/>
+                              <path d="M5 9 L8 12 L13 6" stroke="var(--moss, #527a55)" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span><?php echo esc_html($label); ?></span>
+                          </li>
+                        <?php endforeach; ?>
+                      </ul>
+                    <?php endif; ?>
+                  </div>
+                <?php endforeach; ?>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <?php elseif (!empty($gallery) && is_array($gallery)) : // ── Fallback: flat photo strip ── ?>
       <section style="padding: 40px 0 120px;">
         <div class="shell">
           <div class="eyebrow reveal" style="margin-bottom: 20px;">The room</div>
@@ -259,12 +350,69 @@
 </main>
 
 <style>
+  /* ── Room multi-gallery ── */
+  .rmg__tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+  .rmg__tab {
+    padding: 10px 20px; border-radius: 999px;
+    border: 1px solid var(--line, #ede9d9); background: transparent;
+    font: inherit; font-size: 13px; letter-spacing: .04em; cursor: pointer;
+    color: var(--ink-2, #3d433d);
+    transition: all 250ms cubic-bezier(.16,1,.3,1);
+  }
+  .rmg__tab:hover { border-color: var(--forest, #1f4a3a); }
+  .rmg__tab.is-active { background: var(--forest, #1f4a3a); border-color: var(--forest, #1f4a3a); color: var(--ivory, #f7f6f0); }
+
+  .rmg__body { display: grid; grid-template-columns: 1.6fr 1fr; gap: 40px; align-items: start; }
+  .rmg__panel { display: none; }
+  .rmg__panel.is-active { display: block; animation: rmgFade 450ms cubic-bezier(.16,1,.3,1); }
+  @keyframes rmgFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+  .rmg__main { position: relative; height: 480px; border-radius: 6px; overflow: hidden; }
+  .rmg__img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    opacity: 0; transition: opacity 450ms cubic-bezier(.16,1,.3,1);
+  }
+  .rmg__img.is-active { opacity: 1; }
+  .rmg__nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(247,246,240,.9); color: var(--forest, #1f4a3a);
+    border: 0; cursor: pointer; font-size: 22px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 200ms ease, transform 200ms ease;
+  }
+  .rmg__nav:hover { background: var(--ivory, #f7f6f0); }
+  .rmg__nav--prev { left: 14px; }
+  .rmg__nav--next { right: 14px; }
+
+  .rmg__thumbs { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+  .rmg__thumb {
+    width: 78px; height: 58px; border-radius: 4px; overflow: hidden; padding: 0;
+    border: 2px solid transparent; cursor: pointer; background: none;
+    transition: border-color 200ms ease;
+  }
+  .rmg__thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .rmg__thumb.is-active { border-color: var(--sun, #e8c46a); }
+
+  .rmg__incl-panel { display: none; }
+  .rmg__incl-panel.is-active { display: block; }
+  .rmg__incl-head {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--moss, #527a55); margin-bottom: 16px;
+  }
+  .rmg__incl-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+  .rmg__incl-list li { display: flex; gap: 12px; align-items: baseline; line-height: 1.55; }
+  .rmg__incl-list svg { flex: 0 0 16px; position: relative; top: 2px; }
+
   @media (max-width: 1000px) {
     .single-room__layout { grid-template-columns: 1fr !important; gap: 48px !important; }
     .single-room__sidebar { position: static !important; }
     .single-room__specs { grid-template-columns: 1fr 1fr !important; }
     .single-room__gallery { grid-template-columns: 1fr !important; }
     .single-room__gallery .ph { grid-row: span 1 !important; height: 280px !important; }
+    .rmg__body { grid-template-columns: 1fr; gap: 32px; }
+    .rmg__main { height: 360px; }
   }
 </style>
 

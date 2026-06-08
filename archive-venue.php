@@ -8,89 +8,82 @@
     <div class="gs-page-hero__media kb" style="background: linear-gradient(160deg, #1f4a3a, #0f2018);"></div>
     <div class="gs-page-hero__scrim" style="background: linear-gradient(to bottom, rgba(13,42,32,.5), rgba(13,42,32,.88));"></div>
     <div class="shell gs-page-hero__content">
-      <div class="eyebrow reveal" style="color: var(--sun, #e8c46a);">Event venues</div>
+      <div class="eyebrow reveal" style="color: var(--sun, #e8c46a);">Event spaces</div>
       <h1 class="display reveal reveal--lg" style="font-size: clamp(48px, 7vw, 104px); margin-top: 22px; max-width: 16ch; font-weight: 500;">
-        Three venues. <em>One unforgettable evening.</em>
+        Many spaces. <em>One unforgettable address.</em>
       </h1>
       <p class="reveal" style="max-width: 620px; margin-top: 28px; color: rgba(255,255,255,.82); font-size: 18px; line-height: 1.75;">
-        From a 120-pax flagship hall to focus rooms wired for hybrid work — Greensun hosts the meetings, weddings, and quiet board offsites of Makati.
+        From a flagship hall to an intimate below-stairs cellar — Greensun hosts the weddings, launches, shoots, and board offsites of Makati. Explore each space below.
       </p>
     </div>
   </section>
 
-  <section style="padding: 30px 0 120px;">
-    <div class="shell archive-venue__stack">
-      <?php $idx = 0; if (have_posts()) : while (have_posts()) : the_post();
-        $vid       = get_the_ID();
-        $flip      = ($idx % 2) === 1;
-        $tagline   = function_exists('get_field') ? get_field('venue_tagline', $vid) : '';
-        $capacity  = function_exists('get_field') ? get_field('venue_capacity', $vid) : '';
-        $area      = function_exists('get_field') ? get_field('venue_area', $vid) : '';
-        $location  = function_exists('get_field') ? get_field('venue_location', $vid) : '';
-        $layouts   = function_exists('get_field') ? get_field('venue_layouts', $vid) : '';
-        $cta_text  = function_exists('get_field') ? (get_field('venue_cta_text', $vid) ?: 'Inquire about ' . get_the_title()) : 'Inquire about ' . get_the_title();
-        $cta_url   = function_exists('get_field') ? get_field('venue_cta_url', $vid) : '';
-        if (!$cta_url) $cta_url = home_url('/contact');
-        $blurb     = wp_strip_all_tags(get_the_excerpt());
-        $thumb     = get_the_post_thumbnail_url($vid, 'full');
+  <?php
+    // Collect published venues; first = featured, the rest = grid.
+    $venue_ids = [];
+    if (have_posts()) {
+        while (have_posts()) { the_post(); $venue_ids[] = get_the_ID(); }
+        wp_reset_postdata();
+    }
+    $featured_id = $venue_ids ? array_shift($venue_ids) : 0;
+  ?>
 
-        $eyebrow_parts = array_filter([$tagline ?: $location, $capacity]);
-        $caps = array_filter(array_map('trim', explode(',', (string) $layouts)));
-        $caps = array_slice($caps, 0, 3);
-      ?>
-        <article class="archive-venue__row reveal reveal--lg<?php echo $flip ? ' is-flipped' : ''; ?>">
-          <div class="archive-venue__media">
-            <a href="<?php the_permalink(); ?>" class="ph kb archive-venue__img" style="display:block; height: 540px;">
-              <?php echo greensun_post_thumbnail_html($vid, 'full', '(max-width: 900px) 100vw, 50vw', 'archive-venue__img-el'); ?>
+  <?php if ($featured_id) :
+    $f_thumb = get_the_post_thumbnail_url($featured_id, 'full');
+    $f_area  = function_exists('get_field') ? get_field('venue_area', $featured_id) : '';
+    $f_cap   = function_exists('get_field') ? get_field('venue_capacity', $featured_id) : '';
+  ?>
+    <section style="padding: 24px 0 40px;">
+      <div class="shell">
+        <a class="archive-venue__featured reveal reveal--lg" href="<?php echo esc_url(get_permalink($featured_id)); ?>">
+          <span class="archive-venue__featured-media ph kb">
+            <?php if ($f_thumb) : ?><img src="<?php echo esc_url($f_thumb); ?>" alt="<?php echo esc_attr(get_the_title($featured_id)); ?>" /><?php endif; ?>
+          </span>
+          <span class="archive-venue__featured-scrim" aria-hidden="true"></span>
+          <span class="archive-venue__featured-body">
+            <span class="eyebrow" style="color: var(--sun, #e8c46a);">Signature space</span>
+            <span class="archive-venue__featured-row">
+              <span class="display archive-venue__featured-title"><?php echo esc_html(get_the_title($featured_id)); ?></span>
+              <span class="archive-venue__featured-meta">
+                <?php if ($f_area) : ?><span class="chip archive-venue__chip"><span class="dot"></span><?php echo esc_html($f_area); ?></span><?php endif; ?>
+                <?php if ($f_cap) : ?><span class="chip archive-venue__chip"><span class="dot"></span><?php echo esc_html($f_cap); ?></span><?php endif; ?>
+                <span class="btn btn--sun btn--sm"><span style="position:relative; z-index:1;">View space</span><span class="ripple"></span></span>
+              </span>
+            </span>
+          </span>
+        </a>
+      </div>
+    </section>
+  <?php endif; ?>
+
+  <?php if (!empty($venue_ids)) : ?>
+    <section style="padding: 40px 0 110px;">
+      <div class="shell">
+        <div class="eyebrow reveal" style="margin-bottom: 32px;">All event spaces</div>
+        <div class="archive-venue__grid">
+          <?php foreach ($venue_ids as $i => $gid) :
+            $g_thumb = get_the_post_thumbnail_url($gid, 'large');
+            $g_tag   = function_exists('get_field') ? (get_field('venue_tagline', $gid) ?: get_field('venue_location', $gid)) : '';
+          ?>
+            <a class="archive-venue__card reveal" href="<?php echo esc_url(get_permalink($gid)); ?>">
+              <span class="archive-venue__card-media ph">
+                <?php if ($g_thumb) : ?><img src="<?php echo esc_url($g_thumb); ?>" alt="<?php echo esc_attr(get_the_title($gid)); ?>" loading="lazy" /><?php endif; ?>
+                <span class="archive-venue__card-num"><?php echo esc_html(str_pad((string) ($i + 2), 2, '0', STR_PAD_LEFT)); ?></span>
+              </span>
+              <span class="archive-venue__card-body">
+                <?php if ($g_tag) : ?><span class="mono muted"><?php echo esc_html($g_tag); ?></span><?php endif; ?>
+                <span class="display archive-venue__card-title"><?php echo esc_html(get_the_title($gid)); ?></span>
+              </span>
             </a>
-            <div class="archive-venue__badge"><?php echo esc_html(str_pad((string) ($idx + 1), 2, '0', STR_PAD_LEFT)); ?></div>
-          </div>
-          <div class="archive-venue__body">
-            <?php if (!empty($eyebrow_parts)) : ?>
-              <div class="eyebrow"><?php echo esc_html(implode(' · ', $eyebrow_parts)); ?></div>
-            <?php endif; ?>
-            <h2 class="display archive-venue__title">
-              <a href="<?php the_permalink(); ?>" style="color: inherit; text-decoration: none;"><?php the_title(); ?></a>
-            </h2>
-            <?php if ($blurb) : ?>
-              <p class="archive-venue__blurb"><?php echo esc_html($blurb); ?></p>
-            <?php endif; ?>
-            <?php if (!empty($caps)) : ?>
-              <dl class="archive-venue__caps" style="grid-template-columns: repeat(<?php echo esc_attr(count($caps)); ?>, 1fr);">
-                <?php foreach ($caps as $c) :
-                  $label = $c;
-                  $value = '';
-                  if (preg_match('/^(.*?)\s+(\d+\+?)$/', $c, $m)) {
-                    $label = trim($m[1]);
-                    $value = $m[2];
-                  }
-                ?>
-                  <div>
-                    <dt><?php echo esc_html($label); ?></dt>
-                    <?php if ($value !== '') : ?>
-                      <dd class="display"><?php echo esc_html($value); ?> pax</dd>
-                    <?php endif; ?>
-                  </div>
-                <?php endforeach; ?>
-              </dl>
-            <?php endif; ?>
-            <div style="margin-top: 32px;">
-              <a href="<?php echo esc_url($cta_url); ?>" class="btn btn--ghost">
-                <span class="ripple"></span>
-                <span><?php echo esc_html($cta_text); ?></span>
-                <svg width="14" height="10" viewBox="0 0 22 8" fill="none" aria-hidden="true" style="margin-left: 8px;">
-                  <path d="M0 4 L20 4 M14 0 L20 4 L14 8" stroke="currentColor" stroke-width="1.4" fill="none"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-        </article>
-      <?php $idx++; endwhile;
-      else : ?>
-        <p style="text-align:center; color: var(--ink-2, #3d433d);">No venues published yet.</p>
-      <?php endif; ?>
-    </div>
-  </section>
+          <?php endforeach; ?>
+        </div>
+      </div>
+    </section>
+  <?php elseif (!$featured_id) : ?>
+    <section style="padding: 60px 0 120px;">
+      <div class="shell"><p style="text-align:center; color: var(--ink-2, #3d433d);">No event spaces published yet.</p></div>
+    </section>
+  <?php endif; ?>
 
   <section class="archive-venue__inquiry" style="background: var(--forest, #1f4a3a); color: var(--ivory, #f7f6f0); padding: 90px 0;">
     <div class="shell archive-venue__inquiry-grid">
@@ -119,75 +112,60 @@
 </main>
 
 <style>
-  .archive-venue__stack { display: grid; gap: 80px; }
-  .archive-venue__row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
-  }
-  .archive-venue__row.is-flipped .archive-venue__media { order: 2; }
-  .archive-venue__row.is-flipped .archive-venue__body  { order: 1; }
-  .archive-venue__media { position: relative; }
-  .archive-venue__media .ph {
-    border-radius: 4px;
+  /* ── Featured space ── */
+  .archive-venue__featured {
+    position: relative;
+    display: block;
+    height: 560px;
+    border-radius: 6px;
     overflow: hidden;
+    color: var(--ivory, #f7f6f0);
+    text-decoration: none;
+  }
+  .archive-venue__featured-media { position: absolute; inset: 0; }
+  .archive-venue__featured-media img { width: 100%; height: 100%; object-fit: cover; }
+  .archive-venue__featured-scrim {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(13,42,32,.85), rgba(13,42,32,.1) 60%);
+  }
+  .archive-venue__featured-body { position: absolute; left: 40px; right: 40px; bottom: 40px; }
+  .archive-venue__featured-row {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    flex-wrap: wrap; gap: 20px; margin-top: 14px;
+  }
+  .archive-venue__featured-title { font-size: clamp(48px, 6vw, 88px); color: var(--ivory, #f7f6f0); line-height: 1; }
+  .archive-venue__featured-meta { display: inline-flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .archive-venue__chip {
+    background: rgba(255,255,255,.16);
+    border-color: rgba(255,255,255,.3);
+    color: var(--ivory, #f7f6f0);
+  }
+
+  /* ── Spaces grid ── */
+  .archive-venue__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .archive-venue__card { display: block; color: inherit; text-decoration: none; }
+  .archive-venue__card-media {
+    position: relative; height: 320px; border-radius: 4px; overflow: hidden;
     background: var(--bone, #ede9d9);
   }
-  .archive-venue__media img,
-  .archive-venue__img-el {
-    width: 100%; height: 100%; object-fit: cover; display: block;
-    transition: transform 800ms cubic-bezier(.16,1,.3,1);
+  .archive-venue__card-media::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(13,42,32,.55), transparent 55%);
+    pointer-events: none;
   }
-  .archive-venue__media .ph:hover img { transform: scale(1.03); }
-  .archive-venue__badge {
-    position: absolute;
-    top: 20px;
-    left: -20px;
-    background: var(--sun, #e8c46a);
-    color: var(--forest-2, #0f2018);
-    padding: 8px 14px;
-    font-family: var(--font-display, 'Cormorant Garamond', serif);
-    font-size: 32px;
-    line-height: 1;
-    border-radius: 2px;
+  .archive-venue__card-media img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 700ms cubic-bezier(.16,1,.3,1);
   }
-  .archive-venue__row.is-flipped .archive-venue__badge { left: auto; right: -20px; }
-  .archive-venue__title {
-    font-size: clamp(40px, 5vw, 64px);
-    margin-top: 14px;
-    max-width: 12ch;
-    line-height: 1.05;
+  .archive-venue__card:hover .archive-venue__card-media img { transform: scale(1.04); }
+  .archive-venue__card-num {
+    position: absolute; top: 16px; left: 16px; z-index: 1;
+    background: var(--sun, #e8c46a); color: var(--forest-2, #0f2018);
+    padding: 4px 10px; border-radius: 2px;
+    font-family: var(--font-display, 'Cormorant Garamond', serif); font-size: 22px; line-height: 1;
   }
-  .archive-venue__title em { font-style: italic; }
-  .archive-venue__blurb {
-    margin-top: 22px;
-    color: var(--ink-2, #3d433d);
-    font-size: 16.5px;
-    line-height: 1.8;
-    max-width: 520px;
-  }
-  .archive-venue__caps {
-    margin: 24px 0 0;
-    display: grid;
-    gap: 14px;
-    max-width: 460px;
-  }
-  .archive-venue__caps > div {
-    border-top: 1px solid var(--line, #ede9d9);
-    padding-top: 12px;
-  }
-  .archive-venue__caps dt {
-    font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    color: var(--mute, #7b817b);
-    font-size: 12px;
-    margin: 0;
-  }
-  .archive-venue__caps dd {
-    margin: 4px 0 0;
-    font-size: 24px;
-    color: var(--forest, #1f4a3a);
-  }
+  .archive-venue__card-body { padding: 18px 2px 0; display: flex; flex-direction: column; gap: 6px; }
+  .archive-venue__card-title { font-size: 28px; }
 
   .archive-venue__inquiry-grid {
     display: grid;
@@ -197,12 +175,13 @@
   }
 
   @media (max-width: 900px) {
-    .archive-venue__row,
+    .archive-venue__grid { grid-template-columns: 1fr 1fr; }
+    .archive-venue__featured { height: 440px; }
+    .archive-venue__featured-body { left: 24px; right: 24px; bottom: 24px; }
     .archive-venue__inquiry-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
-    .archive-venue__row.is-flipped .archive-venue__media { order: 1; }
-    .archive-venue__row.is-flipped .archive-venue__body  { order: 2; }
-    .archive-venue__badge { left: 12px !important; right: auto !important; top: 12px; }
-    .archive-venue__media .ph { height: 360px !important; }
+  }
+  @media (max-width: 560px) {
+    .archive-venue__grid { grid-template-columns: 1fr; }
   }
 </style>
 

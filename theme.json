@@ -11,29 +11,39 @@
       "units": ["px", "rem", "em", "%", "vw", "vh"]
     },
     "typography": {
-      "fluid": true
+      "fluid": true,
+      "fontFamilies": [
+        {
+          "slug": "display",
+          "name": "Roca Two (Display)",
+          "fontFamily": "\"Roca Two\", \"Cormorant Garamond\", Georgia, serif"
+        },
+        {
+          "slug": "sans",
+          "name": "Codec Pro (Body)",
+          "fontFamily": "\"Codec Pro\", ui-sans-serif, system-ui, sans-serif"
+        }
+      ]
     },
     "color": {
       "palette": [
-        { "slug": "primary", "name": "Primary", "color": "#111827" },
-        { "slug": "secondary", "name": "Secondary", "color": "#4B5563" },
-        { "slug": "accent", "name": "Accent", "color": "#2563EB" },
-        { "slug": "white", "name": "White", "color": "#FFFFFF" },
-        {
-          "slug": "custom-border",
-          "name": "Custom Border",
-          "color": "rgba(255,255,255,0.08)"
-        }
+        { "slug": "forest", "name": "Forest", "color": "#5a7755" },
+        { "slug": "forest-dark", "name": "Forest Dark", "color": "#3f5a3b" },
+        { "slug": "sun", "name": "Sun", "color": "#e8c46a" },
+        { "slug": "ivory", "name": "Ivory", "color": "#fbf7ec" },
+        { "slug": "ink", "name": "Ink", "color": "#403e3f" },
+        { "slug": "line", "name": "Line", "color": "#e6e1d6" },
+        { "slug": "white", "name": "White", "color": "#FFFFFF" }
       ]
     }
   },
   "styles": {
     "color": {
-      "background": "#FFFFFF",
-      "text": "#111827"
+      "background": "#fbf7ec",
+      "text": "#403e3f"
     },
     "typography": {
-      "fontFamily": "system-ui, sans-serif",
+      "fontFamily": "\"Codec Pro\", ui-sans-serif, system-ui, sans-serif",
       "lineHeight": "1.6"
     },
     "spacing": {

@@ -19,14 +19,34 @@
     $brochure  = function_exists('get_field') ? get_field('venue_brochure', $vid) : '';
     $cta_text  = function_exists('get_field') ? (get_field('venue_cta_text', $vid) ?: 'Send an inquiry') : 'Send an inquiry';
     $cta_url   = function_exists('get_field') ? get_field('venue_cta_url', $vid) : '';
-    if (!$cta_url) $cta_url = home_url('/contact');
     $gallery   = function_exists('get_field') ? get_field('venue_gallery', $vid) : [];
+    $capacity_layouts = function_exists('get_field') ? get_field('venue_capacity_layouts', $vid) : [];
     $thumb     = get_the_post_thumbnail_url($vid, 'full');
     $phone     = function_exists('greensun_setting') ? greensun_setting('phone', '') : '';
 
+    // Deep-link CTAs into the Contact form with this space pre-filled.
+    $space_name  = get_the_title();
+    $inquire_url = $cta_url ?: add_query_arg(['subject' => 'Events inquiry', 'space' => $space_name], home_url('/contact'));
+    $ocular_url  = add_query_arg(['subject' => 'Book an ocular visit', 'space' => $space_name], home_url('/contact'));
+
     $eyebrow_parts = array_filter([$tagline, $location]);
     $eyebrow_text  = implode(' · ', $eyebrow_parts);
-    $caps = array_filter(array_map('trim', explode(',', (string) $layouts)));
+
+    // Structured capacity-by-layout rows (preferred); fall back to legacy text tiles.
+    $cl_rows = [];
+    if (!empty($capacity_layouts) && is_array($capacity_layouts)) {
+        foreach ($capacity_layouts as $row) {
+            $lt  = $row['layout']   ?? '';
+            $cap = $row['capacity'] ?? '';
+            if ($lt === '' && $cap === '') continue;
+            $cl_rows[] = ['layout' => $lt, 'capacity' => $cap];
+        }
+    }
+    $caps = $cl_rows ? [] : array_filter(array_map('trim', explode(',', (string) $layouts)));
+    $layout_labels = [
+        'theatre' => 'Theatre', 'banquet' => 'Banquet', 'classroom' => 'Classroom',
+        'boardroom' => 'Boardroom', 'ushape' => 'U-Shape', 'cocktail' => 'Cocktail / Reception', 'cabaret' => 'Cabaret',
+    ];
 
     $excerpt_lead = wp_strip_all_tags(get_the_excerpt());
     $first_sentence = $excerpt_lead ? rtrim(preg_split('/[\.\!\?]/', $excerpt_lead)[0], '.') . '.' : '';
@@ -107,6 +127,26 @@
               </ul>
             </div>
           <?php endif; ?>
+
+          <?php if (!empty($cl_rows)) : ?>
+            <div class="reveal single-venue__captable-wrap" style="margin-top: 56px;">
+              <div class="eyebrow" style="margin-bottom: 18px;">Capacity by layout</div>
+              <table class="gs-captable">
+                <tbody>
+                  <?php foreach ($cl_rows as $row) :
+                    $glyph = function_exists('greensun_layout_glyph') ? greensun_layout_glyph((string) $row['layout']) : '';
+                    $label = $layout_labels[$row['layout']] ?? ucfirst((string) $row['layout']);
+                  ?>
+                    <tr>
+                      <td class="gs-captable__glyph"><?php echo $glyph; // safe: theme-generated SVG ?></td>
+                      <th scope="row" class="gs-captable__name"><?php echo esc_html($label); ?></th>
+                      <td class="gs-captable__cap"><?php echo $row['capacity'] !== '' ? esc_html(number_format_i18n((int) $row['capacity']) . ' guests') : '—'; ?></td>
+                    </tr>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+            </div>
+          <?php endif; ?>
         </div>
 
         <aside class="single-venue__sidebar reveal" style="position: sticky; top: 100px;">
@@ -141,12 +181,17 @@
               <?php endforeach; ?>
             </ul>
 
-            <a href="<?php echo esc_url($cta_url); ?>" class="btn btn--sun btn--lg" style="margin-top: 28px; width:100%; justify-content:center;">
+            <a href="<?php echo esc_url($inquire_url); ?>" class="btn btn--sun btn--lg" style="margin-top: 28px; width:100%; justify-content:center;">
               <span class="ripple"></span>
               <span><?php echo esc_html($cta_text); ?></span>
               <svg width="14" height="10" viewBox="0 0 22 8" fill="none" aria-hidden="true" style="margin-left: 8px;">
                 <path d="M0 4 L20 4 M14 0 L20 4 L14 8" stroke="currentColor" stroke-width="1.4" fill="none"/>
               </svg>
+            </a>
+
+            <a href="<?php echo esc_url($ocular_url); ?>" class="btn btn--ghost" style="margin-top: 12px; width:100%; justify-content:center;">
+              <span class="ripple"></span>
+              <span>Book an ocular visit</span>
             </a>
 
             <?php if ($brochure) : ?>
@@ -171,23 +216,31 @@
       <section style="padding: 40px 0 120px;">
         <div class="shell">
           <div class="eyebrow reveal" style="margin-bottom: 20px;">The space</div>
-          <div class="single-venue__gallery" style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap: 14px;">
+          <div class="single-venue__gallery" style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap: 14px;" data-venue-gallery>
             <?php
               $count = 0;
               foreach ($gallery as $image) :
                 if ($count >= 4) break;
-                $url = is_array($image) ? ($image['sizes']['large'] ?? $image['url'] ?? '') : '';
-                $alt = is_array($image) ? ($image['alt'] ?? '') : '';
+                $url  = is_array($image) ? ($image['sizes']['large'] ?? $image['url'] ?? '') : '';
+                $full = is_array($image) ? ($image['sizes']['large'] ?? $image['url'] ?? '') : '';
+                $alt  = is_array($image) ? ($image['alt'] ?? '') : '';
                 if (!$url) continue;
                 $is_hero = $count === 0;
             ?>
-              <div class="ph reveal<?php echo $is_hero ? ' kb' : ''; ?>" style="height: <?php echo $is_hero ? '520px; grid-row: span 2;' : '253px;'; ?>">
+              <button type="button" class="ph reveal<?php echo $is_hero ? ' kb' : ''; ?> single-venue__gallery-item" style="height: <?php echo $is_hero ? '520px; grid-row: span 2;' : '253px;'; ?>; padding:0; border:0; cursor:zoom-in; display:block;" data-full="<?php echo esc_url($full); ?>" aria-label="<?php echo esc_attr($alt ?: __('View photo', 'greensun-hotel')); ?>">
                 <img src="<?php echo esc_url($url); ?>" alt="<?php echo esc_attr($alt); ?>" style="width:100%; height:100%; object-fit:cover;" />
-              </div>
+              </button>
             <?php $count++; endforeach; ?>
           </div>
         </div>
       </section>
+
+      <div class="gs-lightbox" data-venue-lightbox hidden aria-hidden="true">
+        <button type="button" class="gs-lightbox__close" data-lightbox-close aria-label="<?php esc_attr_e('Close', 'greensun-hotel'); ?>">×</button>
+        <button type="button" class="gs-lightbox__nav gs-lightbox__nav--prev" data-lightbox-prev aria-label="<?php esc_attr_e('Previous', 'greensun-hotel'); ?>">‹</button>
+        <img class="gs-lightbox__img" data-lightbox-img src="" alt="" />
+        <button type="button" class="gs-lightbox__nav gs-lightbox__nav--next" data-lightbox-next aria-label="<?php esc_attr_e('Next', 'greensun-hotel'); ?>">›</button>
+      </div>
     <?php endif; ?>
 
     <?php
@@ -230,6 +283,41 @@
       </section>
     <?php endif; ?>
 
+    <?php
+    // "Next space" link — the following venue in menu/title order, wrapping around.
+    $all_venues = get_posts([
+        'post_type'      => 'venue',
+        'posts_per_page' => -1,
+        'orderby'        => 'menu_order title',
+        'order'          => 'ASC',
+        'fields'         => 'ids',
+    ]);
+    $next_id = 0;
+    if (count($all_venues) > 1) {
+        $pos = array_search($vid, $all_venues, true);
+        if ($pos !== false) {
+            $next_id = $all_venues[($pos + 1) % count($all_venues)];
+        }
+    }
+    if ($next_id) :
+      $next_thumb = get_the_post_thumbnail_url($next_id, 'large');
+    ?>
+      <section class="single-venue__next">
+        <a class="single-venue__next-link reveal" href="<?php echo esc_url(get_permalink($next_id)); ?>">
+          <span class="single-venue__next-media ph">
+            <?php if ($next_thumb) : ?><img src="<?php echo esc_url($next_thumb); ?>" alt="" loading="lazy" /><?php endif; ?>
+          </span>
+          <span class="single-venue__next-body">
+            <span class="eyebrow" style="color: var(--sun, #e8c46a);">Next space</span>
+            <span class="display single-venue__next-title"><?php echo esc_html(get_the_title($next_id)); ?></span>
+          </span>
+          <svg class="single-venue__next-arrow" width="40" height="12" viewBox="0 0 40 12" fill="none" aria-hidden="true">
+            <path d="M0 6 H37 M31 1 L37 6 L31 11" stroke="currentColor" stroke-width="1.4"/>
+          </svg>
+        </a>
+      </section>
+    <?php endif; ?>
+
     <section class="single-venue__inquiry" style="background: var(--forest, #1f4a3a); color: var(--ivory, #f7f6f0); padding: 90px 0;">
       <div class="shell single-venue__inquiry-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items:center;">
         <h2 class="display reveal reveal--lg" style="font-size: clamp(36px, 5vw, 60px); color: var(--sun, #e8c46a); max-width: 14ch;">
@@ -240,12 +328,16 @@
             Tell us about your event — guest count, dates, the feel you're after. Our team will send back venue options, pricing, and a layout sketch within one business day.
           </p>
           <div class="reveal" style="margin-top: 28px; display:flex; gap: 14px; flex-wrap: wrap;">
-            <a href="<?php echo esc_url($cta_url); ?>" class="btn btn--sun btn--lg">
+            <a href="<?php echo esc_url($inquire_url); ?>" class="btn btn--sun btn--lg">
               <span class="ripple"></span>
               <span>Send an inquiry</span>
               <svg width="14" height="10" viewBox="0 0 22 8" fill="none" aria-hidden="true" style="margin-left: 8px;">
                 <path d="M0 4 L20 4 M14 0 L20 4 L14 8" stroke="currentColor" stroke-width="1.4" fill="none"/>
               </svg>
+            </a>
+            <a href="<?php echo esc_url($ocular_url); ?>" class="btn btn--ghost btn--light btn--lg">
+              <span class="ripple"></span>
+              <span>Book an ocular visit</span>
             </a>
             <?php if ($brochure) : ?>
               <a href="<?php echo esc_url($brochure); ?>" target="_blank" rel="noopener" class="btn btn--ghost btn--light btn--lg">
@@ -263,6 +355,65 @@
 </main>
 
 <style>
+  /* ── Capacity-by-layout table ── */
+  .gs-captable { width: 100%; border-collapse: collapse; }
+  .gs-captable tr { border-top: 1px solid var(--line, #ede9d9); }
+  .gs-captable tr:last-child { border-bottom: 1px solid var(--line, #ede9d9); }
+  .gs-captable td, .gs-captable th { padding: 16px 8px; text-align: left; vertical-align: middle; }
+  .gs-captable__glyph { width: 44px; color: var(--moss, #527a55); }
+  .gs-captable__glyph svg { display: block; }
+  .gs-captable__name { font-weight: 500; font-size: 16px; }
+  .gs-captable__cap {
+    text-align: right;
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    color: var(--ink-2, #3d433d);
+    white-space: nowrap;
+  }
+
+  /* ── "Next space" link ── */
+  .single-venue__next { border-top: 1px solid var(--line, #ede9d9); }
+  .single-venue__next-link {
+    display: flex; align-items: center; gap: 28px;
+    max-width: var(--max, 1320px); margin: 0 auto; padding: 36px 32px;
+    color: var(--ink, #1a1f1a); text-decoration: none;
+    transition: background 300ms cubic-bezier(.16,1,.3,1);
+  }
+  .single-venue__next-link:hover { background: var(--paper, #f8f5e9); }
+  .single-venue__next-media { width: 120px; height: 80px; border-radius: 6px; overflow: hidden; flex: 0 0 auto; }
+  .single-venue__next-media img { width: 100%; height: 100%; object-fit: cover; }
+  .single-venue__next-body { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .single-venue__next-title { font-size: clamp(28px, 3.5vw, 44px); }
+  .single-venue__next-arrow { color: var(--forest, #1f4a3a); flex: 0 0 auto; transition: transform 350ms cubic-bezier(.16,1,.3,1); }
+  .single-venue__next-link:hover .single-venue__next-arrow { transform: translateX(8px); }
+
+  /* ── Gallery lightbox ── */
+  .gs-lightbox {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(8, 24, 18, 0.92);
+    display: flex; align-items: center; justify-content: center;
+    padding: 5vw;
+    animation: gsLbFade 250ms ease;
+  }
+  .gs-lightbox[hidden] { display: none; }
+  @keyframes gsLbFade { from { opacity: 0; } to { opacity: 1; } }
+  .gs-lightbox__img { max-width: 90vw; max-height: 86vh; object-fit: contain; border-radius: 4px; }
+  .gs-lightbox__close {
+    position: absolute; top: 22px; right: 28px;
+    width: 48px; height: 48px; border: 0; background: none;
+    color: var(--ivory, #f7f6f0); font-size: 34px; line-height: 1; cursor: pointer;
+  }
+  .gs-lightbox__nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 56px; height: 56px; border: 0; border-radius: 50%;
+    background: rgba(255,255,255,.12); color: var(--ivory, #f7f6f0);
+    font-size: 28px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 200ms ease;
+  }
+  .gs-lightbox__nav:hover { background: rgba(255,255,255,.24); }
+  .gs-lightbox__nav--prev { left: 24px; }
+  .gs-lightbox__nav--next { right: 24px; }
+
   @media (max-width: 1000px) {
     .single-venue__layout { grid-template-columns: 1fr !important; gap: 48px !important; }
     .single-venue__sidebar { position: static !important; }
@@ -270,6 +421,7 @@
     .single-venue__gallery { grid-template-columns: 1fr !important; }
     .single-venue__gallery .ph { grid-row: span 1 !important; height: 280px !important; }
     .single-venue__inquiry-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+    .single-venue__next-media { display: none; }
   }
 </style>
 

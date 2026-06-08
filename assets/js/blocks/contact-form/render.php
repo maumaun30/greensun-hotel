@@ -4,7 +4,20 @@ $subtitle      = $attributes['subtitle']     ?? '';
 $submit_text   = $attributes['submitText']   ?? 'Send message';
 $success_title = $attributes['successTitle'] ?? 'Message sent.';
 $success_text  = $attributes['successText']  ?? "We'll be in touch shortly. Thank you.";
-$subjects      = $attributes['subjects']     ?? ['Reservation', 'Events inquiry', 'Long stay', 'Press / partnerships', 'Other'];
+$subjects      = $attributes['subjects']     ?? [
+    'Make a reservation',
+    'Book an ocular visit',
+    'Events inquiry',
+    'Partnership inquiry',
+    'Long stay / corporate rate',
+    'Press / media',
+    'Careers',
+    'Something else',
+];
+
+// Deep-link prefill from event pages: /contact?subject=…&space=…
+$prefill_subject = isset($_GET['subject']) ? sanitize_text_field(wp_unslash($_GET['subject'])) : '';
+$prefill_space   = isset($_GET['space'])   ? sanitize_text_field(wp_unslash($_GET['space']))   : '';
 ?>
 <form <?php echo get_block_wrapper_attributes(['class' => 'greensun-contact-form gs-contact-form reveal', 'data-success-title' => $success_title, 'data-success-text' => $success_text]); ?>>
   <div class="gs-contact-form__panel">
@@ -25,16 +38,36 @@ $subjects      = $attributes['subjects']     ?? ['Reservation', 'Events inquiry'
         <input type="email" name="email" required autocomplete="email" />
       </label>
       <label class="field gs-cf-field">
-        <span>Subject</span>
+        <span>Phone</span>
+        <input type="tel" name="phone" autocomplete="tel" />
+      </label>
+      <label class="field gs-cf-field">
+        <span>I'd like to&hellip;</span>
         <select name="subject">
           <?php foreach ($subjects as $opt) : ?>
-            <option value="<?php echo esc_attr($opt); ?>"><?php echo esc_html($opt); ?></option>
+            <option value="<?php echo esc_attr($opt); ?>"<?php selected($prefill_subject, $opt); ?>><?php echo esc_html($opt); ?></option>
           <?php endforeach; ?>
         </select>
       </label>
+
+      <?php if ($prefill_space) : ?>
+        <input type="hidden" name="space" value="<?php echo esc_attr($prefill_space); ?>" />
+        <div class="gs-cf-field gs-cf-field--full gs-contact-form__space-note">
+          <span class="chip chip--moss"><span class="dot"></span><?php echo esc_html($prefill_space); ?></span>
+        </div>
+      <?php endif; ?>
+
       <label class="field gs-cf-field gs-cf-field--full">
         <span>Message</span>
         <textarea name="message" rows="5" required></textarea>
+      </label>
+
+      <label class="gs-cf-field gs-cf-field--full gs-contact-form__optin">
+        <input type="checkbox" name="marketing" value="1" />
+        <span class="gs-contact-form__optin-box" aria-hidden="true">
+          <svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5 L4 7.5 L10 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="gs-contact-form__optin-text">Keep me posted on offers, events and announcements from Green Sun.</span>
       </label>
     </div>
 

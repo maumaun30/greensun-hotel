@@ -33,12 +33,14 @@ add_action('rest_api_init', function () {
         'callback'            => 'greensun_rest_contact',
         'permission_callback' => 'greensun_rest_public_permission',
         'args'                => [
-            'name'    => ['required' => true,  'type' => 'string'],
-            'email'   => ['required' => true,  'type' => 'string'],
-            'phone'   => ['required' => false, 'type' => 'string'],
-            'subject' => ['required' => false, 'type' => 'string'],
-            'message' => ['required' => true,  'type' => 'string'],
-            '_hp'     => ['required' => false, 'type' => 'string'],
+            'name'      => ['required' => true,  'type' => 'string'],
+            'email'     => ['required' => true,  'type' => 'string'],
+            'phone'     => ['required' => false, 'type' => 'string'],
+            'subject'   => ['required' => false, 'type' => 'string'],
+            'space'     => ['required' => false, 'type' => 'string'],
+            'message'   => ['required' => true,  'type' => 'string'],
+            'marketing' => ['required' => false, 'type' => 'string'],
+            '_hp'       => ['required' => false, 'type' => 'string'],
         ],
     ]);
 
@@ -101,6 +103,8 @@ function greensun_rest_contact(WP_REST_Request $request) {
     $email   = sanitize_email((string) $request->get_param('email'));
     $phone   = sanitize_text_field((string) $request->get_param('phone'));
     $subject_in = sanitize_text_field((string) $request->get_param('subject'));
+    $space      = sanitize_text_field((string) $request->get_param('space'));
+    $marketing  = (string) $request->get_param('marketing') === '1' ? 'yes' : 'no';
     $message = wp_strip_all_tags((string) $request->get_param('message'));
 
     if (!is_email($email)) {
@@ -114,13 +118,15 @@ function greensun_rest_contact(WP_REST_Request $request) {
     $submission_id = 0;
     if (function_exists('greensun_store_submission')) {
         $submission_id = greensun_store_submission([
-            'name'    => $name,
-            'email'   => $email,
-            'phone'   => $phone,
-            'subject' => $subject_in,
-            'message' => $message,
-            'ip'      => $_SERVER['REMOTE_ADDR'] ?? '',
-            'source'  => 'contact-form',
+            'name'      => $name,
+            'email'     => $email,
+            'phone'     => $phone,
+            'subject'   => $subject_in,
+            'space'     => $space,
+            'marketing' => $marketing,
+            'message'   => $message,
+            'ip'        => $_SERVER['REMOTE_ADDR'] ?? '',
+            'source'    => 'contact-form',
         ]);
     }
 
@@ -128,8 +134,8 @@ function greensun_rest_contact(WP_REST_Request $request) {
     $subj_tag = $subject_in ?: 'Enquiry';
     $subject  = sprintf('[%s] %s — %s', wp_specialchars_decode(get_bloginfo('name'), ENT_QUOTES), $subj_tag, $name);
     $body     = sprintf(
-        "Name: %s\nEmail: %s\nPhone: %s\nSubject: %s\n\nMessage:\n%s",
-        $name, $email, $phone ?: '—', $subject_in ?: '—', $message
+        "Name: %s\nEmail: %s\nPhone: %s\nSubject: %s\nEvent space: %s\nMarketing opt-in: %s\n\nMessage:\n%s",
+        $name, $email, $phone ?: '—', $subject_in ?: '—', $space ?: '—', $marketing, $message
     );
     $headers = ['Reply-To: ' . $name . ' <' . $email . '>'];
 

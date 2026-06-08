@@ -3,35 +3,70 @@
 @tailwind utilities;
 
 /* ============================================================
+   GREENSUN HOTEL — Brand fonts (self-hosted)
+   Primary: Roca Two (Thin + Bold) · Secondary: Codec Pro (Reg + Italic)
+   ============================================================ */
+@font-face {
+  font-family: "Roca Two";
+  src: url("../fonts/RocaTwo-Thin.ttf") format("truetype");
+  font-weight: 100 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roca Two";
+  src: url("../fonts/RocaTwo-Bold.ttf") format("truetype");
+  font-weight: 500 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Codec Pro";
+  src: url("../fonts/CodecPro-Regular.ttf") format("truetype");
+  font-weight: 100 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Codec Pro";
+  src: url("../fonts/CodecPro-Italic.ttf") format("truetype");
+  font-weight: 100 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ============================================================
    GREENSUN HOTEL — Design tokens
    ============================================================ */
 :root {
-  /* Brand palette — sourced from design tweaks
-     forest #2a5a4a · sun #ffd266 · ivory #fbf7ec
-     -2 / moss / paper / bone derived via the same shade() ramp the
-     design uses (±0.15 for brand, +0.03 / -0.07 for neutrals). */
-  --forest:   #2a5a4a;
-  --forest-2: #043424;
-  --moss:     #508070;
-  --sage:     oklch(0.82 0.045 135);
-  --sage-2:   oklch(0.92 0.025 130);
-  --sun:      #ffd266;
-  --sun-2:    #d9ac40;
+  /* Official brand palette (Green Sun Hotel, 2022 kit)
+     green #5a7755 + charcoal #403e3f sampled from the master logo.
+     A warm sun-gold is retained as the accent ("Sun"). */
+  --forest:   #5a7755;
+  --forest-2: #3f5a3b;
+  --moss:     #6e8f67;
+  --sage:     #b8c7b1;
+  --sage-2:   #dde5d6;
+  --sun:      #e8c46a;
+  --sun-2:    #cda64a;
   --ember:    oklch(0.60 0.16 50);
 
   /* Neutral */
   --ivory:    #fbf7ec;
   --bone:     #e9e5da;
   --paper:    #fffff4;
-  --ink:      oklch(0.16 0.018 150);
-  --ink-2:    oklch(0.30 0.018 150);
-  --mute:     oklch(0.55 0.012 150);
-  --line:     oklch(0.86 0.015 130);
+  --ink:      #403e3f;
+  --ink-2:    #615e5f;
+  --mute:     #918d89;
+  --line:     #e6e1d6;
 
-  /* Type */
-  --display: "Cormorant Garamond", "Cormorant", "Times New Roman", serif;
-  --sans:    "Manrope", ui-sans-serif, system-ui, sans-serif;
-  --mono:    "JetBrains Mono", "DM Mono", ui-monospace, monospace;
+  /* Type — brand fonts, with both naming schemes used across the theme */
+  --display: "Roca Two", "Cormorant Garamond", Georgia, serif;
+  --sans:    "Codec Pro", ui-sans-serif, system-ui, sans-serif;
+  --mono:    "Codec Pro", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--display);
+  --font-sans:    var(--sans);
+  --font-mono:    var(--mono);
 
   /* Motion */
   --ease:     cubic-bezier(.22,.61,.36,1);
@@ -590,6 +625,45 @@
   border-color: var(--forest, #1f4a3a);
 }
 
+/* Card-entry fields */
+.booking-flow .bf-card {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px 28px;
+}
+.booking-flow .bf-card[hidden] { display: none; }
+
+/* Promo code */
+.booking-flow .bf-promo {
+  margin-top: 28px;
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+}
+.booking-flow .bf-promo__field { flex: 1; }
+.booking-flow .bf-promo__apply { flex: 0 0 auto; }
+.booking-flow .bf-promo__msg {
+  margin-top: 12px;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+.booking-flow .bf-promo__msg.is-ok  { color: var(--moss, #527a55); }
+.booking-flow .bf-promo__msg.is-err { color: #7a2424; }
+.booking-flow .bf-payment__note {
+  margin-top: 18px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.booking-flow .bf-payment__note code {
+  font-family: var(--mono, 'JetBrains Mono', monospace);
+  font-size: 12px;
+  background: var(--paper, #f8f5e9);
+  border: 1px solid var(--line, #ede9d9);
+  border-radius: 3px;
+  padding: 1px 6px;
+}
+
 .booking-flow .bf-error {
   margin-top: 18px;
   padding: 14px 18px;
@@ -628,6 +702,28 @@
   font-family: var(--mono, 'JetBrains Mono', monospace);
   color: var(--forest, #1f4a3a);
 }
+.booking-flow .bf-done__receipt {
+  display: inline-flex;
+  gap: 0;
+  margin: 26px auto 0;
+  border: 1px solid var(--line, #ede9d9);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.booking-flow .bf-done__receipt > div {
+  padding: 16px 28px;
+  text-align: center;
+}
+.booking-flow .bf-done__receipt > div + div { border-left: 1px solid var(--line, #ede9d9); }
+.booking-flow .bf-done__receipt dt {
+  font-family: var(--mono, 'JetBrains Mono', monospace);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute, #7b817b);
+  margin-bottom: 6px;
+}
+.booking-flow .bf-done__receipt dd { margin: 0; font-size: 22px; }
 @keyframes bfPop {
   from { transform: scale(0.4); opacity: 0; }
   60%  { transform: scale(1.1); }
@@ -678,6 +774,8 @@
   align-items: baseline;
   gap: 16px;
 }
+.booking-flow .bf-summary__discount[hidden] { display: none; }
+.booking-flow .bf-summary__discount dd { color: var(--sun, #e8c46a); }
 .booking-flow .bf-summary__lines dt {
   color: rgba(247,246,240,.7);
   margin: 0;

@@ -1,3 +1,38 @@
+/* ---------- Brand fonts (self-hosted) — load before first paint ---------- */
+@font-face {
+  font-family: "Roca Two";
+  src: url("../fonts/RocaTwo-Thin.ttf") format("truetype");
+  font-weight: 100 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Roca Two";
+  src: url("../fonts/RocaTwo-Bold.ttf") format("truetype");
+  font-weight: 500 800; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Codec Pro";
+  src: url("../fonts/CodecPro-Regular.ttf") format("truetype");
+  font-weight: 100 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Codec Pro";
+  src: url("../fonts/CodecPro-Italic.ttf") format("truetype");
+  font-weight: 100 500; font-style: italic; font-display: swap;
+}
+
+/* ---------- Brand design tokens (mirror of main.css :root for early paint) ---------- */
+:root {
+  --forest: #5a7755; --forest-2: #3f5a3b; --moss: #6e8f67;
+  --sage: #b8c7b1; --sage-2: #dde5d6;
+  --sun: #e8c46a; --sun-2: #cda64a;
+  --ivory: #fbf7ec; --bone: #e9e5da; --paper: #fffff4;
+  --ink: #403e3f; --ink-2: #615e5f; --mute: #918d89; --line: #e6e1d6;
+  --display: "Roca Two", "Cormorant Garamond", Georgia, serif;
+  --sans: "Codec Pro", ui-sans-serif, system-ui, sans-serif;
+  --mono: "Codec Pro", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--display); --font-sans: var(--sans); --font-mono: var(--mono);
+}
+
 /* ---------- Site header (fixed, scroll-aware) ---------- */
 .site-header {
   position: fixed;

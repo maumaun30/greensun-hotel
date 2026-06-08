@@ -590,6 +590,45 @@
   border-color: var(--forest, #1f4a3a);
 }
 
+/* Card-entry fields */
+.booking-flow .bf-card {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px 28px;
+}
+.booking-flow .bf-card[hidden] { display: none; }
+
+/* Promo code */
+.booking-flow .bf-promo {
+  margin-top: 28px;
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+}
+.booking-flow .bf-promo__field { flex: 1; }
+.booking-flow .bf-promo__apply { flex: 0 0 auto; }
+.booking-flow .bf-promo__msg {
+  margin-top: 12px;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+.booking-flow .bf-promo__msg.is-ok  { color: var(--moss, #527a55); }
+.booking-flow .bf-promo__msg.is-err { color: #7a2424; }
+.booking-flow .bf-payment__note {
+  margin-top: 18px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.booking-flow .bf-payment__note code {
+  font-family: var(--mono, 'JetBrains Mono', monospace);
+  font-size: 12px;
+  background: var(--paper, #f8f5e9);
+  border: 1px solid var(--line, #ede9d9);
+  border-radius: 3px;
+  padding: 1px 6px;
+}
+
 .booking-flow .bf-error {
   margin-top: 18px;
   padding: 14px 18px;
@@ -628,6 +667,28 @@
   font-family: var(--mono, 'JetBrains Mono', monospace);
   color: var(--forest, #1f4a3a);
 }
+.booking-flow .bf-done__receipt {
+  display: inline-flex;
+  gap: 0;
+  margin: 26px auto 0;
+  border: 1px solid var(--line, #ede9d9);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.booking-flow .bf-done__receipt > div {
+  padding: 16px 28px;
+  text-align: center;
+}
+.booking-flow .bf-done__receipt > div + div { border-left: 1px solid var(--line, #ede9d9); }
+.booking-flow .bf-done__receipt dt {
+  font-family: var(--mono, 'JetBrains Mono', monospace);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute, #7b817b);
+  margin-bottom: 6px;
+}
+.booking-flow .bf-done__receipt dd { margin: 0; font-size: 22px; }
 @keyframes bfPop {
   from { transform: scale(0.4); opacity: 0; }
   60%  { transform: scale(1.1); }
@@ -678,6 +739,8 @@
   align-items: baseline;
   gap: 16px;
 }
+.booking-flow .bf-summary__discount[hidden] { display: none; }
+.booking-flow .bf-summary__discount dd { color: var(--sun, #e8c46a); }
 .booking-flow .bf-summary__lines dt {
   color: rgba(247,246,240,.7);
   margin: 0;

@@ -49,7 +49,7 @@ if ($rooms_q->have_posts()) {
     wp_reset_postdata();
 }
 
-$steps = ['Dates & guests', 'Choose a room', 'Your details', 'Review & confirm'];
+$steps = ['Dates & guests', 'Choose a room', 'Your details', 'Payment', 'Confirm'];
 ?>
 
 <main id="site-main" class="site-main booking-flow" role="main" data-prefill="<?php echo esc_attr(wp_json_encode($prefill)); ?>" data-rooms="<?php echo esc_attr(wp_json_encode($rooms_data)); ?>">
@@ -58,7 +58,7 @@ $steps = ['Dates & guests', 'Choose a room', 'Your details', 'Review & confirm']
     <div class="shell">
       <div class="eyebrow reveal" style="margin-bottom: 22px;">Reserve your stay</div>
       <h1 class="display reveal reveal--lg booking-flow__title">
-        Book a room <em>in four easy steps.</em>
+        Book a room <em>step by step.</em>
       </h1>
     </div>
   </section>
@@ -171,6 +171,39 @@ $steps = ['Dates & guests', 'Choose a room', 'Your details', 'Review & confirm']
           </section>
 
           <section class="bf-step" data-step="3">
+            <h2 class="display" style="font-size: 36px; max-width: 18ch;">How would you like to pay?</h2>
+
+            <div class="bf-payment">
+              <div class="bf-payment__label">Payment method</div>
+              <div class="bf-payment__row">
+                <button type="button" class="bf-pay is-active" data-payment="card">Credit / debit card</button>
+                <button type="button" class="bf-pay" data-payment="gcash">GCash</button>
+                <button type="button" class="bf-pay" data-payment="paypal">PayPal</button>
+                <button type="button" class="bf-pay" data-payment="onsite">Pay at hotel</button>
+              </div>
+            </div>
+
+            <div class="bf-card" data-card-fields>
+              <div class="field bf-field bf-field--full"><label for="bf-card-name">Name on card</label><input id="bf-card-name" type="text" name="cardName" autocomplete="cc-name" /></div>
+              <div class="field bf-field bf-field--full"><label for="bf-card-number">Card number</label><input id="bf-card-number" type="text" name="cardNumber" inputmode="numeric" autocomplete="cc-number" placeholder="1234 5678 9012 3456" maxlength="19" /></div>
+              <div class="field bf-field"><label for="bf-card-exp">Expiry</label><input id="bf-card-exp" type="text" name="cardExp" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/YY" maxlength="5" /></div>
+              <div class="field bf-field"><label for="bf-card-cvc">CVC</label><input id="bf-card-cvc" type="text" name="cardCvc" inputmode="numeric" autocomplete="cc-csc" placeholder="123" maxlength="4" /></div>
+            </div>
+
+            <div class="bf-promo">
+              <div class="field bf-field bf-promo__field"><label for="bf-promo">Promo code</label><input id="bf-promo" type="text" name="promo" placeholder="Have a code?" autocapitalize="characters" /></div>
+              <button type="button" class="btn btn--ghost btn--sm bf-promo__apply" data-action="apply-promo"><span class="ripple"></span><span>Apply</span></button>
+            </div>
+            <p class="bf-promo__msg" data-promo-msg role="status" aria-live="polite" hidden></p>
+            <p class="bf-payment__note muted">Payments are simulated in this preview — no card is charged. Try a demo code: <code>GREENSUN10</code>, <code>STAY3PAY2</code>, or <code>WELCOME500</code>.</p>
+
+            <div class="bf-actions">
+              <button type="button" class="btn btn--ghost" data-action="prev"><span class="ripple"></span><span>Back</span></button>
+              <button type="button" class="btn btn--sun" data-action="next"><span class="ripple"></span><span>Continue</span></button>
+            </div>
+          </section>
+
+          <section class="bf-step" data-step="4">
             <h2 class="display" style="font-size: 36px; max-width: 18ch;">Review and confirm.</h2>
             <dl class="bf-review">
               <div class="bf-review__row"><dt>Guest</dt><dd data-field="name">—</dd></div>
@@ -180,16 +213,10 @@ $steps = ['Dates & guests', 'Choose a room', 'Your details', 'Review & confirm']
               <div class="bf-review__row"><dt>Departure</dt><dd data-field="departure">—</dd></div>
               <div class="bf-review__row"><dt>Stay</dt><dd data-field="stay">—</dd></div>
               <div class="bf-review__row"><dt>Room</dt><dd data-field="room">—</dd></div>
+              <div class="bf-review__row"><dt>Payment</dt><dd data-field="payment">—</dd></div>
+              <div class="bf-review__row" data-review-promo hidden><dt>Promo</dt><dd data-field="promo">—</dd></div>
               <div class="bf-review__row"><dt>Notes</dt><dd data-field="notes">—</dd></div>
             </dl>
-            <div class="bf-payment">
-              <div class="bf-payment__label">Payment</div>
-              <div class="bf-payment__row">
-                <button type="button" class="bf-pay is-active" data-payment="card">Credit card</button>
-                <button type="button" class="bf-pay" data-payment="paypal">PayPal</button>
-                <button type="button" class="bf-pay" data-payment="onsite">Pay at hotel</button>
-              </div>
-            </div>
             <div class="bf-actions bf-actions--between">
               <button type="button" class="btn btn--ghost" data-action="prev"><span class="ripple"></span><span>Back</span></button>
               <button type="button" class="btn btn--sun btn--lg" data-action="confirm">
@@ -199,7 +226,7 @@ $steps = ['Dates & guests', 'Choose a room', 'Your details', 'Review & confirm']
             <div class="bf-error" hidden></div>
           </section>
 
-          <section class="bf-step bf-step--done" data-step="4">
+          <section class="bf-step bf-step--done" data-step="5">
             <div class="bf-done">
               <div class="bf-done__check" aria-hidden="true">
                 <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
@@ -207,7 +234,11 @@ $steps = ['Dates & guests', 'Choose a room', 'Your details', 'Review & confirm']
                 </svg>
               </div>
               <h2 class="display" style="font-size: clamp(40px, 5vw, 60px);">Reservation confirmed.</h2>
-              <p class="bf-done__body">A confirmation has been sent to <strong data-field="email">your inbox</strong>. We'll see you on <span data-field="arrival">—</span>. Reference <span class="bf-done__ref" data-field="reference">—</span>.</p>
+              <dl class="bf-done__receipt">
+                <div><dt>Reference</dt><dd class="bf-done__ref" data-field="reference">—</dd></div>
+                <div><dt>Total</dt><dd class="display" data-field="total">—</dd></div>
+              </dl>
+              <p class="bf-done__body">Your confirmation email is on its way to <strong data-field="email">your inbox</strong>. We'll see you on <span data-field="arrival">—</span>.</p>
               <div class="bf-actions" style="justify-content:center;">
                 <a class="btn" href="<?php echo esc_url(home_url('/')); ?>"><span class="ripple"></span><span>Back to home</span></a>
                 <a class="btn btn--ghost" href="<?php echo esc_url(home_url('/contact')); ?>"><span class="ripple"></span><span>Add a request</span></a>
@@ -228,6 +259,7 @@ $steps = ['Dates & guests', 'Choose a room', 'Your details', 'Review & confirm']
 
           <dl class="bf-summary__lines">
             <div><dt data-summary="line-label">Room</dt><dd data-summary="subtotal">—</dd></div>
+            <div class="bf-summary__discount" data-summary-discount hidden><dt data-summary="discount-label">Promo</dt><dd data-summary="discount">—</dd></div>
             <div><dt>Taxes &amp; fees (12%)</dt><dd data-summary="tax">—</dd></div>
           </dl>
 

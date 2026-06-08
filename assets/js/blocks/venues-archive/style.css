@@ -4,7 +4,6 @@
   max-width: 16ch;
   margin: 0;
   line-height: 1.05;
-  font-weight: 500;
 }
 .venues-archive-block .venues-archive__heading em { font-style: italic; }
 .venues-archive-block .venues-archive__lead {

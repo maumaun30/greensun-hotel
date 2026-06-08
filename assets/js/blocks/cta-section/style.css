@@ -20,6 +20,10 @@
   flex-wrap: wrap;
 }
 
+.greensun-cta-section .display em {
+  color: var(--sun, #e8c46a);
+}
+
 @media (max-width: 900px) {
   .greensun-cta-section .greensun-cta-section__inner { padding-block: 90px; }
   .greensun-cta-section .greensun-cta-section__split { grid-template-columns: 1fr; gap: 32px; }

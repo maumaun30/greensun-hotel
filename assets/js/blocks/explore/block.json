@@ -1,0 +1,20 @@
+{
+  "apiVersion": 3,
+  "name": "greensun-hotel/explore",
+  "title": "Explore",
+  "category": "design",
+  "icon": "location-alt",
+  "description": "Explore page sections — on-site establishments (alternating feature rows) plus a Chino Roces neighborhood grid with walk-distance chips.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "onsiteEyebrow": { "type": "string", "default": "Under our roof" },
+    "hoodEyebrow":   { "type": "string", "default": "The neighborhood" },
+    "hoodTitle":     { "type": "string", "default": "Chino Roces, <em>on foot.</em>" },
+    "hoodLead":      { "type": "string", "default": "Our front desk keeps a running list of the good stuff nearby. Here's where we'd start." },
+    "ctaTitle":      { "type": "string", "default": "Make Green Sun <em>your base in Makati.</em>" },
+    "onsite": { "type": "array", "default": [] },
+    "hood":   { "type": "array", "default": [] }
+  }
+}

@@ -138,6 +138,83 @@
   background: rgba(31, 74, 58, 0.08);
 }
 
+/* ---------- HOTEL | EVENTS division switcher ---------- */
+.site-header__lead {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.site-header__division {
+  position: relative;
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  transition: background 400ms cubic-bezier(.22,.61,.36,1), border-color 400ms cubic-bezier(.22,.61,.36,1);
+}
+
+.site-header__division-pill {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  border-radius: 999px;
+  background: var(--sun, #e8c46a);
+  transform: translateX(0);
+  transition: transform 420ms cubic-bezier(.22,.61,.36,1), background 400ms cubic-bezier(.22,.61,.36,1);
+}
+.site-header__division[data-active="events"] .site-header__division-pill {
+  transform: translateX(100%);
+}
+
+.site-header__division-tab {
+  position: relative;
+  z-index: 1;
+  padding: 7px 18px;
+  border-radius: 999px;
+  font-family: var(--font-sans, "Manrope", sans-serif);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+  transition: color 300ms cubic-bezier(.22,.61,.36,1);
+}
+.site-header__division-tab[aria-selected="true"] {
+  color: var(--forest-2, #0f2018);
+  text-shadow: none;
+}
+
+/* Scrolled / light-top: forest pill, ink-on-light tabs */
+.site-header[data-scrolled="true"] .site-header__division,
+body.gs-light-top .site-header__division {
+  border-color: rgba(13, 42, 32, 0.16);
+  background: rgba(13, 42, 32, 0.04);
+}
+.site-header[data-scrolled="true"] .site-header__division-pill,
+body.gs-light-top .site-header__division-pill {
+  background: var(--forest, #1f4a3a);
+}
+.site-header[data-scrolled="true"] .site-header__division-tab,
+body.gs-light-top .site-header__division-tab {
+  color: rgba(13, 42, 32, 0.6);
+  text-shadow: none;
+}
+.site-header[data-scrolled="true"] .site-header__division-tab[aria-selected="true"],
+body.gs-light-top .site-header__division-tab[aria-selected="true"] {
+  color: var(--ivory, #f7f6f0);
+}
+
+.site-header__division--mobile {
+  display: inline-flex;
+  margin-bottom: 22px;
+}
+
 /* ----------------------------------------------------------
    Light-top pages (no dark hero behind the fixed header).
    Mirror the data-scrolled styling so menu items stay readable,
@@ -227,6 +304,7 @@ body.gs-light-top .site-header__cta .ripple { background: rgba(31, 74, 58, 0.08)
 @media (max-width: 900px) {
   .site-header__nav { display: none; }
   .site-header__toggle { display: inline-flex; }
+  .site-header__lead > .site-header__division { display: none; }
 }
 
 /* ---------- Site footer ---------- */

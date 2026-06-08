@@ -280,6 +280,48 @@ function greensun_hotel_enqueue_booking_flow_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'greensun_hotel_enqueue_booking_flow_assets' );
 
+/**
+ * Room multi-gallery script — only on single room pages.
+ */
+function greensun_hotel_enqueue_room_gallery_assets() {
+    if ( ! is_singular( 'room' ) ) {
+        return;
+    }
+    $path = get_theme_file_path( '/assets/js/room-gallery.js' );
+    if ( ! file_exists( $path ) ) {
+        return;
+    }
+    wp_enqueue_script(
+        'greensun-hotel-room-gallery',
+        get_theme_file_uri( '/assets/js/room-gallery.js' ),
+        [],
+        filemtime( $path ),
+        true
+    );
+}
+add_action( 'wp_enqueue_scripts', 'greensun_hotel_enqueue_room_gallery_assets' );
+
+/**
+ * Venue (event-space) detail script — gallery lightbox; only on single venue pages.
+ */
+function greensun_hotel_enqueue_venue_detail_assets() {
+    if ( ! is_singular( 'venue' ) ) {
+        return;
+    }
+    $path = get_theme_file_path( '/assets/js/venue-detail.js' );
+    if ( ! file_exists( $path ) ) {
+        return;
+    }
+    wp_enqueue_script(
+        'greensun-hotel-venue-detail',
+        get_theme_file_uri( '/assets/js/venue-detail.js' ),
+        [],
+        filemtime( $path ),
+        true
+    );
+}
+add_action( 'wp_enqueue_scripts', 'greensun_hotel_enqueue_venue_detail_assets' );
+
 
 /**
  * A11y + perf: lightweight global filters.

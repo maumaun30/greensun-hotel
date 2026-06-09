@@ -830,3 +830,46 @@
   .gap-24 { gap: 24px; }
   .gap-32 { gap: 32px; }
 }
+
+/* ============================================================
+   PAGE HERO (shared)
+   These mirror the page-hero block's style.css so the same
+   .gs-page-hero markup also styles correctly on raw PHP
+   templates (single-room, single-venue, single-event,
+   single, archive-venue) where the block CSS is not enqueued.
+   ============================================================ */
+.gs-page-hero {
+  position: relative;
+  overflow: hidden;
+  color: var(--ivory, #f7f6f0);
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+}
+.gs-page-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(160deg, #1f4a3a, #0f2018);
+  overflow: hidden;
+}
+.gs-page-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.gs-page-hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.gs-page-hero__content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding-block: 120px;
+  display: flex;
+  flex-direction: column;
+}
